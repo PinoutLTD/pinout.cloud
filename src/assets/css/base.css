@@ -39,7 +39,7 @@ section {
 .layout {
 	max-width: var(--content-width);
 	margin: 0 auto;
-	padding: calc(var(--space) * 2) var(--space);
+	padding: calc(var(--space) * 1.5) var(--space);
   padding-bottom: 0;
 	overflow: hidden;
 }

@@ -70,7 +70,7 @@ export default {
     justify-content: space-between;
     /* min-height: 100vh; */
     margin-bottom: 0;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
   }
 
   .main-page-left {
