@@ -85,9 +85,9 @@ export default {
   }
 
   .header__logo {
-    max-width: 170px;
-    width: 100%;
-    margin-right: calc(var(--space) * 2);
+    /* max-width: 170px; */
+    /* width: 100%; */
+    margin-right: calc(var(--space) * 3);
   }
 
   .header__slogan {
@@ -115,7 +115,6 @@ export default {
   .header__slogan p {
     max-width: 524px;
     font-size: calc(var(--base-font-size) * 1.1);
-    text-align: center;
     font-weight: 600;
   }
 
@@ -252,6 +251,8 @@ export default {
     .main-page-right {
       align-self: center;
     }
+
+
   }
 
   @media screen and (max-width: 1080px) {
@@ -301,6 +302,10 @@ export default {
 
     .main-page__contacts address {
       display: block;
+    }
+
+    .header__slogan p {
+      text-align: center;
     }
     
   }

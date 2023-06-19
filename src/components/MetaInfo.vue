@@ -26,7 +26,7 @@ export default {
         return this.$static.metadata.siteUrl + this.metaImage;
       }
       else{
-        return this.$static.metadata.siteUrl + '/og/index.png'
+        return this.$static.metadata.siteUrl + '/og.png'
       }
     },
 
@@ -84,7 +84,7 @@ export default {
         { property: "og:site_name", content: this.$static.metadata.siteName },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
-        // { property: "og:image", content: image },
+        { property: "og:image", content: image },
         { property: "og:image:width", content: this.pageImageWidth },
         { property: "og:image:height", content: this.pageImageHeight },
         { property: "og:url", content: this.url },
@@ -92,7 +92,7 @@ export default {
         // Some Twitter Cards Tags
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: title },
-        // { name: "twitter:image", content: image},
+        { name: "twitter:image", content: image},
         { name: "twitter:description", content: description },
       ],
       script: this.googleInfo
