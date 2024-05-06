@@ -1,0 +1,34 @@
+body {
+
+	--base-font-size: 1.2rem;
+	--font-family: 'Roboto Flex', -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto,sans-serif;
+	--font-family-title: "Roboto Flex", -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto,sans-serif;
+
+	--color-dark: #191919;
+	--color-light: #ffffff;
+	--color-blue-link:#9fc5e8;
+	--color-grey: #b4b4b4;
+	--color-green: #175973;
+
+	--text-color: #191919;
+	--text-accent: #4285f4;
+	--text-secondary: #d9d9d9;
+
+  --bg-body: #f8f8f7;
+
+
+
+  --space: 2rem;
+  --content-width: 1600px;
+
+}
+
+
+body.dark {
+	--color-light: #191919;
+	--color-dark: #ffffff;
+
+	--text-color: #ffffff;
+  --bg-body: #191919;
+
+}

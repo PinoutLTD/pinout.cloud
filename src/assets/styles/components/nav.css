@@ -1,0 +1,21 @@
+.nav__list {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.nav__item {
+  margin: 0;
+  line-height: 1.2;
+  font-size: 14px;
+  font-weight: 500;
+  font-variation-settings: 'GRAD' 132, 'wdth' 148;
+}
+
+.nav__item:not(:last-child) {
+  margin-right: calc(var(--space) * 2);
+}
+
+.nav__link:focus-visible {
+  color: var(--color-blue-link)
+}

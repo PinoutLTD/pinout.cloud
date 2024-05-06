@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  @include('../partials/head.html', {
+    "pageTitle": "Contact us / Pinout",
+  })
+<body class="dark dark-contact-us">
+  <!--  website header -->
+  @include('../partials/header.html')
+
+  <main>
+    <section class="contact-us">
+      <div class="layout contact-us__layout">
+        <span class="link-font contact-us__interest">We’re glad to be interesting for you</span>
+
+        <div class="contact-us__next-level">
+          <div class="about-us-next__go">
+            go to the <span>NEXT LEVEL</span>
+          </div>
+          <span class="link-font contact-us__more-details">contact us for more details</span>
+        </div>
+
+        <div class="contact-us__content">
+          <div class="contact-us__info text-normal">
+            <span>Vadim Manaenko</span>
+            <a aria-label="email us vm@pinout.cloud" class="underline" href="mailto:vm@pinout.cloud">vm@pinout.cloud</a>
+            <a aria-label="call us +357 99 955105" class="underline" href="tel:+35799955105">+357 99 955105</a>
+          </div>
+          <div class="contact-us__decor-mobile">
+            <img src="./img/decor-legs-white.svg" alt="" aria-hidden="true"/>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- website footer -->
+  @include('../partials/footer.html')
+</body>
+</html>

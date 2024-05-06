@@ -1,0 +1,224 @@
+
+.why-smart-home__layout {
+  padding-top: 0;
+}
+
+.why-smart-home___title {
+  margin-bottom: calc( var(--space) * 2);
+}
+
+.why-smart-home__descr {
+  position: relative;
+  display: inline-block;
+  margin-bottom: var(--space);
+  z-index: 2;
+}
+
+.why-smart-home__descr::after {
+  content: url('data:image/svg+xml,<svg width="141" height="100" viewBox="0 0 141 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M63.22 30.7708C63.22 38.3008 62.56 44.5308 54.7 62.2108L38.98 99.2208H6.55L17.69 57.9508C6.88 53.7008 0 43.8708 0 30.7708C0 13.0808 13.43 0.310781 31.44 0.310781C49.45 0.310781 63.21 13.0808 63.21 30.7708H63.22ZM140.52 30.7708C140.52 38.3008 139.87 44.5308 132 62.2108L116.28 99.2208H83.85L94.99 57.9508C84.18 53.6908 77.3 43.8708 77.3 30.7608C77.3 13.0708 90.73 0.300781 108.74 0.300781C126.75 0.300781 140.51 13.0708 140.51 30.7608L140.52 30.7708Z" fill="%23E9E9E9"/></svg>');
+  position: absolute;
+  z-index: -1;
+  top: -22px;
+  right: 10px;
+}
+
+.why-smart-home__caption {
+  max-width: 300px;
+  font-size: 14px;
+  line-height: 1.5;
+  font-variation-settings: 'GRAD' 0, 'wdth' 110;
+  color: var(--color-grey);
+}
+
+.why-smart-home__graph {
+  /* margin-top: var(--space); */
+  align-items: end;
+  justify-content: center;
+  grid-template-columns: minmax(320px, 728px) 372px;
+}
+
+.why-smart-home__graph-text .text-normal {
+  margin-bottom: var(--space);
+}
+
+.why-smart-home-offers {
+  position: relative;
+  margin-bottom: 0;
+  min-height: 1180px;
+}
+
+.why-smart-home__jack {
+  position: absolute;
+  left: -358px;
+  bottom: -12px;
+}
+
+.why-smart-home-offers__top {
+  margin-bottom: var(--space);
+  justify-items: center;
+}
+
+.why-smart-home-offers__left {
+  max-width: 330px;
+  /* min-height: 435px; */
+  align-self: end;
+}
+
+.why-smart-home-offers__title {
+  position: absolute;
+  top: calc(100% - 856px);
+  left: 315px;
+  max-width: 335px;
+  font-size: 48px;
+  line-height: 1.2;
+  font-weight: 500;
+  font-variation-settings: 'GRAD' 132, 'wdth' 148;
+  z-index: 3;
+}
+
+.why-smart-home-offers__price {
+  display: inline-block;
+  position: absolute;
+  top: calc(100% - 732px);
+  left: 315px;
+  max-width: 335px;
+  font-size: 64px;
+  line-height: 1.1;
+  font-weight: 700;
+  font-variation-settings: 'GRAD' 132, 'wdth' 148;
+  color: var(--text-accent);
+  z-index: 3;
+}
+
+.why-smart-home-offers__text {
+  position: absolute;
+  top: calc(100% - 640px);
+  left: 315px;
+  max-width: 335px;
+  z-index: 3;
+}
+
+.why-smart-home-offers__right {
+  text-align: center;
+}
+
+.why-smart-home-offers__silhouette {
+  max-width: 305px ;
+  margin-bottom: var(--space);
+}
+
+.why-smart-home-offers__bottom {
+  margin: 0 auto;
+  padding-bottom: var(--space);
+  max-width: 450px;
+}
+
+
+@media screen and (max-width: 1560px) {
+  .why-smart-home-offers__bottom {
+    margin-right: var(--space);
+  }
+}
+
+@media screen and (max-width: 1060px) {
+
+  .why-smart-home {
+    margin-bottom: 0;
+  }
+
+  .why-smart-home-offers {
+    min-height: 1930px;
+  }
+
+  .why-smart-home-offers__layout {
+    padding-top: 0;
+  }
+
+  .why-smart-home-offers__layout,
+  .why-smart-home-offers__top {
+    display: flex;
+    flex-direction: column;
+    /* flex-direction: column-reverse; */
+  }
+
+  .why-smart-home-offers__bottom {
+    padding-bottom: 0;
+    margin: 0 auto;
+    /* margin-bottom: var(--space); */
+  }
+
+  .why-smart-home-offers__right .link-with-arrow {
+    position: absolute;
+    bottom: 160px;
+    right: 30px;
+    z-index: 8;
+  }
+}
+
+
+@media screen and (max-width: 670px) {
+
+  .why-smart-home__graph {
+    margin-top: var(--space);
+  }
+
+  .why-smart-home__graph .text-normal {
+    margin-bottom: calc(var(--space) * 0.5);
+  }
+
+  .why-smart-home__jack {
+    left: -566px;
+    z-index: 0;
+  }
+
+  .why-smart-home-offers__title,
+  .why-smart-home-offers__price,
+  .why-smart-home-offers__text {
+    left: 85px;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .why-smart-home__jack {
+    bottom: 68px;
+  }
+}
+
+@media screen and (max-width: 460px) {
+
+  .why-smart-home {
+    margin-bottom: var(--space);
+  }
+
+  .why-smart-home-offers {
+    min-height: 1780px;
+    overflow: hidden;
+    margin-bottom: var(--space);
+  }
+
+  .why-smart-home-offers__title {
+    max-width: 300px;
+    font-size: 36px;
+    left: 25px;
+    top: calc(100% - 820px);
+  }
+
+  .why-smart-home-offers__price {
+    max-width: 300px;
+    font-size: 40px;
+    left: 25px;
+    top: calc(100% - 734px);
+  }
+
+  .why-smart-home-offers__text {
+    max-width: 300px;
+    font-size: 16px;
+    left: 25px;
+    top: calc(100% - 676px);
+  }
+
+  .why-smart-home__jack {
+    left: -626px;
+    bottom: 90px;
+  }
+}

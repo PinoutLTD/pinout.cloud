@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  @include('../partials/head.html', {
+    "pageTitle": "Page not found / Pinout",
+  })
+<body>
+  <!--  website header -->
+  @include('../partials/header.html')
+
+  <main>
+    <section class="page-404">
+      <div class="layout page-404__layout">
+        <div class="page-404__terminal">
+          <img src="./img/404-terminal.svg" alt="" aria-hidden="true"/>
+        </div>
+        <p class="text text-with-bg text page-404__text-with-bg">
+          <span>Oops! It seems this page does not exist. </span><br/>
+          <span>Check and fix the URL address or return to <br/>  the homepage and try again.</span>
+        </p>
+        <a href="/" aria-label="go to home page" class="link-font underline link-with-arrow page-404__link"> return to the home page </a>
+      </div>
+
+      <img class="page-404__img" src="./img/home-banner.png" alt="" aria-hidden="true"/>
+    </section>
+  </main>
+
+</body>
+</html>

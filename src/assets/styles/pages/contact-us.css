@@ -1,0 +1,61 @@
+.contact-us__layout {
+  background-image: url('../img/decor-legs-white.svg');
+  background-position: right center;
+  background-size: 368px 462px;
+  background-repeat: no-repeat;
+}
+
+.contact-us__interest {
+  display: inline-block;
+  max-width: 360px;
+  margin-bottom: calc(var(--space) * 2);
+}
+
+.contact-us__next-level {
+  margin-bottom: calc(var(--space) * 2);
+}
+
+.contact-us__next-level .about-us-next__go {
+  margin-bottom: calc(var(--space) * 0.5)
+}
+
+.contact-us__info  {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.contact-us__decor-mobile {
+  display: none;
+}
+
+
+@media screen and (max-width: 860px) {
+  .contact-us__layout {
+    background-size: 268px 266px;
+    background-position: right top;
+  }
+}
+
+@media screen and (max-width: 595px) {
+  .contact-us__layout {
+    background-image: none;
+  }
+
+  .contact-us__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .contact-us__decor-mobile {
+    display: block;
+    max-width: 150px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 415px) {
+  .contact-us__decor-mobile {
+    max-width: 80px;
+  }
+}

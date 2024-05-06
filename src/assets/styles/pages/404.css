@@ -1,0 +1,54 @@
+.page-404 {
+  position: relative;
+  margin-bottom: 0;
+  min-height: calc(100vh - 161px);
+  display: flex;
+  /* align-items: center;
+  justify-content: center;
+  flex-direction: column; */
+  overflow: hidden;
+  /* background-image: url('../img/house-404.png');
+  background-position: right bottom;
+  background-size: 350px;
+  background-repeat: no-repeat; */
+}
+
+.page-404__layout {
+  position: relative;
+  text-align: center;
+  max-width: 760px;
+  min-height: 700px;
+  padding: 0 20px;
+  z-index: 5;
+}
+
+.page-404__layout p {
+  margin-bottom: var(--space);
+}
+
+.page-404__img {
+  position: absolute;
+  max-width: 666px;
+  bottom: 0;
+  right: 20px;
+  transform: translateY(50%);
+  transition: transform 0.33s ease-in-out;
+}
+
+.page-404__img.animate {
+  transform: translateY(20%);
+}
+
+@media screen and (max-width: 560px) {
+  .page-404 {
+    min-height: unset;
+  }
+
+  .page-404__layout {
+    min-height: 780px;
+  }
+  .page-404__img {
+    right: 0;
+  }
+
+}

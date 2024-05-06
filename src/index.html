@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  @include('partials/head.html', {
+    "pageTitle": "Pinout LTD, Smart Solutions for your Home / Pinout",
+  })
+<body>
+
+  <!-- header -->
+  @include('partials/header.html')
+
+  <main>
+    <section class="lottie-container"><div class="animation"></div></section>
+    <section class="home-banner">
+      <div class="end-lottie"></div>
+      <div class="layout home-banner__container">
+        <div class="home-banner__content home-banner__title">
+            <h1 class="main-title">Smart <br/> Home Solution</h1>
+            <span class="home-banner__subtitle">by Pinout  LTD</span>
+        </div>
+        <span class="home__link">more <a href="./about-us" aria-label="go to about us page" class="underline link-with-arrow"> about us</a></span>
+        <div class="home-banner__img ">
+          <img src="./img/home-banner.png" alt="" aria-hidden="true"/>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-solutions">
+      <div class="layout">
+        <div class="grid grid-2-min">
+          <img src="./img/home-footer.png" alt="decor" aria-hidden="true"/>
+          <div class="home-solutions__content">
+            <h2 class="home-solutions__title">The inevitability of Smart Home solutions</h2>
+            <p class="home-solutions__text">
+              Nowadays Smart home solutions are becoming common life attribute for more convenience.
+            </p>
+            <p class="home-solutions__text">
+              Comfortable and nice place of living is a combination of design, engineering and construction. And this where our value lays.
+            </p>
+            <span class="home__link home__link--with-underline">why <a class="underline link-with-arrow" href="./why-smart-home" aria-label="go to why smart home page"> smart home</a></span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- footer -->
+  @include('partials/footer.html')
+
+</body>
+</html>
+
+
+
+
+
+
+
+
