@@ -200,12 +200,6 @@
   animation: landing 5s forwards linear 0.3s;
 }
 
-@media screen and (max-width: 1180px) {
-  .about-us-more__hackathon {
-    max-width: 200px;
-  }
-}
-
 
 @media screen and (max-width: 990px) {
 
@@ -223,19 +217,12 @@
   }
 
   .about-us-more__right {
-    justify-self: self-end;
     max-width: 368px;
 
   }
 
   .about-us-more__lens {
     max-width: 238px;
-  }
-
-  .about-us-more__hackathon {
-    left: 20px;
-    bottom: 150px;
-    max-width: 285px;
   }
 
   .about-us-more__map {
@@ -297,6 +284,10 @@
 
 @media screen and (max-width: 540px) {
 
+  .about-us__creds-left  {
+    background: none;
+  }
+
   .about-us-more__right {
     min-height: unset;
   }
@@ -308,6 +299,8 @@
 
   .about-us__text-with-bg {
     max-width: 350px;
+    font-size: 18px;
+    margin-bottom: 0.5rem;
   }
 
   .about-us-next__title {

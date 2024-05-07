@@ -140,6 +140,7 @@
   }
 
   .home-banner__container {
+    padding-top: 0;
     min-height: unset;
   }
 
