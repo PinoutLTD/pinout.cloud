@@ -206,6 +206,7 @@ b.solutions__swiper-price-name  {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin-bottom: calc(var(--space) * 4);
 }
 
 .solutions__text-with-bg {
@@ -323,6 +324,10 @@ b.solutions__swiper-price-name  {
 
   .solutions__swiper-price {
     font-size: 18px;
+  }
+
+  .solutions-adds__layout {
+    margin-bottom: calc(var(--space)* 1.5);
   }
 
 }

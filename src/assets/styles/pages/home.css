@@ -41,10 +41,13 @@
 
 .home__link {
   position: relative;
-  font-weight: 300;
   font-size: 32px;
-  font-variation-settings: 'wdth' 148, 'slnt' -10, 'xtra' 520;
   z-index: 3;
+}
+
+.home__link--light {
+  font-weight: 300;
+  font-variation-settings: 'wdth' 148, 'slnt' -10, 'xtra' 520;
 }
 
 .home-solutions {

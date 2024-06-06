@@ -177,6 +177,11 @@ p:last-child, ul:last-child, ol:last-child, blockquote:last-child, table:last-ch
   font-variation-settings: 'GRAD' 0, 'wdth' 110;
 }
 
+.text-normal-light {
+  font-weight: 300;
+  font-variation-settings: 'wdth' 148, 'xtra' 520;
+}
+
 
 @media screen and (max-width: 560px) {
   h1 { font-size: calc(var(--base-font-size) * 2.4) }
