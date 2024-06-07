@@ -60,3 +60,9 @@
     margin-bottom: var(--space);
   }
 }
+
+@media screen and (max-width: 475px) {
+  .header__nav {
+    top: 115px;
+  }
+}
