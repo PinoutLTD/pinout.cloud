@@ -183,7 +183,7 @@ p:last-child, ul:last-child, ol:last-child, blockquote:last-child, table:last-ch
 }
 
 
-@media screen and (max-width: 560px) {
+@media screen and (max-width: 595px) {
   h1 { font-size: calc(var(--base-font-size) * 2.4) }
   h2 { font-size: calc(var(--base-font-size) * 2.1) }
   h3 { font-size: calc(var(--base-font-size) * 1.8) };

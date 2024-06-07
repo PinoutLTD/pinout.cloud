@@ -1,6 +1,6 @@
-/* .footer {
+.footer {
   padding-top: var(--space);
-} */
+}
 
 .footer__container {
   position: relative;
@@ -73,6 +73,7 @@
 
   .footer__container  {
     align-items: flex-start;
+    flex-direction: column-reverse;
   }
 
   .footer__list {
