@@ -35,6 +35,9 @@
 
 .contacts-form__textarea {
   height: 50px;
+}
+
+.contacts-form__textarea::placeholder {
   font-weight: 400;
 }
 
@@ -68,7 +71,6 @@
 }
 
 @media screen and (max-width: 415px) {
-
   .contacts-form__text .page-title {
     line-height: 1.1;
   }
