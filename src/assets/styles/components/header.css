@@ -17,6 +17,67 @@
   width: 100%;
 }
 
+/* logo animation */
+.logo-circle-black {
+  animation: bounce 7s ease-in infinite .15s;
+}
+
+.logo-circle-white {
+  animation: bounce 7s ease-in infinite .15s;
+}
+
+@keyframes bounce {
+
+  40% {
+    transform: none;
+    animation-timing-function: ease-in;
+  }
+
+  42% {
+    transform: translateY(258px) scaleY(0.2);
+  }
+
+  44% {
+    animation-timing-function: ease-out;
+  }
+
+  46% {
+    transform: none;
+    animation-timing-function: ease-in;
+  }
+
+
+  80% {
+    transform: none;
+    animation-timing-function: ease-in;
+  }
+
+  82% {
+    transform: translateY(258px) scaleY(0.2);
+  }
+
+  84% {
+    animation-timing-function: ease-out;
+  }
+
+  86% {
+    transform: none;
+    animation-timing-function: ease-in;
+  }
+}
+
+
+@keyframes slidein {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+
 
 @media screen and (max-width: 740px) {
   .header__decor {

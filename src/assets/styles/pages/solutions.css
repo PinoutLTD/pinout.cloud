@@ -214,10 +214,19 @@ b.solutions__swiper-price-name  {
   text-align: center;
 }
 
-.why-smart-home__jack .eye {
-  animation: eyeMovement 3s infinite;
+.solutions__want-link {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  font-size: 14px;
+  font-weight: 400;
+  font-variation-settings: 'GRAD' 132, 'wdth' 148;
+  text-decoration: underline;
+  color: #68778f;
 }
-
 
 @media screen and (max-width: 1040px) {
 

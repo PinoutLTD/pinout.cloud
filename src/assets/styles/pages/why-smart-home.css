@@ -113,6 +113,10 @@
   max-width: 450px;
 }
 
+.why-smart-home__jack .eye {
+  animation: eyeMovement 3s infinite;
+}
+
 
 @media screen and (max-width: 1560px) {
   .why-smart-home-offers__bottom {
