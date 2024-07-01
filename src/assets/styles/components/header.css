@@ -19,29 +19,29 @@
 
 /* logo animation */
 .logo-circle-black {
-  animation: bounce 7s ease-in infinite .15s;
+  animation: bounce 8s ease-in infinite .15s;
 }
 
-.logo-circle-white {
+/* .logo-circle-white {
   animation: bounce 7s ease-in infinite .15s;
-}
+} */
 
 @keyframes bounce {
 
-  40% {
+  30% {
     transform: none;
     animation-timing-function: ease-in;
   }
 
-  42% {
-    transform: translateY(258px) scaleY(0.2);
+  32% {
+    transform: translateY(30px) scaleY(0.2);
   }
 
-  44% {
+  34% {
     animation-timing-function: ease-out;
   }
 
-  46% {
+  36% {
     transform: none;
     animation-timing-function: ease-in;
   }
@@ -53,7 +53,7 @@
   }
 
   82% {
-    transform: translateY(258px) scaleY(0.2);
+    transform: translateY(30px) scaleY(0.2);
   }
 
   84% {
