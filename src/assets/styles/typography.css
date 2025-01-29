@@ -182,6 +182,11 @@ p:last-child, ul:last-child, ol:last-child, blockquote:last-child, table:last-ch
   font-variation-settings: 'wdth' 148, 'xtra' 520;
 }
 
+.subtitle {
+  font-size: 32px;
+  font-variation-settings: 'wdth' 148, 'xtra' 520;
+}
+
 
 @media screen and (max-width: 595px) {
   h1 { font-size: calc(var(--base-font-size) * 2.4) }
@@ -210,6 +215,11 @@ p:last-child, ul:last-child, ol:last-child, blockquote:last-child, table:last-ch
 
   .text-normal {
     font-size: 16px;
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    font-size: 24px;
     line-height: 1.2;
   }
 }

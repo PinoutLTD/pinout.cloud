@@ -1,0 +1,114 @@
+<!-- getting user consent for utm -->
+
+<div id="cookie-consent-banner" class="text-normal">
+  <p>We use browser storage, cookies, and analytics tools to enhance your experience. <br/> Your privacy matters to us!</p>
+  <p>Learn more in our
+    <a href="/privacy-policy" target="_blank" style="color: #175973;">Privacy Policy</a>.
+  </p>
+  <div class="cookie-consent-banner__agreement text-normal">
+    <p>Would you like to allow us to collect analytics data?</p>
+    <button class="text-normal underline" onclick="acceptCookies()">Accept</button>
+    <button class="text-normal underline" onclick="declineCookies()">Decline</button>
+  </div>
+</div>
+
+<script>
+  function acceptCookies() {
+      localStorage.setItem("userConsent", "granted");
+      document.getElementById("cookie-consent-banner").style.display = "none";
+
+      // Load GA if not already loaded
+      if (!window.gtag) {
+        loadGoogleAnalytics();
+
+        // Wait a bit for GA to load before updating consent
+        setTimeout(function() {
+          if (window.gtag) {
+            updateConsent();
+          } else {
+            console.error("gtag not loaded in time");
+          }
+        }, 1000); // Adjust delay if needed
+    } else {
+      updateConsent(); // If already loaded, update immediately
+    }
+
+    if(document.querySelector('.privacy-policy')) {
+      document?.querySelector('.privacy-policy__remove-btn').classList.remove('hide')
+      document.querySelector('.privacy-policy__add-btn').classList.add('hide')
+    }
+
+  }
+
+  function loadGoogleAnalytics() {
+    if (!window.gtag) {
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = "https://www.googletagmanager.com/gtag/js?id=G-BHDM2M3L81"; // Replace with your GA4 ID
+      document.head.appendChild(script);
+
+      script.onload = function() {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+
+        gtag("js", new Date());
+
+        // Default Consent Mode (Before User Gives Consent)
+        gtag("consent", "default", {
+          "ad_storage": "denied",
+          "ad_user_data": "denied",
+          "ad_personalization": "denied",
+          "analytics_storage": "denied"
+        });
+
+        gtag("config", "G-BHDM2M3L81", { anonymize_ip: true });
+
+        // If user has already consented, update consent
+        if (localStorage.getItem("userConsent") === "granted") {
+          updateConsent();
+        }
+      };
+    }
+  }
+
+  function updateConsent() {
+    if (window.gtag) {
+        gtag("consent", "update", {
+            "ad_storage": "granted",
+            "ad_user_data": "granted",
+            "ad_personalization": "granted",
+            "analytics_storage": "granted"
+        });
+    } else {
+        console.error("gtag is not defined at updateConsent");
+    }
+  }
+
+  function declineCookies() {
+    localStorage.setItem("userConsent", "denied");
+    document.getElementById("cookie-consent-banner").style.display = "none";
+
+    if(document.querySelector('.privacy-policy'))  {
+      document.querySelector('.privacy-policy__add-btn').classList.remove('hide')
+      document.querySelector('.privacy-policy__remove-btn').classList.add('hide')
+    }
+
+  }
+
+  function checkConsent() {
+    const consent = localStorage.getItem("userConsent");
+    if (consent === "granted") {
+      document.getElementById("cookie-consent-banner").style.display = "none";
+      loadGoogleAnalytics();
+    } else if(consent === 'denied') {
+      document.getElementById("cookie-consent-banner").style.display = "none";
+    }
+
+    if(!consent) {
+      document.getElementById("cookie-consent-banner").style.display = "block";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", checkConsent);
+</script>

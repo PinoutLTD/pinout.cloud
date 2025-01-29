@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  @include('../partials/head.html', {
+    "pageTitle": "Privacy Policy / Pinout",
+  })
+<body>
+  <!-- website header -->
+  @include('../partials/header.html')
+
+  <!-- main page content -->
+  <main>
+    <section class="privacy-policy">
+      <div class="layout">
+        <h1 class="page-title">Privacy Policy</h1>
+        <div class="text-small text-normal-light privacy-policy__update">Last Updated: <b>February 2025</b></div>
+        <div class="privacy-policy__content">
+          <ol class="list list--ordered text-normal">
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">Introduction</h2>
+              <p class="text-normal">Welcome to Pinout.Cloud ("we," "our," or "us"). Your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your information when you visit our website [pinout.cloud].</p>
+            </li>
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">Information We Collect</h2>
+              <p class="text-normal">We collect the following types of information:</p>
+              <ul class="list list--unordered">
+                <li class="list__item">
+                  <b>Personal Data</b>: Name, email, phone number, etc., when voluntarily provided by you.
+                </li>
+                <li class="list__item">
+                  <b>Usage Data</b>: Pages visited, time spent on the site, and interactions
+                </li>
+                <li class="list__item">
+                  <b>Tracking Data</b>: We use cookies, Google Analytics, and UTM parameters to track visitor behavior and improve our services.
+                </li>
+              </ul>
+            </li>
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">How We Use Your Information</h2>
+              <p class="text-normal">We use the collected data to:</p>
+              <ul class="list list--unordered">
+                <li class="list__item">
+                  Improve website functionality and user experience.
+                </li>
+                <li class="list__item">
+                  Analyze traffic and marketing effectiveness.
+                </li>
+                <li class="list__item">
+                  Respond to your inquiries and provide customer support.
+                </li>
+                <li class="list__item">
+                  Comply with legal obligations under European regulations.
+                </li>
+              </ul>
+            </li>
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">Tracking Technologies</h2>
+              <p class="text-normal">We use cookies, localStorage and tracking technologies to analyze user behavior. You can manage or disable it below. We also comply with <b>GDPR</b> by obtaining user consent before tracking.</p>
+
+              <div class="privacy-policy__change-preference">
+                <p>Update Consent:</p>
+                <button class="privacy-policy__add-btn underline" onclick="acceptCookies()">Add</button>
+                <button class="privacy-policy__remove-btn hide underline"  onclick="declineCookies()">Remove</button>
+              </div>
+            </li>
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">Google Analytics & UTM Tracking</h2>
+              <p class="text-normal">We use <a href="https://marketingplatform.google.com/about/analytics/" class="underline" aria-label="learn more about Google Analytics" target="_blank">Google Analytics</a> to collect anonymized data about website visits. This includes UTM parameters to track campaign performance. IP anonymization is enabled to comply with GDPR regulations.</p>
+            </li>
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">Your Rights (GDPR & European Compliance)</h2>
+              <p class="text-normal">Under the <b>General Data Protection Regulation (GDPR)</b> and other European privacy laws, you have the following rights:</p>
+              <ul class="list list--unordered">
+                <li class="list__item">
+                  <b>Access</b>: Request a copy of the personal data we hold.
+                </li>
+                <li class="list__item">
+                  <b>Correction</b>: Request corrections to inaccurate data.
+                </li>
+                <li class="list__item">
+                  <b>Deletion</b>: Request data erasure ("right to be forgotten").
+                </li>
+                <li class="list__item">
+                  <b>Objection</b>: Opt-out of tracking and data collection.
+                </li>
+                <li class="list__item">
+                  <b>Data Portability: </b>: Request a structured, machine-readable copy of your data.
+                </li>
+                <li class="list__item">
+                  <b>Restriction of Processing</b>: Request a temporary halt to data processing under certain conditions.
+                </li>
+                <li class="list__item">
+                  <b>Lodge a Complaint</b>: File a complaint with a data protection authority if your rights are violated.
+                </li>
+              </ul>
+
+              <p class="text-normal">To exercise your rights, contact us at <a aria-label="email us vm@pinout.cloud" class="underline" href="mailto:vm@pinout.cloud">vm@pinout.cloud</a>.</p>
+            </li>
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">Legal Basis for Processing (EU Users)</h2>
+              <p class="text-normal">For users in the European Economic Area (EEA), we process personal data based on the following legal grounds:</p>
+              <ul class="list list--unordered">
+                <li class="list__item">
+                  <b>Consent</b>: When you give explicit consent.
+                </li>
+                <li class="list__item">
+                  <b>Legitimate Interest</b>: For improving services and security.
+                </li>
+                <li class="list__item">
+                  <b>Contractual Necessity</b>: When processing is necessary for providing services.
+                </li>
+                <li class="list__item">
+                  <b>Legal Obligations</b>: When required by law.
+                </li>
+              </ul>
+            </li>
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">Third-Party Services</h2>
+              <p class="text-normal">We may use third-party services like <a href="https://marketingplatform.google.com/about/analytics/" class="underline" aria-label="learn more about Google Analytics" target="_blank">Google Analytics</a>. These services have their own privacy policies, which we encourage you to review.</p>
+            </li>
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">Data Security</h2>
+              <p class="text-normal">We implement security measures to protect your data from unauthorized access or breaches.</p>
+            </li>
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">International Data Transfers</h2>
+              <p class="text-normal">If we transfer your data outside the European Economic Area (EEA), we ensure appropriate safeguards such as:</p>
+              <ul class="list list--unordered">
+                <li class="list__item">
+                  Standard Contractual Clauses (SCCs) approved by the European Commission.
+                </li>
+                <li class="list__item">
+                  Compliance with recognized data protection frameworks.
+                </li>
+              </ul>
+            </li>
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">Changes to This Policy</h2>
+              <p class="text-normal">We may update this Privacy Policy from time to time. Any changes will be posted on this page with a revised "Last Updated" date.</p>
+            </li>
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">Contact Us</h2>
+              <p class="text-normal"> If you have any questions about this Privacy Policy, please contact us in any <a href="./contact-us" class="underline" aria-label="contact us anywhere you like">preferable way</a></p>
+            </li>
+          </ol>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- website footer -->
+  @include('../partials/footer.html')
+</body>
+</html>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const consent = localStorage.getItem("userConsent");
+
+
+    if (consent === "granted") {
+      document.querySelector('.privacy-policy__remove-btn').classList.remove('hide')
+      document.querySelector('.privacy-policy__add-btn').classList.add('hide')
+    } else if (consent === "denied") {
+      document.querySelector('.privacy-policy__add-btn').classList.remove('hide')
+    }
+
+  });
+
+</script>
+
