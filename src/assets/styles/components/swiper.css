@@ -16,14 +16,14 @@
 }
 
 .swiper-btns .swiper-button-next::after, .swiper-btns .swiper-button-prev::after {
-  content: url('data:image/svg+xml,<svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.5185 8.90915V11.0911L11.0401 19.6545L9.30393 17.8011L16.6005 11.3022H0.505859V8.76838H16.6474L9.30393 2.08185L11.1808 0.345703L20.5185 8.90915Z" fill="white"/></svg>');
+  content: url('data:image/svg+xml,<svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.5185 8.90915V11.0911L11.0401 19.6545L9.30393 17.8011L16.6005 11.3022H0.505859V8.76838H16.6474L9.30393 2.08185L11.1808 0.345703L20.5185 8.90915Z" fill="black"/></svg>');
   width: 20px;
   height: 20px;
   transition: color 0.3s ease-in-out, opacity 0.33s ease-in-out;
 }
 
 .swiper-btns .swiper-button-prev::after {
-  content: url('data:image/svg+xml,<svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.487333 10.7862L0.487332 8.60424L9.96578 0.0407896L11.7019 1.89425L4.4054 8.39309L20.5 8.39308L20.5 10.9269L4.35848 10.9269L11.7019 17.6135L9.82501 19.3496L0.487333 10.7862Z" fill="white"/></svg>')
+  content: url('data:image/svg+xml,<svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.487333 10.7862L0.487332 8.60424L9.96578 0.0407896L11.7019 1.89425L4.4054 8.39309L20.5 8.39308L20.5 10.9269L4.35848 10.9269L11.7019 17.6135L9.82501 19.3496L0.487333 10.7862Z" fill="black"/></svg>')
 }
 
 .swiper-btns .swiper-button-next:hover::after, .swiper-btns .swiper-button-prev:hover::after {
