@@ -13,7 +13,7 @@
 }
 
 .nav__item:not(:last-child) {
-  margin-right: calc(var(--space) * 2);
+  margin-right: var(--space);
 }
 
 .nav__link:focus-visible {

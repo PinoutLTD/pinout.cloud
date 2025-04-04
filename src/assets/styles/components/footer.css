@@ -35,7 +35,13 @@
   width: 80px;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1360px) {
+  .footer .nav__item:not(:last-child) {
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 1170px) {
   .footer__container {
     position: relative;
     flex-direction: column;
@@ -62,14 +68,10 @@
   .footer__list .nav__item {
     font-size: 12px;
   }
-
-  .nav__item:not(:last-child) {
-    margin-right:var(--space);
-  }
 }
 
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 790px) {
 
   .footer__container  {
     align-items: flex-start;

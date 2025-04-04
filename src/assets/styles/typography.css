@@ -48,12 +48,17 @@ h1 {
 
 h2, h3, h4, h5 {
   line-height: 1.5;
-  margin-bottom: var(--space-text);
+  margin-bottom: var(--space);
   /* font-weight: 400; */
 }
 
 h2:first-child, h3:first-child, h4:first-child, h5:first-child { margin-top: 0 }
 h2:last-child, h3:last-child, h4:last-child, h5:last-child { margin-bottom: 0 }
+
+h1 b, h2 b, h3 b {
+  display: block;
+}
+
 
 blockquote {
   font-size: 110%;
@@ -185,6 +190,10 @@ p:last-child, ul:last-child, ol:last-child, blockquote:last-child, table:last-ch
 .subtitle {
   font-size: 32px;
   font-variation-settings: 'wdth' 148, 'xtra' 520;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
 }
 
 

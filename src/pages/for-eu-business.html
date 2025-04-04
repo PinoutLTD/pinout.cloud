@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  @include('../partials/head.html', {
+    "pageTitle": "About us / Pinout",
+  })
+<body>
+  <!-- website header -->
+  @include('../partials/header.html')
+
+  <main class="eu-business">
+    <section class="eu-business-management">
+      <div class="layout eu-business__layout">
+        <h1 class="page-title"><b>Smart Maintenance</b> for Property Management Companies</h1>
+
+        <div class="eu-business__top grid grid-2">
+          <img src="./img/eu-business-1.png" alt="property management company">
+          <div class="eu-business__top-right">
+            <h2 class="subtitle">How Smart Devices and&nbsp;Cloud Technologies Help Manage Buildings</h2>
+            <div class="eu-business__decor-images-top">
+              <img src="./img/eu-business-2.png" alt="" aria-hidden="true">
+              <img src="./img/eu-business-3.png" alt="" aria-hidden="true">
+            </div>
+          </div>
+        </div>
+        <div class="eu-business-management-companies grid grid-2">
+          <div>
+            <h3 class="text">Management Companies and the Challenges of Daily Operations</h3>
+            <p class="text-normal">Management companies are responsible for maintaining buildings in a safe and comfortable condition. Full automation of all processes is not yet possible, but today digitalization and IoT solutions can significantly simplify many tasks. For example, smart water and electricity meters allow you to analyze resource consumption and optimize costs. Sensors in engineering systems record deviations from the norm and automatically create requests for diagnostics or repairs, helping to quickly respond to problems.</p>
+            <p class="text-normal">
+              In many countries, management companies have difficulty providing a full range of services, and those who successfully cope with this task are actively introducing digital technologies into the daily processes of their employees.
+            </p>
+            <p class="text-normal">
+              Pinout offers one of the newest tools on the market of digital solutions for management companies, and will help establish a direct dialogue between devices and your employees, literally.
+            </p>
+          </div>
+          <img src="./img/eu-business-4.png" alt="" aria-hidden="true">
+        </div>
+      </div>
+    </section>
+
+    <section class="eu-business__cmms">
+      <div class="layout eu-business__layout">
+        <h2 class="subtitle">Why? What? how? - the answer to CMMS</h2>
+
+        <div class="grid grid-2">
+          <div>
+            <img src="./img/eu-business-5.png" alt="CMMS">
+            <img src="./img/eu-business-6.png" alt="" aria-hidden="true">
+          </div>
+          <div>
+            <h3 class="text">CMMS – a digital assistant in building management</h3>
+            <p class="text-normal">For effective management of facility maintenance, CMMS (Computerized Maintenance Management System) are used – specialized systems that allow you to plan work, assign responsible persons, keep records of completed tasks and generate reports.</p>
+            <p class="text-normal">
+              Modern CMMS often overlap with ERP and CRM systems, blurring the boundaries between them. However, their key task is to manage physical objects and analyze data from IoT devices. CMMS can be either a standalone solution or an integrated part of a large CRM/ERP platform. Most of these systems are closed solutions that require significant licensing and support costs. In this context, it is worth noting Odoo, which, thanks to its open architecture, can be deployed on the company's own servers, providing autonomy and full control over data.
+            </p>
+            <p class="text-normal">
+              <b>Is it possible to make real estate management even more transparent? Yes, if you use a digital twin of the building.</b>
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div>
+            <h3 class="text">Digital Twin of a Building: Transparency Without Cloud Reliance</h3>
+            <p class="text-normal"> A digital twin is a virtual copy of a building that displays its current state in real time. It receives data from IoT devices, records the history of maintenance and repairs, providing full control and transparency of facility management.</p>
+            <p class="text-normal text-uppercase">
+              <b>Why are Pinout solutions more profitable?</b>
+            </p>
+            <p class="text-normal">
+              We use open source software and web3 infrastructure, which not only reduces digitalization costs, but also frees your company from dependence on closed solution providers. Customer privacy and partner independence are our priority!
+            </p>
+          </div>
+          <div>
+            <img src="./img/eu-business-7.png" alt="Digital Twin of a Building: Transparency Without Cloud Reliance">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="eu-business__pinout-solution">
+      <div class="layout eu-business__layout">
+        <h2 class="subtitle">How does Pinout's solution work?</h2>
+        <img src="./img/eu-business-8.png" alt="" aria-hidden="true">
+
+        <div class="grid grid-2">
+          <div>
+            <h4 class="link-font text-uppercase">On the <br> building side:</h4>
+            <ul class="eu-business__list">
+              <li class="eu-business__item text-normal"><b>A local server</b> based on Home Assistant controls IoT devices, including temperature, humidity, energy consumption, air quality, and others.</li>
+              <li class="eu-business__item text-normal"><b>Connect flexibility:</b> Wi-Fi, Zigbee, Z-Wave, LoRaWAN wireless protocols are supported, as well as Modbus, BACnet wired solutions for integration with existing engineering systems.</li>
+              <li class="eu-business__item text-normal"><b>Automatic equipment monitoring:</b> Pinout CMMS Report Service records faults, create encrypted reports, transmits them via a p2p network, and updates the digital twin of the building.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="link-font text-uppercase">On the  <br> management company or integrator side:</h4>
+            <ul class="eu-business__list">
+              <li class="eu-business__item text-normal"><b>Pinout CMMS Property Management Agent</b> receives reports and automatically creates requests in Odoo.</li>
+              <li class="eu-business__item text-normal"><b>Odoo CRM</b> allows you to manage requests, employee tasks and receive feedback from IoT devices in real time.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="eu-business__testing">
+      <div class="layout eu-business__layout">
+        <div class="grid grid-2">
+          <div>
+            <h3 class="text">Join the testing!</h3>
+            <p class="text-normal">We currently have an MVP that we are testing with our first partners – developers and private clients. We see how modern Internet technologies can change property management, and we already have a long history of using the latest advances in Internet solutions specifically for the tasks of ensuring the privacy and independence of our clients. We invite management companies, integrators and everyone who works with real estate to test our solution and contribute to the development of the new digital era!</p>
+          </div>
+          <img src="./img/eu-business-9.png" alt="" aria-hidden="true">
+        </div>
+
+        <a href="./contact-us" class="link-font">Contact us to discuss how this can work for you!</a>
+      </div>
+    </section>
+  </main>
+
+  <!--
+
+
+
+  -->
+
+  <!-- website footer -->
+  @include('../partials/footer.html')
+</body>
+</html>

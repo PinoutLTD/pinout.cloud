@@ -22,10 +22,6 @@
   animation: bounce 8s ease-in infinite .15s;
 }
 
-/* .logo-circle-white {
-  animation: bounce 7s ease-in infinite .15s;
-} */
-
 @keyframes bounce {
 
   30% {
@@ -79,7 +75,7 @@
 
 
 
-@media screen and (max-width: 740px) {
+@media screen and (max-width: 880px) {
   .header__decor {
     display: none;
   }

@@ -1,0 +1,318 @@
+.cyprus-lifestyle  {
+  margin-top: -30px;
+}
+
+.cyprus-lifestyle h2 {
+  text-transform: uppercase;
+}
+
+.cyprus-lifestyle h3 {
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.cyprus-lifestyle p:first-of-type{
+  margin-bottom: var(--space);
+}
+
+.cyprus-lifestyle__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  width: 100%;
+}
+
+.cyprus-lifestyle__top-wrapper {
+  margin-bottom: calc(var(--space) * 2);
+  min-height: 800px;
+}
+
+.cyprus-lifestyle__top-wrapper--lett {
+  position: relative;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+  margin: 0;
+}
+
+.cyprus-lifestyle__decor-2 {
+  min-height: 260px;
+  margin-bottom: var(--space);
+}
+
+.cyprus-lifestyle__decor-2 img {
+  position: absolute;
+  right: 16%;
+  top: 32%;
+  width: 42%;
+}
+
+.cyprus-lifestyle__decor {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 65%;
+  max-width: 950px;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  transition: width 0.5s ease-in-out;
+}
+
+.cyprus-lifestyle__decor img {
+  height: 100%;
+  width: auto;
+  max-width: none;
+}
+
+.cyprus-lifestyle__bottom-wrapper--left {
+  position: relative;
+  width: 100%;
+  min-width: 50%;
+  min-height: 550px;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* car image styles */
+.cyprus-lifestyle__car  {
+  position: absolute;
+  bottom: 50px;
+  height: 180px;
+  animation: moveCarIn 2s ease-out forwards ;
+}
+
+.cyprus-lifestyle__car img {
+  width: 100%;
+  height: 100%;
+}
+
+
+@keyframes moveCarIn {
+  0% {
+    left: -1000px; /* Start off-screen on the left */
+  }
+  100% {
+    left: -500px; /* End at the starting position inside the wrapper */
+  }
+}
+
+
+/* switcher icon styles */
+
+.cyprus-lifestyle__switcher {
+  width: 100px;
+  position: absolute;
+  right: 15%;
+  top: 35%;
+}
+
+.cyprus-lifestyle__switcher .circle {
+  fill: #b3b3b3;
+  transform: translateX(0);
+  transition: transform 1s ease-in-out;
+}
+
+/* Switch animation */
+.cyprus-lifestyle__switcher rect {
+  fill: #ddd;
+  transition: fill 1s ease-in-out;
+}
+
+
+.cyprus-lifestyle__switcher .circle {
+  animation: moveCircle 4s ease-in-out infinite;
+}
+
+
+.cyprus-lifestyle__switcher rect {
+  animation: backgroundColorChange 4s ease-in-out infinite;
+}
+
+.cyprus-lifestyle__switcher text {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+  animation: textFade 4s ease-in-out infinite;
+}
+
+
+/* Background color change animation */
+@keyframes backgroundColorChange {
+  0%, 100% {
+    fill: #000; /* Grey when OFF */
+  }
+  50% {
+    fill: var(--color-green); /* Green when ON */
+  }
+}
+
+@keyframes textFade {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0; /* Fade out when ON */
+  }
+}
+
+/* Animating the movement of the circle */
+@keyframes moveCircle {
+  0% {
+    fill: #b3b3b3;
+    transform: translateX(0); /* Start on the left */
+  }
+  50% {
+    fill: #fff;
+    transform: translateX(-50px); /* Move to the right */
+  }
+  100% {
+    fill: #b3b3b3;
+    transform: translateX(0); /* Return to the left */
+  }
+}
+
+/* ac icon style */
+.cyprus-lifestyle__ac  {
+  width: 250px;
+  position: absolute;
+  top: 0;
+  right: 30%;
+}
+
+.cyprus-lifestyle__ac .cls-1{fill:#f1f1f1;}
+.cyprus-lifestyle__ac .cls-1, .cyprus-lifestyle__ac .cls-3{stroke:#000;}
+.cyprus-lifestyle__ac .cls-1, .cyprus-lifestyle__ac .cls-2
+{stroke-linecap:round;stroke-linejoin:round;}
+.cyprus-lifestyle__ac .cls-2, .cyprus-lifestyle__ac .cls-3{fill:none;}
+.cyprus-lifestyle__ac .cls-2{stroke:#03a5ed;} .cyprus-lifestyle__ac .cls-3{stroke-miterlimit:10;}
+
+
+.cyprus-lifestyle__bottom-wrapper--right h3 {
+  margin-bottom: calc(var(--space) * 0.5);
+  color: var(--color-blue-link);
+  text-align: left;
+}
+
+/* .cyprus-lifestyle__cat img {
+} */
+
+.cyprus-lifestyle__cat {
+  margin-top: var(--space);
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.cyprus-lifestyle__cat img {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  margin: 0 auto;
+  max-width: 200px;
+  left: -100px; /* Start the vacuum off-screen on the left */
+  animation: moveVacuum 6s ease-in-out infinite; /* Infinite movement with ease-out */
+}
+
+@keyframes moveVacuum {
+  0% {
+    left: -100px; /* Start off-screen on the left */
+  }
+  40% {
+    left: 50%; /* Move towards the center */
+    transform: translateX(-50%); /* Center the image */
+  }
+  50% {
+    left: 50%; /* Stay at the center */
+    transform: translateX(-50%); /* Keep it centered */
+  }
+  60% {
+    left: 50%; /* Still at the center */
+    transform: translateX(-50%); /* Keep it centered */
+  }
+  100% {
+    left: 100%; /* Move off-screen to the right */
+  }
+}
+.cyprus-lifestyle__cat img {
+  animation-direction: alternate; /* Reverse direction after one complete cycle */
+}
+
+
+@media (max-width: 1024px) {
+  .cyprus-lifestyle__decor {
+    width: 55%;
+  }
+  .cyprus-lifestyle__top-wrapper--lett {
+    width: 60%;
+  }
+
+  .cyprus-lifestyle__decor-2 img{
+    position: static;
+    width: 70%;
+  }
+
+  .cyprus-lifestyle__decor-2 {
+    height: unset;
+    min-height: unset;
+    justify-self: end;
+  }
+}
+
+@media (max-width: 900px) {
+  .cyprus-lifestyle__decor {
+    width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .cyprus-lifestyle__top-wrapper {
+    min-height: unset;
+  }
+
+  .cyprus-lifestyle__bottom-wrapper {
+    flex-direction: column-reverse;
+  }
+
+  .cyprus-lifestyle__top-wrapper--lett {
+    width: 80%;
+  }
+
+  .cyprus-lifestyle__decor {
+    width: 45%;
+    opacity: 0.8;
+  }
+}
+
+@media (max-width: 550px) {
+  .cyprus-lifestyle__top-wrapper--lett {
+    width: 90%;
+  }
+
+  .cyprus-lifestyle__decor {
+    width: 35%;
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 480px) {
+  .cyprus-lifestyle__top-wrapper--lett {
+    width: 100%;
+  }
+
+  .cyprus-lifestyle__decor {
+    width: 0;
+    opacity: 0;
+  }
+}
+
+
+
+
+
+
+
