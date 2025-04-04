@@ -201,6 +201,10 @@
     display: block;
    }
 
+   .form-layout {
+     padding-bottom: calc(var(--space) * 1.5);
+    }
+
 
 }
 

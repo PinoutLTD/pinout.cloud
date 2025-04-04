@@ -111,6 +111,7 @@
 
   .eu-business__testing a.link-font {
     margin-top: calc(var(--space) * 2);
+    padding-bottom: var(--space);
   }
 }
 
