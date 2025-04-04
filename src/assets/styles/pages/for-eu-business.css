@@ -88,12 +88,30 @@
   display: block;
   color: var(--color-blue-link);
   text-align: center;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 2px;
   text-transform: uppercase;
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.2s, text-decoration-color 0.3s ease-in-out;
 }
 
 .eu-business__testing a.link-font:hover {
   opacity: 0.7;
+  text-decoration-color: color-mix(in srgb, currentColor, transparent 85%);
+}
+
+@media screen and (max-width: 1000px) {
+  .eu-business section {
+    margin-bottom: 0
+  }
+
+  .eu-business .grid {
+    margin-bottom: var(--space);
+  }
+
+  .eu-business__testing a.link-font {
+    margin-top: calc(var(--space) * 2);
+  }
 }
 
 @media screen and (max-width: 580px) {

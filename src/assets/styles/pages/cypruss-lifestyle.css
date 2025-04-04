@@ -79,26 +79,45 @@
 }
 
 /* car image styles */
-.cyprus-lifestyle__car  {
+@keyframes moveCarIn {
+  0% {
+    transform: translateX(-150%) scale(2.5);
+  }
+  100% {
+    transform: translateX(calc(-40px + 10vw)) scale(2.5);
+  }
+}
+
+@keyframes moveCarInSafari {
+  0% {
+    bottom: 50px;
+    transform: translateX(-150%);
+  }
+  100% {
+    bottom: 50px;
+    transform: translateX(calc(-40px - 3vw));
+  }
+}
+
+.cyprus-lifestyle__car {
   position: absolute;
-  bottom: 50px;
-  height: 180px;
-  animation: moveCarIn 2s ease-out forwards ;
+  /* height: 180px; */
+  bottom: 140px;
+  left: 0;
+  animation: moveCarIn 2s ease-out forwards;
+  will-change: transform;
+}
+
+/* for safari */
+
+.safari-ios .cyprus-lifestyle__car {
+  animation: moveCarInSafari 2s ease-out forwards;
+  will-change: transform;
 }
 
 .cyprus-lifestyle__car img {
   width: 100%;
   height: 100%;
-}
-
-
-@keyframes moveCarIn {
-  0% {
-    left: -1000px; /* Start off-screen on the left */
-  }
-  100% {
-    left: -500px; /* End at the starting position inside the wrapper */
-  }
 }
 
 
@@ -197,11 +216,7 @@
   text-align: left;
 }
 
-/* .cyprus-lifestyle__cat img {
-} */
-
 .cyprus-lifestyle__cat {
-  margin-top: var(--space);
   position: relative;
   width: 100%;
   height: 200px;
@@ -215,12 +230,16 @@
   margin: 0 auto;
   max-width: 200px;
   left: -100px; /* Start the vacuum off-screen on the left */
+  will-change: transform;
+  animation: moveVacuum 6s infinite ease-in-out;
+  -webkit-transform: translateX(-150%);
   animation: moveVacuum 6s ease-in-out infinite; /* Infinite movement with ease-out */
 }
 
 @keyframes moveVacuum {
   0% {
-    left: -100px; /* Start off-screen on the left */
+    left: -100px;
+    transform: translateX(-100%) /* Start off-screen on the left */
   }
   40% {
     left: 50%; /* Move towards the center */
@@ -235,11 +254,24 @@
     transform: translateX(-50%); /* Keep it centered */
   }
   100% {
-    left: 100%; /* Move off-screen to the right */
+    left: 100%;
+    transform: translateX(100%)  /* Move off-screen to the right */
   }
 }
 .cyprus-lifestyle__cat img {
   animation-direction: alternate; /* Reverse direction after one complete cycle */
+}
+
+
+@media screen and (max-width: 1150px) {
+  @keyframes moveCarIn {
+    0% {
+      transform: translateX(-150%) scale(2);
+    }
+    100% {
+      transform: translateX(calc(-40px + -3vw)) scale(2.2);
+    }
+  }
 }
 
 
@@ -274,18 +306,36 @@
     min-height: unset;
   }
 
-  .cyprus-lifestyle__bottom-wrapper {
-    flex-direction: column-reverse;
-  }
-
   .cyprus-lifestyle__top-wrapper--lett {
     width: 80%;
+  }
+
+  .cyprus-lifestyle__bottom-wrapper {
+    flex-direction: column-reverse;
   }
 
   .cyprus-lifestyle__decor {
     width: 45%;
     opacity: 0.8;
   }
+
+  .cyprus-lifestyle__bottom-wrapper--left  {
+    min-height: 390px;
+  }
+
+  .cyprus-lifestyle__car {
+    bottom: 50px;
+  }
+
+  @keyframes moveCarIn {
+    0% {
+      transform: translateX(-150%) scale(2);
+    }
+    100% {
+      transform: translateX(calc(-40px + -3vw)) scale(1.6);
+    }
+  }
+
 }
 
 @media (max-width: 550px) {

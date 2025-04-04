@@ -82,12 +82,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // comment placeholder
-  const packOptions = document?.querySelectorAll('.solutions__want-link');
-  const comment = document?.querySelector('#mce-COMMENT')
-  packOptions.forEach(opt => {
-    opt.addEventListener('click', (e) => {
-      comment.value = e.target.dataset.comment
-    })
-  })
+  // const packOptions = document?.querySelectorAll('.solutions__want-link');
+  // const comment = document?.querySelector('#mce-COMMENT')
+  // packOptions.forEach(opt => {
+  //   opt.addEventListener('click', (e) => {
+  //     comment.value = e.target.dataset.comment
+  //   })
+  // })
 
 })

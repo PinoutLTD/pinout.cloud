@@ -57,9 +57,9 @@
 
         <div class="cyprus-lifestyle__footer layout">
           <h3 class="subtitle">Don't become robots — let the robots work for you.</h3>
-          <div class="cyprus-lifestyle__cat">
-            <img src="./img/cyprus-lifestyle-cat.png" alt="" aria-hidden="true"/>
-          </div>
+        </div>
+        <div class="cyprus-lifestyle__cat">
+          <img src="./img/cyprus-lifestyle-cat.png" alt="" aria-hidden="true"/>
         </div>
       </div>
     </section>
@@ -68,4 +68,14 @@
   <!-- website footer -->
   @include('../partials/footer.html')
 </body>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    isSafariBrowser = () => navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') <= -1;
+
+    if(isSafariBrowser()) {
+      document.querySelector('.cyprus-lifestyle').classList.add('safari-ios')
+    }
+  })
+</script>
 </html>
