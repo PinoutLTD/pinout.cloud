@@ -263,14 +263,15 @@
   font-family: inherit;
   font-size: var(--base-font-size);
   font-variation-settings: 'GRAD' 150, 'wdth' 150, 'wght' 500, 'opsz' 26;
-  text-transform: uppercase;
   color: var(--color-orange);
   background-color: var(--color-light);
   border: 1px solid transparent;
+  text-align: center;
 }
 
 .cyprus-lifestyle__input::placeholder {
   color: var(--color-orange);
+  text-transform: uppercase;
 }
 
 .cyprus-lifestyle__form-link {
@@ -313,6 +314,16 @@
   transform: skew(-10deg) translateX(8px);
 }
 
+.cyprus-lifestyle__form .text-normal {
+  display: inline-block;
+  color: var(--color-light-blue);
+  margin-bottom: 10px;
+}
+
+.cyprus-lifestyle__form .text-normal.hide {
+  display: none;
+}
+
 .cyprus-lifestyle__form-wrong {
   opacity: 0;
   height: 0;
@@ -329,6 +340,7 @@
 
 .cyprus-lifestyle__form .btn {
   padding: 8px 45px;
+  margin-bottom: 10px;
   font-family: inherit;
   font-variation-settings: 'wdth' 148, 'slnt' -1;
   font-weight: 600;

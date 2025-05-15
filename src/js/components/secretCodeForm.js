@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const code = scInput.value.toLowerCase();
 
       try {
+        scForm.querySelector('span').classList.remove('hide')
         const res = await fetch(
           'https://stellar-blini-2e01cb.netlify.app/.netlify/functions/checkCode',
           {
@@ -19,9 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         );
 
+
         const data = await res.json();
-        if (res.ok) {
-          if (data.link) {
+
+        if (res.ok && data.link) {
             if (
               document
                 .querySelector('.cyprus-lifestyle__form-wrong')
@@ -32,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .classList.remove('active');
 
             scForm.classList.add('hide');
+            scForm.querySelector('span').classList.add('hide')
 
             document
               .querySelector('.cyprus-lifestyle__promo')
@@ -39,14 +42,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             scLink.querySelector('a').href = 'https://' + data.link;
             scLink.classList.add('active');
-          }
         } else {
           document
               ?.querySelector('.cyprus-lifestyle__form-wrong')
               .classList.add('active');
+          scForm.querySelector('span').classList.add('hide')
         }
       } catch (err) {
         console.error(err);
+        scForm.querySelector('span').classList.add('hide')
       }
     });
   }
