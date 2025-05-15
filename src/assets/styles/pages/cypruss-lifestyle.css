@@ -216,6 +216,131 @@
   text-align: left;
 }
 
+.cyprus-lifestyle__promo {
+  background-image: url('../img/secret-code-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-bottom: var(--space);
+}
+
+.cyprus-lifestyle__promo.success {
+  min-height: 350px;
+  background-color: var(--color-dark);
+  background-image: url('../img/secret-code-success.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.cyprus-lifestyle__promo .layout {
+  min-height: 320px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cyprus-lifestyle__form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-family);
+  align-items:center;
+}
+
+.cyprus-lifestyle__form.hide {
+  display: none;
+}
+
+.cyprus-lifestyle__input {
+  padding: 15px 8px;
+  max-width: 320px;
+  width: 100%;
+  margin-bottom: var(--space);
+  font-family: inherit;
+  font-size: var(--base-font-size);
+  font-variation-settings: 'GRAD' 150, 'wdth' 150, 'wght' 500, 'opsz' 26;
+  text-transform: uppercase;
+  color: var(--color-orange);
+  background-color: var(--color-light);
+  border: 1px solid transparent;
+}
+
+.cyprus-lifestyle__input::placeholder {
+  color: var(--color-orange);
+}
+
+.cyprus-lifestyle__form-link {
+  position: relative;
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+  text-align: center;
+  transform: translateY(-50%) rotate(10deg);
+  transition: transform 0.5s ease-in-out, opacity 0.33s ease-in-out, visibility 0.33s ease-in-out;
+}
+
+.cyprus-lifestyle__form-link h4 {
+  margin-bottom: calc(var(--space) * 0.5);
+  font-variation-settings: 'wdth' 128, 'slnt' -1, 'wght' 600;
+  color: var(--color-orange);
+  text-transform: uppercase;
+}
+
+.cyprus-lifestyle__form-link .link-font {
+  position: relative;
+  display: block;
+  font-size: calc(var(--base-font-size) * 1.2);
+  font-weight: 300;
+  font-variation-settings: 'wdth' 108, 'xtra' 520;
+  text-decoration: underline;
+  color: var(--color-light-blue);
+  transition: transform 0.5s ease-in-out, opacity 0.33s ease-in-out,
+}
+
+.cyprus-lifestyle__form-link.active {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0) rotate(0);
+}
+
+.cyprus-lifestyle__form-link .link-font:hover {
+  color: var(--color-blue-link);
+  transform: skew(-10deg) translateX(8px);
+}
+
+.cyprus-lifestyle__form-wrong {
+  opacity: 0;
+  height: 0;
+  visibility: hidden;
+  color: #ff2121;
+  transition: opacity 0.33s ease-in-out, visibility 0.33s ease-in-out, height 0.33s ease-in-out;
+}
+
+.cyprus-lifestyle__form-wrong.active {
+  height: 30px;
+  visibility: visible;
+  opacity: 1;
+}
+
+.cyprus-lifestyle__form .btn {
+  padding: 8px 45px;
+  font-family: inherit;
+  font-variation-settings: 'wdth' 148, 'slnt' -1;
+  font-weight: 600;
+  color: var(--color-dark);
+  background-color: var(--color-orange);
+}
+
+.cyprus-lifestyle__form .btn:hover {
+  color: var(--color-light);
+  background-color: #8d4817;
+}
+
 .cyprus-lifestyle__cat {
   position: relative;
   width: 100%;

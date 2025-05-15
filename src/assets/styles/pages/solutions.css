@@ -8,7 +8,7 @@
 
 .solutions__plans {
   display: grid;
-  grid-template-columns: 1fr minmax(250px, 500px);
+  grid-template-columns: minmax(250px, 700px) 1fr;
 }
 
 .solutions__wrapper {
@@ -24,7 +24,7 @@
 }
 
 .solutions__left {
-  border-right: 1px solid var(--text-secondary);
+  border-left: 1px solid var(--text-secondary);
   border-bottom: 1px solid var(--text-secondary);
 }
 
@@ -262,6 +262,10 @@ b.solutions__swiper-price-name  {
 @media screen and (max-width: 850px) {
   .solutions__plans {
     grid-template-columns: minmax(320px, 1fr);
+  }
+
+  .solutions__left {
+    border-left: none;
   }
 
 

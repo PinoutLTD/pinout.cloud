@@ -77,11 +77,6 @@ const svgSprites = () => {
     .pipe(dest('dist/assets/images'))
 }
 
-// const fonts = () => {
-//     src('./src/fonts/**.woff2')
-// 		.pipe(dest('dist/assets/fonts/'))
-// }
-
 const scripts = () => {
     return src([
       'src/js/vendor/*.js',
