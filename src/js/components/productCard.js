@@ -5,13 +5,13 @@ function createProductCard(product) {
   const tagClass = isAvailable ? 'text-normal shop-content__tag' : 'text-normal shop-content__tag shop-content__tag--not-available';
   const tagText = isAvailable ? 'available' : 'not available';
   // Use absolute path from root to ensure links work in both dev and production builds
-  const linkHref = isAvailable ? `/shop/${product.slug}.html` : '#';
+  const linkHref = isAvailable ? `/shop/${product.slug}` : '#';
 
   const oldPriceHTML = product.oldPrice ? `<span class="text shop-content__price-old">€ ${product.oldPrice.toFixed(2)}</span>` : '';
-  
+
   // Use first image from images array if available, otherwise fall back to image property
-  const productImage = (product.images && product.images.length > 0) 
-    ? product.images[0] 
+  const productImage = (product.images && product.images.length > 0)
+    ? product.images[0]
     : (product.image || '../img/shop/card-1.png');
 
   return `
