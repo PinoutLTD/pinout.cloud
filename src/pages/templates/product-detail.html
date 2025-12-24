@@ -15,10 +15,17 @@
           <!-- Product Image Slider -->
           <div class="product-detail__gallery">
             <div class="product-detail__gallery-wrapper">
-              <!-- Thumbnails -->
-              <div class="swiper product-detail__thumbs">
-                <div class="swiper-wrapper">
-                  {{PRODUCT_IMAGES_THUMBS}}
+              <!-- Thumbnails with Navigation -->
+              <div class="product-detail__thumbs-wrapper">
+                <div class="swiper product-detail__thumbs">
+                  <div class="swiper-wrapper">
+                    {{PRODUCT_IMAGES_THUMBS}}
+                  </div>
+                </div>
+                <!-- Navigation buttons for main swiper -->
+                <div class="product-detail__swiper-navigation">
+                  <button type="button" class="product-detail__swiper-button-prev" aria-label="Previous slide"></button>
+                  <button type="button" class="product-detail__swiper-button-next" aria-label="Next slide"></button>
                 </div>
               </div>
               <!-- Main Swiper -->

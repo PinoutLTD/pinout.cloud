@@ -65,6 +65,11 @@ const swiperSpecialOffer = new Swiper('.swiper-solutions', {
       clickable: true,
       type: 'bullets'
     },
+    navigation: {
+      nextEl: '.product-detail__swiper-button-next',
+      prevEl: '.product-detail__swiper-button-prev',
+      hideOnClick: false,
+    },
     thumbs: {
       swiper: thumbsSwiper
     }
