@@ -35,13 +35,13 @@
   width: 80px;
 }
 
-@media screen and (max-width: 1360px) {
+@media screen and (max-width: 1460px) {
   .footer .nav__item:not(:last-child) {
     font-size: 10px;
   }
 }
 
-@media screen and (max-width: 1170px) {
+@media screen and (max-width: 1230px) {
   .footer__container {
     position: relative;
     flex-direction: column;
@@ -71,7 +71,7 @@
 }
 
 
-@media screen and (max-width: 790px) {
+@media screen and (max-width: 850px) {
 
   .footer__container  {
     align-items: flex-start;

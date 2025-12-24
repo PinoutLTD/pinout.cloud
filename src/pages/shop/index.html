@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  @include('../../partials/head.html', {
+    "pageTitle": "Shop / Pinout",
+  })
+<body>
+  <!-- website header -->
+  @include('../../partials/header.html')
+
+  <main class="shop">
+    <section class="shop-section">
+      <div class="layout">
+        <div class="shop-header">
+          <div class="shop-header__title">
+            <h1 class="page-title">SERVICE STORE</h1>
+            <p class="text-normal">Delivery is available within 24 hours after your request.</p>
+          </div>
+          <p class="text-normal">
+            We provide fast and professional installation for all listed services. Our engineers have extensive experience in setting up, integrating, and automating smart home systems, ensuring reliable performance and convenient control. We guarantee seamless integration of each device into your existing smart home ecosystem and handle the entire process—from delivery and installation to full configuration and post-installation testing—so you receive a ready-to-use and dependable solution without any hassle.
+          </p>
+        </div>
+
+        <!-- Product cards will be rendered here dynamically by productCard.js -->
+        <div class="shop-content grid grid-3" id="products-container">
+          <!-- Products are loaded via JavaScript -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- website footer -->
+  @include('../../partials/footer.html')
+</body>
+</html>
+
+
+
+
+
+

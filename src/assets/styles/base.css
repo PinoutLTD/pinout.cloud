@@ -1,11 +1,11 @@
 body, html{
-	min-height: 100%;
-	height: 100%;
-	position: relative;
+  min-height: 100%;
+  height: 100%;
+  position: relative;
 }
 
 html{
-	scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 *,
@@ -18,30 +18,30 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100%;
- 	color: var(--text-color);
- 	font-family: var(--font-family);
-	line-height: 1.5;
+  color: var(--text-color);
+  font-family: var(--font-family);
+  line-height: 1.5;
   background-color: var(--color-light);
   background-color: var(--bg-body);
   transition: color .6s, background-color .6s;
 }
 
 img {
-	display: inline-block;
-	max-width: 100%;
+  display: inline-block;
+  max-width: 100%;
   height: auto;
   object-fit: cover;
 }
 
 section {
-	margin-bottom: calc(var(--space) * 2);
+  margin-bottom: calc(var(--space) * 2);
 }
 
 .layout {
-	max-width: var(--content-width);
-	margin: 0 auto;
-	padding: calc(var(--space) * 0.8) var(--space);
-	overflow: hidden;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: calc(var(--space) * 0.8) var(--space);
+  overflow: hidden;
 }
 
 .visually-hidden {
@@ -57,5 +57,5 @@ section {
 }
 
 .link {
-	transition: color 0.33s ease-in-out;
+  transition: color 0.33s ease-in-out;
 }
