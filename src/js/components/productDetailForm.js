@@ -45,6 +45,26 @@ function initProductDetailForm() {
   });
 
   /* -----------------------------
+     Quantity selection
+  ----------------------------- */
+  document.querySelectorAll('.product-detail__contact-method[data-quantity]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      document
+        .querySelectorAll('.product-detail__contact-method[data-quantity]')
+        .forEach(b => b.classList.remove('active'));
+
+      btn.classList.add('active');
+
+      const quantityInput = document.getElementById('quantity');
+      if (quantityInput) {
+        quantityInput.value = btn.dataset.quantity;
+      }
+    });
+  });
+
+
+  /* -----------------------------
      Phone mask (simple & safe)
      Format: +123 456 789 012
   ----------------------------- */
@@ -104,5 +124,6 @@ if (document.readyState === 'loading') {
 } else {
   initProductDetailForm();
 }
+
 
 

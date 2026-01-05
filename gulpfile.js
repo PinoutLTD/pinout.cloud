@@ -121,12 +121,12 @@ const generateProductPages = (cb) => {
 
     // Replace placeholders
     pageContent = pageContent.replace(/\{\{PRODUCT_TITLE\}\}/g, product.title);
-    
+
     // Handle images array for Swiper
     const images = product.images && Array.isArray(product.images) && product.images.length > 0
       ? product.images
       : (product.image ? [product.image] : ['../img/shop/card-1.png']); // Fallback to single image or default
-    
+
     // Generate thumbnail slides HTML
     const thumbsHTML = images.map(img => {
       const imagePath = img.replace(/^\.\//, '../');
@@ -134,7 +134,7 @@ const generateProductPages = (cb) => {
                     <img src="${imagePath}" alt="${product.title}"/>
                   </div>`;
     }).join('\n');
-    
+
     // Generate main slides HTML
     const slidesHTML = images.map(img => {
       const imagePath = img.replace(/^\.\//, '../');
@@ -142,11 +142,11 @@ const generateProductPages = (cb) => {
                     <img src="${imagePath}" alt="${product.title}"/>
                   </div>`;
     }).join('\n');
-    
+
     // Replace image placeholders
     pageContent = pageContent.replace(/\{\{PRODUCT_IMAGES_THUMBS\}\}/g, thumbsHTML);
     pageContent = pageContent.replace(/\{\{PRODUCT_IMAGES_SLIDES\}\}/g, slidesHTML);
-    
+
     pageContent = pageContent.replace(/\{\{PRODUCT_PRICE\}\}/g, product.price.toFixed(2));
 
     // Handle old price
@@ -154,6 +154,16 @@ const generateProductPages = (cb) => {
       ? `<span class="text product-detail__price-old">€ ${product.oldPrice.toFixed(2)}</span>`
       : '';
     pageContent = pageContent.replace(/\{\{PRODUCT_OLD_PRICE\}\}/g, oldPriceHTML);
+
+    // Handle additional pricing for multiple units
+    let additionalPricingHTML = '';
+    if (product.additionalUnitPrice) {
+      additionalPricingHTML = `
+            <div class="product-detail__additional-pricing">
+              <p class="text-normal">Get your first upgrade for <span class="product-detail__additional-price">€&nbsp${product.price.toFixed(2)}</span>. Each additional one is only <span class="product-detail__additional-price">€&nbsp+${product.additionalUnitPrice.toFixed(2)}</span>!</p>
+            </div>`;
+    }
+    pageContent = pageContent.replace(/\{\{PRODUCT_ADDITIONAL_PRICING\}\}/g, additionalPricingHTML);
 
     // Handle description
     const description = product.fullDescription || product.description;
@@ -187,6 +197,38 @@ const generateProductPages = (cb) => {
     // Handle availability
     const availabilityText = product.available ?  'available' : 'Not available';
     pageContent = pageContent.replace(/\{\{PRODUCT_AVAILABILITY\}\}/g, availabilityText);
+
+    // Handle stock availability display
+    let stockHTML = '';
+    if (product.stockAvailable !== undefined && product.stockAvailable !== null) {
+      stockHTML = `<div class="product-detail__stock-section">
+              <p class="text-normal product-detail__stock-title">Available units</p>
+              <p class="text product-detail__stock-count">${product.stockAvailable}</p>
+            </div>`;
+    }
+    pageContent = pageContent.replace(/\{\{PRODUCT_STOCK_AVAILABLE\}\}/g, stockHTML);
+
+    // Handle prefilled comment
+    const prefilledComment = `I want ${product.title.toLowerCase()} automation`;
+    pageContent = pageContent.replace(/\{\{PRODUCT_COMMENT_PREFILL\}\}/g, prefilledComment);
+
+    // Handle quantity selector for products with additionalUnitPrice (AC and Underfloor Heating)
+    let quantitySelectorHTML = '';
+    if (product.additionalUnitPrice) {
+      quantitySelectorHTML = `
+            <!-- QUANTITY -->
+            <div>
+              <label class="text-normal">quantity</label>
+              <div class="product-detail__contact-methods">
+                <button type="button" class="product-detail__contact-method active" data-quantity="1">1</button>
+                <button type="button" class="product-detail__contact-method" data-quantity="2">2</button>
+                <button type="button" class="product-detail__contact-method" data-quantity="3">3</button>
+                <button type="button" class="product-detail__contact-method" data-quantity="4+">4+</button>
+              </div>
+              <input type="hidden" name="QUANTITY" id="quantity" value="1">
+            </div>`;
+    }
+    pageContent = pageContent.replace(/\{\{PRODUCT_QUANTITY_SELECTOR\}\}/g, quantitySelectorHTML);
 
     // Fix breadcrumb and other relative links for shop/ structure
     pageContent = pageContent.replace(/href="\.\/shop\.html"/g, 'href="./"');

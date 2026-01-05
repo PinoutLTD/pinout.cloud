@@ -4,8 +4,9 @@ const products = [
     id: 'boiler-switch-upgrade',
     title: 'Boiler Switch Upgrade',
     description: 'Upgrade your boiler with a smart switch.',
-    price: 200.00,
-    oldPrice: 299.00,
+    price: 160.00,
+    oldPrice: 200.00,
+    stockAvailable: 150, // Number of units available
     image: '../img/shop/banners/boiler-heater/card-1.png',
     images: [
       '../img/shop/banners/boiler-heater/card-1.jpg',
@@ -37,8 +38,10 @@ const products = [
     id: 'air-conditioner-upgrade',
     title: 'Air Conditioner Upgrade',
     description: 'Upgrade your air conditioner with a smart IR control.',
-    price: 290.00,
-    oldPrice: 350.00,
+    price: 195.00,
+    oldPrice: 240.00,
+    additionalUnitPrice: 75.00, // Price for each additional unit after the first one
+    stockAvailable: 100, // Number of units available
     image: '../img/shop/banners/ac/card-1.png',
     images: [
       '../img/shop/banners/ac/card-1.jpg',
@@ -67,10 +70,12 @@ const products = [
   },
   {
     id: 'floor-hearing',
-    title: 'Electric Underfloor Heating Upgrade',
+    title: 'Electrical Underfloor Thermostat',
     description: 'Upgrade your floor heating with a smart switch',
-    price: 310.00,
-    oldPrice: 399.00,
+    price: 230.00,
+    oldPrice: 280.00,
+    additionalUnitPrice: 120.00, // Price for each additional unit after the first one
+    stockAvailable: 50, // Number of units available
     image: '../img/shop/floor-heating/card-1.png',
     images: [
       '../img/shop/banners/floor-heating/card-1.jpg',
