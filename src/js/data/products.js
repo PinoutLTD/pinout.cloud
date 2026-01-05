@@ -6,7 +6,6 @@ const products = [
     description: 'Upgrade your boiler with a smart switch.',
     price: 160.00,
     oldPrice: 200.00,
-    stockAvailable: 150, // Number of units available
     image: '../img/shop/banners/boiler-heater/card-1.png',
     images: [
       '../img/shop/banners/boiler-heater/card-1.jpg',
@@ -41,7 +40,6 @@ const products = [
     price: 195.00,
     oldPrice: 240.00,
     additionalUnitPrice: 75.00, // Price for each additional unit after the first one
-    stockAvailable: 100, // Number of units available
     image: '../img/shop/banners/ac/card-1.png',
     images: [
       '../img/shop/banners/ac/card-1.jpg',
@@ -75,7 +73,6 @@ const products = [
     price: 230.00,
     oldPrice: 280.00,
     additionalUnitPrice: 120.00, // Price for each additional unit after the first one
-    stockAvailable: 50, // Number of units available
     image: '../img/shop/floor-heating/card-1.png',
     images: [
       '../img/shop/banners/floor-heating/card-1.jpg',

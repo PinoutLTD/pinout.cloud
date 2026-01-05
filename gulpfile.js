@@ -198,16 +198,6 @@ const generateProductPages = (cb) => {
     const availabilityText = product.available ?  'available' : 'Not available';
     pageContent = pageContent.replace(/\{\{PRODUCT_AVAILABILITY\}\}/g, availabilityText);
 
-    // Handle stock availability display
-    let stockHTML = '';
-    if (product.stockAvailable !== undefined && product.stockAvailable !== null) {
-      stockHTML = `<div class="product-detail__stock-section">
-              <p class="text-normal product-detail__stock-title">Available units</p>
-              <p class="text product-detail__stock-count">${product.stockAvailable}</p>
-            </div>`;
-    }
-    pageContent = pageContent.replace(/\{\{PRODUCT_STOCK_AVAILABLE\}\}/g, stockHTML);
-
     // Handle prefilled comment
     const prefilledComment = `I want ${product.title.toLowerCase()} automation`;
     pageContent = pageContent.replace(/\{\{PRODUCT_COMMENT_PREFILL\}\}/g, prefilledComment);
