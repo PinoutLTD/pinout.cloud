@@ -12,6 +12,10 @@
   font-variation-settings: 'GRAD' 132, 'wdth' 148;
 }
 
+.header .nav__item  {
+  font-size: 20px;
+}
+
 .nav__item:not(:last-child) {
   margin-right: var(--space);
 }
