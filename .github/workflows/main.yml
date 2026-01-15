@@ -34,15 +34,30 @@ jobs:
           npm ci
           gulp build
 
-      - name: Deploy
+      #- name: Deploy
         #uses: JamesIves/github-pages-deploy-action@3.7.1
         #with:
         #  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         #  BRANCH: gh-pages # The branch the action should deploy to.
         #  FOLDER: dist # The folder the action should deploy.
         #  CLEAN: true # Automatically remove deleted files from the deploy branch
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          cname: pinout.cloud
+        #uses: peaceiris/actions-gh-pages@v3
+        #with:
+          #github_token: ${{ secrets.GITHUB_TOKEN }}
+          #publish_dir: ./dist
+          #cname: pinout.cloud
+          
+      - name: Deploy to Server (rsync)
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          echo "$SSH_KEY" > deploy_key
+          chmod 600 deploy_key
+          rsync -rvz \
+            --delete \
+            --exclude='.git*' \
+            -e "ssh -i deploy_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.SERVER_PORT || '22' }}" \
+            ./dist/ \
+            ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.TARGET_FOLDER }}
+          rm -f deploy_key
+        
