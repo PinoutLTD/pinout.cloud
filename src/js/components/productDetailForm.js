@@ -78,7 +78,7 @@ function initProductDetailForm() {
       // Get color name from data attribute
       let colorName = swatch.getAttribute('data-color-name') || swatch.dataset.colorName;
       const colorHex = swatch.getAttribute('data-color') || swatch.dataset.color || '';
-      
+
       // If no color name or it's a hex code, detect it
       if (!colorName || colorName.startsWith('#')) {
         // Try to extract from aria-label
@@ -95,7 +95,7 @@ function initProductDetailForm() {
           else colorName = colorHex;
         }
       }
-      
+
       const imageIndex = parseInt(swatch.getAttribute('data-image-index') || swatch.dataset.imageIndex || '-1', 10);
 
       // Update hidden input with color name (not hex)
@@ -108,9 +108,9 @@ function initProductDetailForm() {
       // Mapping: Blue (index 0) -> slide 0 (card-1), Pink (index 1) -> slide 2 (card-3), Yellow (index 2) -> slide 1 (card-2)
       if (!isNaN(imageIndex) && imageIndex >= 0) {
         // Map color index to slide index: Blue->0, Pink->2, Yellow->1
-        const slideIndexMap = [0, 2, 1]; // Blue->slide 0, Pink->slide 2, Yellow->slide 1
+        const slideIndexMap = [7, 8, 9]; // Blue->slide 1, Pink->slide 2, Yellow->slide 3
         const targetSlideIndex = slideIndexMap[imageIndex] !== undefined ? slideIndexMap[imageIndex] : imageIndex;
-        
+
         // Navigate to the correct slide
         if (window.mainSwiper) {
           window.mainSwiper.slideTo(targetSlideIndex, 300);
@@ -128,7 +128,7 @@ function initProductDetailForm() {
       let value = phoneInput.value.replace(/\D/g, '');
 
       // limit length (adjust if needed)
-      value = value.substring(0, 13);
+      value = value.substring(0, 14);
 
       let formatted = '';
       if (value.length > 0) formatted = '+' + value.substring(0, 3);

@@ -34,7 +34,8 @@ const swiperSpecialOffer = new Swiper('.swiper-solutions', {
 // Product Detail Swiper with Thumbnails
   const thumbsSwiper = new Swiper('.product-detail__thumbs', {
     spaceBetween: 10,
-    slidesPerView: 3,
+    slidesPerView: 5,
+    slidesPerGroup: 1,
     watchSlidesProgress: true,
     watchSlidesVisibility: true,
     slideToClickedSlide: true,
@@ -44,15 +45,22 @@ const swiperSpecialOffer = new Swiper('.swiper-solutions', {
     touchAngle: 45,
     threshold: 10,
 
+    // Prevent free mode to keep slides aligned
+    freeMode: false,
+    
+    // Ensure slides stay within bounds
+    resistance: true,
+    resistanceRatio: 0.85,
+
     direction: 'vertical',
     breakpoints: {
       0: {
         direction: 'horizontal',
-        slidesPerView: 3,
+        slidesPerView: 5,
       },
       871: {
         direction: 'vertical',
-        slidesPerView: 3,
+        slidesPerView: 5,
       }
     }
   });

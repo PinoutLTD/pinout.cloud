@@ -110,7 +110,7 @@
           <div class="product-detail__form-header">
             <h2 class="page-title">Submit your request</h2>
             <p class="text-normal product-detail__form-intro">
-              We will contact you within 24 hours. <br> Delivery is available within 24 hours after your request. <br> Payment is made after the service is completed.
+              {{PRODUCT_FORM_INTRO}}
             </p>
           </div>
 
@@ -157,6 +157,9 @@
                 required
               >
             </div>
+
+            <!-- ADDRESS (only for home-server) -->
+            {{PRODUCT_ADDRESS_FIELD}}
 
             <!-- CONTACT METHOD -->
             <div>

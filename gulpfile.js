@@ -187,7 +187,7 @@ const generateProductPages = (cb) => {
         // Map color index to image index (0=blue->card-1, 1=pink->card-3, 2=yellow->card-2)
         return `                <button type="button" class="product-detail__color-swatch${isActive}" data-color="${colorValue}" data-color-name="${colorName}" data-image-index="${index}" aria-label="Select ${colorLabel} color" style="background-color: ${colorValue};"></button>`;
       }).join('\n');
-      
+
       const defaultColor = typeof product.colors[0] === 'string' ? product.colors[0] : (product.colors[0].value || product.colors[0]);
       let defaultColorName = typeof product.colors[0] === 'object' && product.colors[0].name ? product.colors[0].name : '';
       if (!defaultColorName) {
@@ -196,7 +196,7 @@ const generateProductPages = (cb) => {
         else if (defaultColor === '#ffd217' || defaultColor.toLowerCase() === '#ffd217') defaultColorName = 'yellow';
         else defaultColorName = defaultColor;
       }
-      
+
       colorOptionsHTML = `
             <div class="product-detail__color-options">
               <label class="text-normal">Color:</label>
@@ -222,31 +222,35 @@ ${colorSwatches}
     }
     pageContent = pageContent.replace(/\{\{PRODUCT_COLOR_INPUT\}\}/g, colorInputHTML);
 
-    // Handle delivery text
+    // Handle delivery text - hide for home-server
     let deliveryHTML = '';
-    if (product.delivery) {
-      deliveryHTML = `
+    if (product.slug !== 'home-server') {
+      if (product.delivery) {
+        deliveryHTML = `
             <div class="product-detail__delivery">
               <p class="text-normal"><b>Delivery:</b> ${product.delivery}</p>
             </div>`;
-    } else {
-      // Default delivery text
-      deliveryHTML = `
+      } else {
+        // Default delivery text
+        deliveryHTML = `
             <div class="product-detail__delivery">
               <p class="text-normal"><b>Delivery:</b> Within 24 hours, the service is available across Cyprus after placing your order.</p>
             </div>`;
+      }
     }
     pageContent = pageContent.replace(/\{\{PRODUCT_DELIVERY\}\}/g, deliveryHTML);
 
-    // Handle payment section (always show, but payment text is conditional)
-    let paymentTextHTML = '';
-    if (!product.paymentExtraTextOff) {
-      // Show payment text unless paymentExtraTextOff is true
-      const paymentText = product.payment || 'Payment is made after the service is completed.';
-      paymentTextHTML = `<p class="text-normal"><b>Payment:</b> ${paymentText}</p>`;
-    }
-    
-    const paymentHTML = `
+    // Handle payment section - hide for home-server
+    let paymentHTML = '';
+    if (product.slug !== 'home-server') {
+      let paymentTextHTML = '';
+      if (!product.paymentExtraTextOff) {
+        // Show payment text unless paymentExtraTextOff is true
+        const paymentText = product.payment || 'Payment is made after the service is completed.';
+        paymentTextHTML = `<p class="text-normal"><b>Payment:</b> ${paymentText}</p>`;
+      }
+
+      paymentHTML = `
             <div class="product-detail__payment">
               ${paymentTextHTML}
               <div class="product-detail__payment-methods">
@@ -256,6 +260,7 @@ ${colorSwatches}
                 <img src="../../img/shop/mastercard.svg" alt="Mastercard" class="product-detail__payment-icon"/>
               </div>
             </div>`;
+    }
     pageContent = pageContent.replace(/\{\{PRODUCT_PAYMENT\}\}/g, paymentHTML);
 
     // Handle features
@@ -305,7 +310,7 @@ ${colorSwatches}
               <p class="text-normal">${step.description || ''}</p>
             </div>`;
       }).join('\n');
-      
+
       howItWorksHTML = `
         <div class="product-detail__how-it-works">
           <h2 class="subtitle">HOW IT WORKS</h2>
@@ -360,6 +365,32 @@ ${stepsHTML}
     const automationText = (product.id === 'home-server' || product.slug === 'home-server') ? '' : ' automation';
     const prefilledComment = `I want ${product.title.toLowerCase()}${automationText}`;
     pageContent = pageContent.replace(/\{\{PRODUCT_COMMENT_PREFILL\}\}/g, prefilledComment);
+
+    // Handle address field - only for home-server
+    let addressFieldHTML = '';
+    if (product.slug === 'home-server') {
+      addressFieldHTML = `
+            <!-- ADDRESS -->
+            <div>
+              <input
+                type="text"
+                name="ADDRESS"
+                id="mce-ADDRESS"
+                class="contacts-form__input"
+                placeholder="your address"
+              >
+            </div>`;
+    }
+    pageContent = pageContent.replace(/\{\{PRODUCT_ADDRESS_FIELD\}\}/g, addressFieldHTML);
+
+    // Handle form intro text - remove delivery/payment text for home-server
+    let formIntroText = '';
+    if (product.slug === 'home-server') {
+      formIntroText = 'We will contact you within 24 hours.';
+    } else {
+      formIntroText = 'We will contact you within 24 hours. <br> Delivery is available within 24 hours after your request. <br> Payment is made after the service is completed.';
+    }
+    pageContent = pageContent.replace(/\{\{PRODUCT_FORM_INTRO\}\}/g, formIntroText);
 
     // Handle quantity selector for products with additionalUnitPrice (AC and Underfloor Heating)
     let quantitySelectorHTML = '';
@@ -744,7 +775,7 @@ const generateProductPagesShop = (cb) => {
         // Map color index to image index (0=blue->card-1, 1=pink->card-3, 2=yellow->card-2)
         return `                <button type="button" class="product-detail__color-swatch${isActive}" data-color="${colorValue}" data-color-name="${colorName}" data-image-index="${index}" aria-label="Select ${colorLabel} color" style="background-color: ${colorValue};"></button>`;
       }).join('\n');
-      
+
       const defaultColor = typeof product.colors[0] === 'string' ? product.colors[0] : (product.colors[0].value || product.colors[0]);
       let defaultColorName = typeof product.colors[0] === 'object' && product.colors[0].name ? product.colors[0].name : '';
       if (!defaultColorName) {
@@ -753,7 +784,7 @@ const generateProductPagesShop = (cb) => {
         else if (defaultColor === '#ffd217' || defaultColor.toLowerCase() === '#ffd217') defaultColorName = 'yellow';
         else defaultColorName = defaultColor;
       }
-      
+
       colorOptionsHTML = `
             <div class="product-detail__color-options">
               <label class="text-normal">Color:</label>
@@ -779,31 +810,35 @@ ${colorSwatches}
     }
     pageContent = pageContent.replace(/\{\{PRODUCT_COLOR_INPUT\}\}/g, colorInputHTML);
 
-    // Handle delivery text
+    // Handle delivery text - hide for home-server
     let deliveryHTML = '';
-    if (product.delivery) {
-      deliveryHTML = `
+    if (product.slug !== 'home-server') {
+      if (product.delivery) {
+        deliveryHTML = `
             <div class="product-detail__delivery">
               <p class="text-normal"><b>Delivery:</b> ${product.delivery}</p>
             </div>`;
-    } else {
-      // Default delivery text
-      deliveryHTML = `
+      } else {
+        // Default delivery text
+        deliveryHTML = `
             <div class="product-detail__delivery">
               <p class="text-normal"><b>Delivery:</b> Within 24 hours, the service is available across Cyprus after placing your order.</p>
             </div>`;
+      }
     }
     pageContent = pageContent.replace(/\{\{PRODUCT_DELIVERY\}\}/g, deliveryHTML);
 
-    // Handle payment section (always show, but payment text is conditional)
-    let paymentTextHTML = '';
-    if (!product.paymentExtraTextOff) {
-      // Show payment text unless paymentExtraTextOff is true
-      const paymentText = product.payment || 'Payment is made after the service is completed.';
-      paymentTextHTML = `<p class="text-normal"><b>Payment:</b> ${paymentText}</p>`;
-    }
-    
-    const paymentHTML = `
+    // Handle payment section - hide for home-server
+    let paymentHTML = '';
+    if (product.slug !== 'home-server') {
+      let paymentTextHTML = '';
+      if (!product.paymentExtraTextOff) {
+        // Show payment text unless paymentExtraTextOff is true
+        const paymentText = product.payment || 'Payment is made after the service is completed.';
+        paymentTextHTML = `<p class="text-normal"><b>Payment:</b> ${paymentText}</p>`;
+      }
+
+      paymentHTML = `
             <div class="product-detail__payment">
               ${paymentTextHTML}
               <div class="product-detail__payment-methods">
@@ -813,6 +848,7 @@ ${colorSwatches}
                 <img src="./img/shop/mastercard.svg" alt="Mastercard" class="product-detail__payment-icon"/>
               </div>
             </div>`;
+    }
     pageContent = pageContent.replace(/\{\{PRODUCT_PAYMENT\}\}/g, paymentHTML);
 
     // Handle features
@@ -863,7 +899,7 @@ ${colorSwatches}
               <p class="text-normal">${step.description || ''}</p>
             </div>`;
       }).join('\n');
-      
+
       howItWorksHTML = `
         <div class="product-detail__how-it-works">
           <h2 class="subtitle">HOW IT WORKS</h2>
@@ -918,6 +954,33 @@ ${stepsHTML}
     const automationText = (product.id === 'home-server' || product.slug === 'home-server') ? '' : ' automation';
     const prefilledComment = `I want ${product.title.toLowerCase()}${automationText}`;
     pageContent = pageContent.replace(/\{\{PRODUCT_COMMENT_PREFILL\}\}/g, prefilledComment);
+
+    // Handle address field - only for home-server
+    // Mailchimp address type fields use 'addr1' for street address
+    let addressFieldHTML = '';
+    if (product.slug === 'home-server') {
+      addressFieldHTML = `
+            <!-- ADDRESS -->
+            <div>
+              <input
+                type="text"
+                name="addr1"
+                id="mce-addr1"
+                class="contacts-form__input"
+                placeholder="your address"
+              >
+            </div>`;
+    }
+    pageContent = pageContent.replace(/\{\{PRODUCT_ADDRESS_FIELD\}\}/g, addressFieldHTML);
+
+    // Handle form intro text - remove delivery/payment text for home-server
+    let formIntroText = '';
+    if (product.slug === 'home-server') {
+      formIntroText = 'We will contact you within 24 hours.';
+    } else {
+      formIntroText = 'We will contact you within 24 hours. <br> Delivery is available within 24 hours after your request. <br> Payment is made after the service is completed.';
+    }
+    pageContent = pageContent.replace(/\{\{PRODUCT_FORM_INTRO\}\}/g, formIntroText);
 
     // Handle quantity selector for products with additionalUnitPrice
     let quantitySelectorHTML = '';
