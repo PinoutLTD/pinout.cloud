@@ -2,8 +2,10 @@
 .cache
 .DS_Store
 src/.temp
+src/js/main-shop.js
 node_modules
 dist
+shopBuild
 .env
 .env.*
 .editorconfig

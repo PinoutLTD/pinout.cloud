@@ -63,6 +63,71 @@ function initProductDetailForm() {
     });
   });
 
+  /* -----------------------------
+     Color selection
+  ----------------------------- */
+  document.querySelectorAll('.product-detail__color-swatch').forEach(swatch => {
+    swatch.addEventListener('click', (e) => {
+      e.preventDefault();
+      document
+        .querySelectorAll('.product-detail__color-swatch')
+        .forEach(s => s.classList.remove('active'));
+
+      swatch.classList.add('active');
+
+      // Get color name from data attribute
+      let colorName = swatch.getAttribute('data-color-name') || swatch.dataset.colorName;
+      const colorHex = swatch.getAttribute('data-color') || swatch.dataset.color || '';
+      
+      // If no color name or it's a hex code, detect it
+      if (!colorName || colorName.startsWith('#')) {
+        // Try to extract from aria-label
+        const ariaLabel = swatch.getAttribute('aria-label') || '';
+        const match = ariaLabel.match(/Select\s+(\w+)\s+color/i);
+        if (match) {
+          colorName = match[1];
+        } else {
+          // Detect from hex value
+          const hexLower = colorHex.toLowerCase();
+          if (hexLower === '#0080ea') colorName = 'blue';
+          else if (hexLower === '#ff2caf') colorName = 'pink';
+          else if (hexLower === '#ffd217') colorName = 'yellow';
+          else colorName = colorHex;
+        }
+      }
+      
+      const imageIndex = parseInt(swatch.getAttribute('data-image-index') || swatch.dataset.imageIndex || '-1', 10);
+
+      // Update hidden input with color name (not hex)
+      const colorInput = document.getElementById('product-color');
+      if (colorInput) {
+        colorInput.value = colorName;
+      }
+
+      // Update textarea with selected color name
+      const commentTextarea = document.getElementById('mce-COMMENT');
+      if (commentTextarea) {
+        const currentText = commentTextarea.value;
+        // Remove old color reference if exists
+        const textWithoutColor = currentText.replace(/, color: [^,]+/i, '');
+        // Update textarea with color name
+        commentTextarea.value = textWithoutColor.trim() + `, color: ${colorName}`;
+      }
+
+      // Navigate swiper to the correct image for this color
+      // Mapping: Blue (index 0) -> slide 0 (card-1), Pink (index 1) -> slide 2 (card-3), Yellow (index 2) -> slide 1 (card-2)
+      if (!isNaN(imageIndex) && imageIndex >= 0) {
+        // Map color index to slide index: Blue->0, Pink->2, Yellow->1
+        const slideIndexMap = [0, 2, 1]; // Blue->slide 0, Pink->slide 2, Yellow->slide 1
+        const targetSlideIndex = slideIndexMap[imageIndex] !== undefined ? slideIndexMap[imageIndex] : imageIndex;
+        
+        // Navigate to the correct slide
+        if (window.mainSwiper) {
+          window.mainSwiper.slideTo(targetSlideIndex, 300);
+        }
+      }
+    });
+  });
 
   /* -----------------------------
      Phone mask (simple & safe)
@@ -73,7 +138,7 @@ function initProductDetailForm() {
       let value = phoneInput.value.replace(/\D/g, '');
 
       // limit length (adjust if needed)
-      value = value.substring(0, 12);
+      value = value.substring(0, 13);
 
       let formatted = '';
       if (value.length > 0) formatted = '+' + value.substring(0, 3);

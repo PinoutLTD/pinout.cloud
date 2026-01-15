@@ -10,6 +10,17 @@
   <main class="product-detail">
     <section class="product-detail-section">
       <div class="layout">
+        <!-- Breadcrumbs -->
+        <nav class="product-detail__breadcrumbs" aria-label="Breadcrumb">
+          <ol class="product-detail__breadcrumbs-list">
+            <li class="product-detail__breadcrumbs-item text">
+              <a href="./index.html" class="product-detail__breadcrumbs-link">Shop</a>
+            </li>
+            <li class="product-detail__breadcrumbs-item text" aria-current="page">
+              <span class="product-detail__breadcrumbs-current">Boiler Switch Upgrade</span>
+            </li>
+          </ol>
+        </nav>
         <!-- Product Overview Section -->
         <div class="grid grid-2 product-detail__overview">
           <!-- Product Image Slider -->
@@ -91,19 +102,23 @@
               <p class="text-normal">Upgrade your home with a smart boiler heater switch! This service includes both the smart switch, professional installation by our expert technicians and programming according to your needs.</p>
             </div>
 
+            
             <div class="product-detail__delivery">
               <p class="text-normal"><b>Delivery:</b> Within 24 hours, the service is available across Cyprus after placing your order.</p>
             </div>
 
+            
             <div class="product-detail__payment">
               <p class="text-normal"><b>Payment:</b> Payment is made after the service is completed.</p>
               <div class="product-detail__payment-methods">
                 <span class="text-normal">Payment methods:</span>
+                <img src="../../img/shop/revolut.svg" alt="Revolut" class="product-detail__payment-icon"/>
                 <img src="../../img/shop/visa.svg" alt="Visa" class="product-detail__payment-icon"/>
                 <img src="../../img/shop/mastercard.svg" alt="Mastercard" class="product-detail__payment-icon"/>
-                <img src="../../img/shop/cash.svg" alt="Cash" class="product-detail__payment-icon"/>
               </div>
             </div>
+
+            
 
             <div class="product-detail__actions">
               <a href="#product-form" class="text button product-detail__order-btn" data-product="Boiler Switch Upgrade">ORDER NOW</a>
@@ -137,6 +152,7 @@
         </div>
 
         <!-- How It Works Section -->
+        
         <div class="product-detail__how-it-works">
           <h2 class="subtitle">HOW IT WORKS</h2>
           <div class="product-detail__steps grid grid-4">
@@ -170,6 +186,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Optional extra sections for specific products (e.g. Home Server) -->
+        
 
         <!-- Contact Form Section -->
         <div class="grid-2 product-detail__form-section grid" id="product-form">
@@ -265,6 +284,9 @@
 
             <!-- PRODUCT -->
             <input type="hidden" name="PRODUCT" value="Boiler Switch Upgrade">
+
+            <!-- COLOR -->
+            
 
             <input type="hidden" name="REQUEST" value="new product">
 

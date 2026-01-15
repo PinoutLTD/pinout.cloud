@@ -75,3 +75,8 @@ const swiperSpecialOffer = new Swiper('.swiper-solutions', {
     }
   });
 
+  // Make swiper accessible globally for color switching
+  if (mainSwiper) {
+    window.mainSwiper = mainSwiper;
+  }
+

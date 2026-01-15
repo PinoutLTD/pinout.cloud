@@ -10,6 +10,17 @@
   <main class="product-detail">
     <section class="product-detail-section">
       <div class="layout">
+        <!-- Breadcrumbs -->
+        <nav class="product-detail__breadcrumbs" aria-label="Breadcrumb">
+          <ol class="product-detail__breadcrumbs-list">
+            <li class="product-detail__breadcrumbs-item text">
+              <a href="./index.html" class="product-detail__breadcrumbs-link">Shop</a>
+            </li>
+            <li class="product-detail__breadcrumbs-item text" aria-current="page">
+              <span class="product-detail__breadcrumbs-current">{{PRODUCT_TITLE}}</span>
+            </li>
+          </ol>
+        </nav>
         <!-- Product Overview Section -->
         <div class="grid grid-2 product-detail__overview">
           <!-- Product Image Slider -->
@@ -57,19 +68,11 @@
               <p class="text-normal">{{PRODUCT_DESCRIPTION}}</p>
             </div>
 
-            <div class="product-detail__delivery">
-              <p class="text-normal"><b>Delivery:</b> Within 24 hours, the service is available across Cyprus after placing your order.</p>
-            </div>
+            {{PRODUCT_DELIVERY}}
 
-            <div class="product-detail__payment">
-              <p class="text-normal"><b>Payment:</b> Payment is made after the service is completed.</p>
-              <div class="product-detail__payment-methods">
-                <span class="text-normal">Payment methods:</span>
-                <img src="../../img/shop/visa.svg" alt="Visa" class="product-detail__payment-icon"/>
-                <img src="../../img/shop/mastercard.svg" alt="Mastercard" class="product-detail__payment-icon"/>
-                <img src="../../img/shop/cash.svg" alt="Cash" class="product-detail__payment-icon"/>
-              </div>
-            </div>
+            {{PRODUCT_PAYMENT}}
+
+            {{PRODUCT_COLOR_OPTIONS}}
 
             <div class="product-detail__actions">
               <a href="#product-form" class="text button product-detail__order-btn" data-product="{{PRODUCT_TITLE}}">ORDER NOW</a>
@@ -97,39 +100,10 @@
         </div>
 
         <!-- How It Works Section -->
-        <div class="product-detail__how-it-works">
-          <h2 class="subtitle">HOW IT WORKS</h2>
-          <div class="product-detail__steps grid grid-4">
-            <div class="product-detail__step">
-              <div class="product-detail__step-icon">
-                <img src="../../img/shop/delivery.png" alt="Fast Delivery"/>
-              </div>
-              <h3 class="text">FAST DELIVERY</h3>
-              <p class="text-normal">We deliver across Cyprus within 24 hours after your order is placed.</p>
-            </div>
-            <div class="product-detail__step">
-              <div class="product-detail__step-icon">
-                <img src="../../img/shop/setup.png" alt="Installation & Setup"/>
-              </div>
-              <h3 class="text">INSTALLATION & SETUP</h3>
-              <p class="text-normal">We install the equipment, connect your smart home system, and configure automations.</p>
-            </div>
-            <div class="product-detail__step">
-              <div class="product-detail__step-icon">
-                <img src="../../img/shop/training.png" alt="Training & Handover"/>
-              </div>
-              <h3 class="text">TRAINING & HANDOVER</h3>
-              <p class="text-normal">We show you how to use the system, control it from your phone, and optimize daily operation.</p>
-            </div>
-            <div class="product-detail__step">
-              <div class="product-detail__step-icon">
-                <img src="../../img/shop/perfomance.png" alt="Performance Check"/>
-              </div>
-              <h3 class="text">PERFORMANCE CHECK</h3>
-              <p class="text-normal">We monitor and test the system to ensure stable, correct, and reliable performance.</p>
-            </div>
-          </div>
-        </div>
+        {{PRODUCT_HOW_IT_WORKS}}
+
+        <!-- Optional extra sections for specific products (e.g. Home Server) -->
+        {{PRODUCT_EXTRA_SECTIONS}}
 
         <!-- Contact Form Section -->
         <div class="grid-2 product-detail__form-section grid" id="product-form">
@@ -225,6 +199,9 @@
 
             <!-- PRODUCT -->
             <input type="hidden" name="PRODUCT" value="{{PRODUCT_TITLE}}">
+
+            <!-- COLOR -->
+            {{PRODUCT_COLOR_INPUT}}
 
             <input type="hidden" name="REQUEST" value="new product">
 
