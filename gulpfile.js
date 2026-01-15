@@ -356,13 +356,9 @@ ${stepsHTML}
     const availabilityText = product.available ?  'available' : 'Not available';
     pageContent = pageContent.replace(/\{\{PRODUCT_AVAILABILITY\}\}/g, availabilityText);
 
-    // Handle prefilled comment (include color if available)
-    let prefilledComment = `I want ${product.title.toLowerCase()} automation`;
-    if (product.colors && product.colors.length > 0) {
-      const defaultColor = typeof product.colors[0] === 'string' ? product.colors[0] : (product.colors[0].value || product.colors[0]);
-      const colorName = typeof product.colors[0] === 'object' && product.colors[0].name ? product.colors[0].name : (defaultColor === '#0080ea' ? 'blue' : defaultColor === '#ff2caf' ? 'pink' : defaultColor === '#ffd217' ? 'yellow' : defaultColor);
-      prefilledComment += `, color: ${colorName}`;
-    }
+    // Handle prefilled comment (home-server doesn't need "automation")
+    const automationText = (product.id === 'home-server' || product.slug === 'home-server') ? '' : ' automation';
+    const prefilledComment = `I want ${product.title.toLowerCase()}${automationText}`;
     pageContent = pageContent.replace(/\{\{PRODUCT_COMMENT_PREFILL\}\}/g, prefilledComment);
 
     // Handle quantity selector for products with additionalUnitPrice (AC and Underfloor Heating)
@@ -918,13 +914,9 @@ ${stepsHTML}
     const availabilityText = product.available ?  'available' : 'Not available';
     pageContent = pageContent.replace(/\{\{PRODUCT_AVAILABILITY\}\}/g, availabilityText);
 
-    // Handle prefilled comment (include color if available)
-    let prefilledComment = `I want ${product.title.toLowerCase()} automation`;
-    if (product.colors && product.colors.length > 0) {
-      const defaultColor = typeof product.colors[0] === 'string' ? product.colors[0] : (product.colors[0].value || product.colors[0]);
-      const colorName = typeof product.colors[0] === 'object' && product.colors[0].name ? product.colors[0].name : (defaultColor === '#0080ea' ? 'blue' : defaultColor === '#ff2caf' ? 'pink' : defaultColor === '#ffd217' ? 'yellow' : defaultColor);
-      prefilledComment += `, color: ${colorName}`;
-    }
+    // Handle prefilled comment (home-server doesn't need "automation")
+    const automationText = (product.id === 'home-server' || product.slug === 'home-server') ? '' : ' automation';
+    const prefilledComment = `I want ${product.title.toLowerCase()}${automationText}`;
     pageContent = pageContent.replace(/\{\{PRODUCT_COMMENT_PREFILL\}\}/g, prefilledComment);
 
     // Handle quantity selector for products with additionalUnitPrice

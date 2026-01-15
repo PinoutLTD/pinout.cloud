@@ -104,16 +104,6 @@ function initProductDetailForm() {
         colorInput.value = colorName;
       }
 
-      // Update textarea with selected color name
-      const commentTextarea = document.getElementById('mce-COMMENT');
-      if (commentTextarea) {
-        const currentText = commentTextarea.value;
-        // Remove old color reference if exists
-        const textWithoutColor = currentText.replace(/, color: [^,]+/i, '');
-        // Update textarea with color name
-        commentTextarea.value = textWithoutColor.trim() + `, color: ${colorName}`;
-      }
-
       // Navigate swiper to the correct image for this color
       // Mapping: Blue (index 0) -> slide 0 (card-1), Pink (index 1) -> slide 2 (card-3), Yellow (index 2) -> slide 1 (card-2)
       if (!isNaN(imageIndex) && imageIndex >= 0) {
