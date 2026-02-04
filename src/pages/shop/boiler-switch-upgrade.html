@@ -1,36 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-  @include('../../partials/head.html', {
-    "pageTitle": "Boiler Switch Upgrade / Pinout",
-  })
-<body>
-  <!-- website header -->
-  @include('../../partials/header.html')
+  @include('../../partials/head.html', { "pageTitle": "Boiler Switch Upgrade / Pinout" })
+  <body>
+    <!-- website header -->
+    @include('../../partials/header.html')
 
-  <main class="product-detail">
-    <section class="product-detail-section">
-      <div class="layout">
-        <!-- Breadcrumbs -->
-        <nav class="product-detail__breadcrumbs" aria-label="Breadcrumb">
-          <ol class="product-detail__breadcrumbs-list">
-            <li class="product-detail__breadcrumbs-item text">
-              <a href="./index.html" class="product-detail__breadcrumbs-link">Shop</a>
-            </li>
-            <li class="product-detail__breadcrumbs-item text" aria-current="page">
-              <span class="product-detail__breadcrumbs-current">Boiler Switch Upgrade</span>
-            </li>
-          </ol>
-        </nav>
-        <!-- Product Overview Section -->
-        <div class="grid grid-2 product-detail__overview">
-          <!-- Product Image Slider -->
-          <div class="product-detail__gallery">
-            <div class="product-detail__gallery-wrapper">
-              <!-- Thumbnails with Navigation -->
-              <div class="product-detail__thumbs-wrapper">
-                <div class="swiper product-detail__thumbs">
-                  <div class="swiper-wrapper">
-                                      <div class="swiper-slide">
+    <main class="product-detail">
+      <section class="product-detail-section">
+        <div class="layout">
+          <!-- Breadcrumbs -->
+          <nav class="product-detail__breadcrumbs" aria-label="Breadcrumb">
+            <ol class="product-detail__breadcrumbs-list">
+              <li class="product-detail__breadcrumbs-item text">
+                <a href="./index.html" class="product-detail__breadcrumbs-link"
+                  >Shop</a
+                >
+              </li>
+              <li
+                class="product-detail__breadcrumbs-item text"
+                aria-current="page"
+              >
+                <span class="product-detail__breadcrumbs-current"
+                  >Boiler Switch Upgrade</span
+                >
+              </li>
+            </ol>
+          </nav>
+          <!-- Product Overview Section -->
+          <div class="grid grid-2 product-detail__overview">
+            <!-- Product Image Slider -->
+            <div class="product-detail__gallery">
+              <div class="product-detail__gallery-wrapper">
+                <!-- Thumbnails with Navigation -->
+                <div class="product-detail__thumbs-wrapper">
+                  <div class="swiper product-detail__thumbs">
+                    <div class="swiper-wrapper">                  <div class="swiper-slide">
                     <img src="../img/shop/banners/boiler-heater/card-1.jpg" alt="Boiler Switch Upgrade"/>
                   </div>
                   <div class="swiper-slide">
@@ -47,19 +51,25 @@
                   </div>
                   <div class="swiper-slide">
                     <img src="../img/shop/banners/boiler-heater/card-6.jpg" alt="Boiler Switch Upgrade"/>
+                  </div></div>
                   </div>
+                  <!-- Navigation buttons for main swiper -->
+                  <div class="product-detail__swiper-navigation">
+                    <button
+                      type="button"
+                      class="product-detail__swiper-button-prev"
+                      aria-label="Previous slide"
+                    ></button>
+                    <button
+                      type="button"
+                      class="product-detail__swiper-button-next"
+                      aria-label="Next slide"
+                    ></button>
                   </div>
                 </div>
-                <!-- Navigation buttons for main swiper -->
-                <div class="product-detail__swiper-navigation">
-                  <button type="button" class="product-detail__swiper-button-prev" aria-label="Previous slide"></button>
-                  <button type="button" class="product-detail__swiper-button-next" aria-label="Next slide"></button>
-                </div>
-              </div>
-              <!-- Main Swiper -->
-              <div class="swiper product-detail__swiper">
-                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
+                <!-- Main Swiper -->
+                <div class="swiper product-detail__swiper">
+                  <div class="swiper-wrapper">                  <div class="swiper-slide">
                     <img src="../img/shop/banners/boiler-heater/card-1.jpg" alt="Boiler Switch Upgrade"/>
                   </div>
                   <div class="swiper-slide">
@@ -76,83 +86,89 @@
                   </div>
                   <div class="swiper-slide">
                     <img src="../img/shop/banners/boiler-heater/card-6.jpg" alt="Boiler Switch Upgrade"/>
-                  </div>
+                  </div></div>
+                  <div class="swiper-pagination"></div>
                 </div>
-                <div class="swiper-pagination"></div>
               </div>
             </div>
-          </div>
 
-          <!-- Product Info -->
-          <div class="product-detail__info">
-            <div class="product-detail__header">
-              <h1 class="page-title">Boiler Switch Upgrade</h1>
-              <span class="text-normal product-detail__availability-tag">available</span>
-            </div>
+            <!-- Product Info -->
+            <div class="product-detail__info">
+              <div class="product-detail__header">
+                <h1 class="page-title">Boiler Switch Upgrade</h1>
+                <span class="text-normal product-detail__availability-tag"
+                  >available</span
+                >
+              </div>
 
-            <div class="product-detail__price">
-              <span class="text product-detail__price-main">€ 160.00</span>
-              <span class="text product-detail__price-old">€ 200.00</span>
-              <span class="text-normal product-detail__tax">*Tax incl.</span>
-            </div>
+              <div class="product-detail__price">
+                <span class="text product-detail__price-main"
+                  >€ 160.00</span
+                >
+                <span class="text product-detail__price-old">€ 200.00</span>
+                <span class="text-normal product-detail__tax">*Tax incl.</span>
+              </div>
 
-            
+              
 
-            <div class="product-detail__description">
-              <p class="text-normal">Upgrade your home with a smart boiler heater switch! This service includes both the smart switch, professional installation by our expert technicians and programming according to your needs.</p>
-            </div>
+              <div class="product-detail__description">
+                <p class="text-normal">Upgrade your home with a smart boiler heater switch! This service includes both the smart switch, professional installation by our expert technicians and programming according to your needs.</p>
+              </div>
 
-            
+              
+              
             <div class="product-detail__delivery">
               <p class="text-normal"><b>Delivery:</b> Within 24 hours, the service is available across Cyprus after placing your order.</p>
-            </div>
-
-            
+            </div> 
             <div class="product-detail__payment">
-              <p class="text-normal"><b>Payment:</b> Payment is made after the service is completed.</p>
+              
               <div class="product-detail__payment-methods">
                 <span class="text-normal">Payment methods:</span>
                 <img src="../../img/shop/revolut.svg" alt="Revolut" class="product-detail__payment-icon"/>
                 <img src="../../img/shop/visa.svg" alt="Visa" class="product-detail__payment-icon"/>
                 <img src="../../img/shop/mastercard.svg" alt="Mastercard" class="product-detail__payment-icon"/>
+                <img src="./img/shop/cash.svg" alt="Cash" class="product-detail__payment-icon"/>
+              </div>
+            </div>  
+
+              <div class="product-detail__actions">
+                <a
+                  href="#product-form"
+                  class="text button product-detail__order-btn"
+                  data-product="Boiler Switch Upgrade"
+                  >ORDER NOW</a
+                >
               </div>
             </div>
-
-            
-
-            <div class="product-detail__actions">
-              <a href="#product-form" class="text button product-detail__order-btn" data-product="Boiler Switch Upgrade">ORDER NOW</a>
-            </div>
           </div>
-        </div>
 
-        <!-- What's Included & Benefits Section -->
-        <div class="product-detail__features-benefits grid grid-2">
-          <!-- What's Included -->
-          <div class="product-detail__whats-included">
-            <h2 class="subtitle">WHAT'S INCLUDED?</h2>
-            <ul class="product-detail__features-list">
-              <li class="text-normal">A smart switch for boiler heater 20A, Wi-Fi</li>
+          <!-- What's Included & Benefits Section -->
+          <div class="product-detail__features-benefits grid grid-2">
+            <!-- What's Included -->
+            <div class="product-detail__whats-included">
+              <h2 class="subtitle">WHAT'S INCLUDED?</h2>
+              <ul class="product-detail__features-list">
+                <li class="text-normal">A smart switch for boiler heater 20A, Wi-Fi</li>
               <li class="text-normal">Professional installation by our technicians</li>
               <li class="text-normal">Configuration and integration with your smart home system (e.g., Home Assistant, Alexa, Google Home)</li>
               <li class="text-normal">Guidance on using and automating your new smart switch</li>
-            </ul>
-          </div>
+              </ul>
+            </div>
 
-          <!-- Benefits -->
-          <div class="product-detail__benefits">
-            <h2 class="subtitle">BENEFITS:</h2>
-            <ul class="product-detail__features-list">
-              <li class="text-normal">Energy Efficiency - Schedule and automate your boiler heating for optimal savings</li>
+            <!-- Benefits -->
+            <div class="product-detail__benefits">
+              <h2 class="subtitle">BENEFITS:</h2>
+              <ul class="product-detail__features-list">
+                <li class="text-normal">Energy Efficiency - Schedule and automate your boiler heating for optimal savings</li>
               <li class="text-normal">Remote Control - Turn your boiler on or off from anywhere using your smartphone</li>
               <li class="text-normal">Smart Home Integration - Connect it to your existing smart home ecosystem</li>
               <li class="text-normal">Peace of Mind - No more worrying about whether you left the heater on</li>
-            </ul>
+              </ul>
+            </div>
           </div>
-        </div>
 
-        <!-- How It Works Section -->
-        
+          <!-- How It Works Section -->
+          
         <div class="product-detail__how-it-works">
           <h2 class="subtitle">HOW IT WORKS</h2>
           <div class="product-detail__steps grid grid-4">
@@ -187,143 +203,199 @@
           </div>
         </div>
 
-        <!-- Optional extra sections for specific products (e.g. Home Server) -->
-        
+          <!-- Optional extra sections for specific products (e.g. Home Server) -->
+          
 
-        <!-- Contact Form Section -->
-        <div class="grid-2 product-detail__form-section grid" id="product-form">
-          <div class="product-detail__form-header">
-            <h2 class="page-title">Submit your request</h2>
-            <p class="text-normal product-detail__form-intro">
-              We will contact you within 24 hours. <br> Delivery is available within 24 hours after your request. <br> Payment is made after the service is completed.
-            </p>
-          </div>
-
-          <form
-            class="product-detail__form"
-            action="https://cloud.us17.list-manage.com/subscribe/post?u=e4dba595a375a9f342a2436aa&amp;id=35b2cf1c49&amp;f_id=00561be3f0"
-            method="post"
-            target="_blank"
-            id="mc-embedded-subscribe-form"
-            name="mc-embedded-subscribe-form"
+          <!-- Contact Form Section -->
+          <div
+            class="grid-2 product-detail__form-section grid"
+            id="product-form"
           >
-
-            <!-- EMAIL -->
-            <div>
-              <input
-                type="email"
-                name="EMAIL"
-                id="mce-EMAIL"
-                class="contacts-form__input"
-                placeholder="your email*"
-                required
-              >
+            <div class="product-detail__form-header">
+              <h2 class="page-title">Submit your request</h2>
+              <p class="text-normal product-detail__form-intro">
+                We will contact you within 24 hours. <br> Delivery is available within 24 hours after your request.  <br> Payment is made after the service is completed.
+              </p>
             </div>
 
-            <!-- NAME -->
-            <div>
-              <input
-                type="text"
-                name="NAME"
-                id="mce-NAME"
-                class="contacts-form__input"
-                placeholder="your name"
-              >
-            </div>
+            <form
+              class="product-detail__form"
+              action="https://cloud.us17.list-manage.com/subscribe/post?u=e4dba595a375a9f342a2436aa&amp;id=35b2cf1c49&amp;f_id=00561be3f0"
+              method="post"
+              target="_blank"
+              id="mc-embedded-subscribe-form"
+              name="mc-embedded-subscribe-form"
+            >
+              <!-- EMAIL (hidden - generated from phone, Mailchimp requires EMAIL) -->
+              <input type="hidden" name="EMAIL" id="mce-EMAIL" value="" />
 
-            <!-- PHONE -->
-            <div>
-              <input
-                type="tel"
-                name="PHONE"
-                id="mce-PHONE"
-                class="contacts-form__input"
-                placeholder="your phone number*"
-                required
-              >
-            </div>
-
-            <!-- ADDRESS (only for home-server) -->
-            
-
-            <!-- CONTACT METHOD -->
-            <div>
-              <label class="text-normal">your preferred contact method</label>
-              <div class="product-detail__contact-methods">
-                <button type="button" class="product-detail__contact-method" data-method="telegram">telegram</button>
-                <button type="button" class="product-detail__contact-method" data-method="whatsapp">whatsapp</button>
-                <button type="button" class="product-detail__contact-method active" data-method="sms">sms</button>
-                <button type="button" class="product-detail__contact-method" data-method="call">call mobile</button>
+              <!-- NAME -->
+              <div>
+                <input
+                  type="text"
+                  name="NAME"
+                  id="mce-NAME"
+                  class="contacts-form__input"
+                  placeholder="your name"
+                />
               </div>
-              <input type="hidden" name="TYPE" id="contact-method" value="sms">
-            </div>
 
-            <!-- LANGUAGE -->
-            <div>
-              <label class="text-normal">select language</label>
-              <div class="product-detail__contact-methods">
-                <button type="button" class="product-detail__contact-method active" data-lang="English">English</button>
-                <button type="button" class="product-detail__contact-method" data-lang="Russian">Russian</button>
+              <!-- PHONE -->
+              <div>
+                <input
+                  type="tel"
+                  name="PHONE"
+                  id="mce-PHONE"
+                  class="contacts-form__input"
+                  placeholder="your phone number*"
+                  required
+                />
               </div>
-              <input type="hidden" name="LANGUAGE" id="language" value="English">
-            </div>
 
-            
+              <!-- ADDRESS (only for home-server) -->
+              
 
-            <!-- COMMENT -->
-            <div>
-              <textarea name="COMMENT" id="mce-COMMENT" class="product-detail__textarea contacts-form__input contacts-form__textarea" placeholder="your message (optional)" maxlength="100">I want boiler switch upgrade automation</textarea>
-            </div>
+              <!-- CONTACT METHOD -->
+              <div>
+                <label class="text-normal">your preferred contact method</label>
+                <div class="product-detail__contact-methods">
+                  <button
+                    type="button"
+                    class="product-detail__contact-method"
+                    data-method="telegram"
+                  >
+                    telegram
+                  </button>
+                  <button
+                    type="button"
+                    class="product-detail__contact-method"
+                    data-method="whatsapp"
+                  >
+                    whatsapp
+                  </button>
+                  <button
+                    type="button"
+                    class="product-detail__contact-method active"
+                    data-method="sms"
+                  >
+                    sms
+                  </button>
+                  <button
+                    type="button"
+                    class="product-detail__contact-method"
+                    data-method="call"
+                  >
+                    call mobile
+                  </button>
+                </div>
+                <input
+                  type="hidden"
+                  name="TYPE"
+                  id="contact-method"
+                  value="sms"
+                />
+              </div>
 
-            <!-- TERMS -->
-            <div>
-              <label class="checkbox subfield contacts-form__checkbox contacts__checkbox custom-checkbox" for="gdpr96449">
-                <input type="checkbox" id="gdpr_96449" name="gdpr[96449]" class="gdpr custom-checkbox__field" value="Y" required>
-                <span class="custom-checkbox__content text-normal">
-                  I accept the Terms & Conditions
-                </span>
-              </label>
-            </div>
+              <!-- LANGUAGE -->
+              <div>
+                <label class="text-normal">select language</label>
+                <div class="product-detail__contact-methods">
+                  <button
+                    type="button"
+                    class="product-detail__contact-method active"
+                    data-lang="English"
+                  >
+                    English
+                  </button>
+                  <button
+                    type="button"
+                    class="product-detail__contact-method"
+                    data-lang="Russian"
+                  >
+                    Russian
+                  </button>
+                </div>
+                <input
+                  type="hidden"
+                  name="LANGUAGE"
+                  id="language"
+                  value="English"
+                />
+              </div>
 
-            <!-- PRODUCT -->
-            <input type="hidden" name="PRODUCT" value="Boiler Switch Upgrade">
+              
 
-            <!-- COLOR -->
-            
+              <!-- COMMENT -->
+              <div>
+                <textarea
+                  name="COMMENT"
+                  id="mce-COMMENT"
+                  class="product-detail__textarea contacts-form__input contacts-form__textarea"
+                  placeholder="your message (optional)"
+                  maxlength="100"
+                >
+Hello, I would like to order  boiler switch upgrade. Please contact me.</textarea
+                >
+              </div>
 
-            <input type="hidden" name="REQUEST" value="new product">
+              <!-- TERMS -->
+              <div>
+                <label
+                  class="checkbox subfield contacts-form__checkbox contacts__checkbox custom-checkbox"
+                  for="gdpr96449"
+                >
+                  <input
+                    type="checkbox"
+                    id="gdpr_96449"
+                    name="gdpr[96449]"
+                    class="gdpr custom-checkbox__field"
+                    value="Y"
+                    required
+                  />
+                  <span class="custom-checkbox__content text-normal">
+                    I accept the Terms & Conditions
+                  </span>
+                </label>
+              </div>
 
-            <!-- TAG -->
-            <input type="hidden" name="tags" value="8329957, order">
+              <!-- PRODUCT -->
+              <input type="hidden" name="PRODUCT" value="Boiler Switch Upgrade" />
 
-            <!-- HONEYPOT -->
-            <div style="position:absolute; left:-5000px;" aria-hidden="true">
-              <input
-                type="text"
-                name="b_e4dba595a375a9f342a2436aa_35b2cf1c49"
-                tabindex="-1"
-                value=""
-              >
-            </div>
+              <!-- COLOR -->
+              
 
-            <!-- SUBMIT -->
-            <div class="contacs-form__btn-wrapper">
-              <button
-                type="submit"
-                name="subscribe"
-                class="contacts-form__btn button link-font link-with-arrow link">
-                submit
-              </button>
-            </div>
-          </form>
+              <input type="hidden" name="REQUEST" value="new product" />
 
+              <!-- TAG -->
+              <input type="hidden" name="tags" value="8329957, order" />
+
+              <!-- HONEYPOT -->
+              <div style="position: absolute; left: -5000px" aria-hidden="true">
+                <input
+                  type="text"
+                  name="b_e4dba595a375a9f342a2436aa_35b2cf1c49"
+                  tabindex="-1"
+                  value=""
+                />
+              </div>
+
+              <!-- SUBMIT -->
+              <div class="contacs-form__btn-wrapper">
+                <button
+                  type="submit"
+                  name="subscribe"
+                  class="contacts-form__btn button link-font link-with-arrow link"
+                >
+                  submit
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
+    </main>
 
-  <!-- website footer -->
-  @include('../../partials/footer.html')
-
-</body>
+    <!-- website footer -->
+    @include('../../partials/footer.html')
+  </body>
 </html>

@@ -4,7 +4,6 @@ function initProductDetailForm() {
   if (!form) return;
 
   const phoneInput = form.querySelector('#mce-PHONE');
-  const emailInput = form.querySelector('#mce-EMAIL');
 
   /* -----------------------------
      Contact method selection
@@ -64,6 +63,42 @@ function initProductDetailForm() {
   });
 
   /* -----------------------------
+     Product variant selection (e.g. robot vacuum model)
+  ----------------------------- */
+  document.querySelectorAll('.product-detail__variant-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      document
+        .querySelectorAll('.product-detail__variant-card')
+        .forEach(c => c.classList.remove('active'));
+
+      card.classList.add('active');
+
+      const variantName = card.getAttribute('data-variant-name') || card.dataset.variantName || '';
+      const variantId = card.getAttribute('data-variant-id') || card.dataset.variantId || variantName || '';
+      const variantInput = document.getElementById('product-variant');
+      const commentTextarea = document.getElementById('mce-COMMENT');
+      const defaultPrice = document.querySelector('.product-detail__price-main');
+      const defaultOldPrice = document.querySelector('.product-detail__price-old');
+      const currentPrice = card.querySelector('.product-detail__variant-price').innerText;
+      const currentOldPrice = card.querySelector('.product-detail__variant-price-old').innerText;
+
+      defaultOldPrice.innerText = currentOldPrice;
+      defaultPrice.innerText = currentPrice;
+
+
+      if (variantInput) {
+        // Store the internal variant ID (or fall back to name)
+        variantInput.value = variantId;
+      }
+
+      if (commentTextarea && variantName) {
+        commentTextarea.value = `Hello, I would like to order ${variantName} with Installation & Automation. Please contact me.`;
+      }
+    });
+  });
+
+  /* -----------------------------
      Color selection
   ----------------------------- */
   document.querySelectorAll('.product-detail__color-swatch').forEach(swatch => {
@@ -91,7 +126,6 @@ function initProductDetailForm() {
           const hexLower = colorHex.toLowerCase();
           if (hexLower === '#0080ea') colorName = 'blue';
           else if (hexLower === '#ff2caf') colorName = 'pink';
-          else if (hexLower === '#ffd217') colorName = 'yellow';
           else colorName = colorHex;
         }
       }
@@ -105,10 +139,9 @@ function initProductDetailForm() {
       }
 
       // Navigate swiper to the correct image for this color
-      // Mapping: Blue (index 0) -> slide 0 (card-1), Pink (index 1) -> slide 2 (card-3), Yellow (index 2) -> slide 1 (card-2)
       if (!isNaN(imageIndex) && imageIndex >= 0) {
         // Map color index to slide index: Blue->0, Pink->2, Yellow->1
-        const slideIndexMap = [7, 8, 9]; // Blue->slide 1, Pink->slide 2, Yellow->slide 3
+        const slideIndexMap = [9, 10]; // Blue->slide 10, Pink->slide 11
         const targetSlideIndex = slideIndexMap[imageIndex] !== undefined ? slideIndexMap[imageIndex] : imageIndex;
 
         // Navigate to the correct slide
@@ -146,14 +179,6 @@ function initProductDetailForm() {
   ----------------------------- */
   form.addEventListener('submit', (e) => {
     let hasError = false;
-
-    // Email validation
-    if (!emailInput || !emailInput.value.trim()) {
-      hasError = true;
-      emailInput?.classList.add('input-error');
-    } else {
-      emailInput.classList.remove('input-error');
-    }
 
     // Phone validation (at least 8 digits)
     if (phoneInput) {

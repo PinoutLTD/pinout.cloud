@@ -222,35 +222,37 @@ ${colorSwatches}
     }
     pageContent = pageContent.replace(/\{\{PRODUCT_COLOR_INPUT\}\}/g, colorInputHTML);
 
-    // Handle delivery text - hide for home-server
+    // Handle warning (above delivery) - show only when product has warning key
+    let warningHTML = '';
+    if (product.warning) {
+      warningHTML = `
+            <div class="product-detail__warning">
+              <p class="text-normal">${product.warning}</p>
+            </div>`;
+    }
+    pageContent = pageContent.replace(/\{\{PRODUCT_WARNING\}\}/g, warningHTML);
+
+    // Handle delivery text
     let deliveryHTML = '';
-    if (product.slug !== 'home-server') {
-      if (product.delivery) {
-        deliveryHTML = `
+    if (product.delivery) {
+      deliveryHTML = `
             <div class="product-detail__delivery">
               <p class="text-normal"><b>Delivery:</b> ${product.delivery}</p>
             </div>`;
-      } else {
-        // Default delivery text
-        deliveryHTML = `
+    } else {
+      // Default delivery text
+      deliveryHTML = `
             <div class="product-detail__delivery">
               <p class="text-normal"><b>Delivery:</b> Within 24 hours, the service is available across Cyprus after placing your order.</p>
             </div>`;
-      }
     }
     pageContent = pageContent.replace(/\{\{PRODUCT_DELIVERY\}\}/g, deliveryHTML);
 
-    // Handle payment section - hide for home-server
+    // Handle payment section
     let paymentHTML = '';
-    if (product.slug !== 'home-server') {
-      let paymentTextHTML = '';
-      if (!product.paymentExtraTextOff) {
-        // Show payment text unless paymentExtraTextOff is true
-        const paymentText = product.payment || 'Payment is made after the service is completed.';
-        paymentTextHTML = `<p class="text-normal"><b>Payment:</b> ${paymentText}</p>`;
-      }
+    let paymentTextHTML = '';
 
-      paymentHTML = `
+    paymentHTML = `
             <div class="product-detail__payment">
               ${paymentTextHTML}
               <div class="product-detail__payment-methods">
@@ -258,10 +260,44 @@ ${colorSwatches}
                 <img src="../../img/shop/revolut.svg" alt="Revolut" class="product-detail__payment-icon"/>
                 <img src="../../img/shop/visa.svg" alt="Visa" class="product-detail__payment-icon"/>
                 <img src="../../img/shop/mastercard.svg" alt="Mastercard" class="product-detail__payment-icon"/>
+                <img src="./img/shop/cash.svg" alt="Cash" class="product-detail__payment-icon"/>
               </div>
             </div>`;
-    }
     pageContent = pageContent.replace(/\{\{PRODUCT_PAYMENT\}\}/g, paymentHTML);
+
+    // Handle product variants (e.g. robot vacuum model choice)
+    let variantsHTML = '';
+    if (product.variants && Array.isArray(product.variants) && product.variants.length > 0) {
+      const variantLabel = product.variantsLabel || 'Choose a robot vacuum*:';
+      const variantCards = product.variants.map((v, index) => {
+        const isActive = index === 0 ? ' active' : '';
+        const imagePath = (v.image || '').replace(/^\.\.\//, '../../').replace(/^\.\//, '../../');
+        const oldPriceHTML = v.oldPrice ? `<span class="product-detail__variant-price-old">€ ${v.oldPrice.toFixed(2)}</span>` : '';
+        return `                <button type="button" class="product-detail__variant-card${isActive}" data-variant-name="${(v.name || '').replace(/"/g, '&quot;')}" data-variant-id="${v.id || ''}">
+                  <div class="product-detail__variant-image">
+                    <img src="${imagePath}" alt="${(v.name || '').replace(/"/g, '&quot;')}"/>
+                  </div>
+                  <div class="product-detail__variant-info">
+                    <span class="product-detail__variant-name text">${v.name || ''}</span>
+                    <span class="product-detail__variant-include text-normal">incl. install</span>
+                    <div class="product-detail__variant-prices">
+                      ${oldPriceHTML}
+                      <span class="product-detail__variant-price text">€ ${(v.price || 0).toFixed(2)}</span>
+                    </div>
+                  </div>
+                </button>`;
+      }).join('\n');
+
+      variantsHTML = `
+            <div class="product-detail__variants">
+              <label class="text-normal product-detail__variants-label"><b>${variantLabel}</b></label>
+              <div class="product-detail__variant-cards">
+${variantCards}
+              </div>
+              <input type="hidden" name="VARIANT" id="product-variant" value="${(product.variants[0].id || product.variants[0].name || '').replace(/"/g, '&quot;')}">
+            </div>`;
+    }
+    pageContent = pageContent.replace(/\{\{PRODUCT_VARIANTS\}\}/g, variantsHTML);
 
     // Handle features
     let featuresHTML = '';
@@ -361,35 +397,22 @@ ${stepsHTML}
     const availabilityText = product.available ?  'available' : 'Not available';
     pageContent = pageContent.replace(/\{\{PRODUCT_AVAILABILITY\}\}/g, availabilityText);
 
-    // Handle prefilled comment (home-server doesn't need "automation")
-    const automationText = (product.id === 'home-server' || product.slug === 'home-server') ? '' : ' automation';
-    const prefilledComment = `I want ${product.title.toLowerCase()}${automationText}`;
+    // Handle prefilled comment (use first variant name if product has variants, e.g. robot vacuum)
+    let prefilledComment;
+    if (product.variants && product.variants.length > 0 && product.variants[0].name) {
+      prefilledComment = `Hello, I would like to order ${product.variants[0].name} with Installation & Automation. Please contact me.`;
+    } else {
+      prefilledComment = `Hello, I would like to order  ${product.title.toLowerCase()}. Please contact me.`;
+    }
     pageContent = pageContent.replace(/\{\{PRODUCT_COMMENT_PREFILL\}\}/g, prefilledComment);
 
-    // Handle address field - only for home-server
+    // Handle address field (not used by current products; kept for template compatibility)
     let addressFieldHTML = '';
-    if (product.slug === 'home-server') {
-      addressFieldHTML = `
-            <!-- ADDRESS -->
-            <div>
-              <input
-                type="text"
-                name="ADDRESS"
-                id="mce-ADDRESS"
-                class="contacts-form__input"
-                placeholder="your address"
-              >
-            </div>`;
-    }
     pageContent = pageContent.replace(/\{\{PRODUCT_ADDRESS_FIELD\}\}/g, addressFieldHTML);
 
-    // Handle form intro text - remove delivery/payment text for home-server
-    let formIntroText = '';
-    if (product.slug === 'home-server') {
-      formIntroText = 'We will contact you within 24 hours.';
-    } else {
-      formIntroText = 'We will contact you within 24 hours. <br> Delivery is available within 24 hours after your request. <br> Payment is made after the service is completed.';
-    }
+    // Handle form intro text
+    const formIntroText =
+      'We will contact you within 24 hours. <br> Delivery is available within 24 hours after your request.  <br> Payment is made after the service is completed.';
     pageContent = pageContent.replace(/\{\{PRODUCT_FORM_INTRO\}\}/g, formIntroText);
 
     // Handle quantity selector for products with additionalUnitPrice (AC and Underfloor Heating)
@@ -810,35 +833,37 @@ ${colorSwatches}
     }
     pageContent = pageContent.replace(/\{\{PRODUCT_COLOR_INPUT\}\}/g, colorInputHTML);
 
-    // Handle delivery text - hide for home-server
+    // Handle warning (above delivery) - show only when product has warning key
+    let warningHTML = '';
+    if (product.warning) {
+      warningHTML = `
+            <div class="product-detail__warning">
+              <p class="text-normal">${product.warning}</p>
+            </div>`;
+    }
+    pageContent = pageContent.replace(/\{\{PRODUCT_WARNING\}\}/g, warningHTML);
+
+    // Handle delivery text
     let deliveryHTML = '';
-    if (product.slug !== 'home-server') {
-      if (product.delivery) {
-        deliveryHTML = `
+    if (product.delivery) {
+      deliveryHTML = `
             <div class="product-detail__delivery">
               <p class="text-normal"><b>Delivery:</b> ${product.delivery}</p>
             </div>`;
-      } else {
-        // Default delivery text
-        deliveryHTML = `
+    } else {
+      // Default delivery text
+      deliveryHTML = `
             <div class="product-detail__delivery">
               <p class="text-normal"><b>Delivery:</b> Within 24 hours, the service is available across Cyprus after placing your order.</p>
             </div>`;
-      }
     }
     pageContent = pageContent.replace(/\{\{PRODUCT_DELIVERY\}\}/g, deliveryHTML);
 
-    // Handle payment section - hide for home-server
+    // Handle payment section
     let paymentHTML = '';
-    if (product.slug !== 'home-server') {
-      let paymentTextHTML = '';
-      if (!product.paymentExtraTextOff) {
-        // Show payment text unless paymentExtraTextOff is true
-        const paymentText = product.payment || 'Payment is made after the service is completed.';
-        paymentTextHTML = `<p class="text-normal"><b>Payment:</b> ${paymentText}</p>`;
-      }
+    let paymentTextHTML = '';
 
-      paymentHTML = `
+    paymentHTML = `
             <div class="product-detail__payment">
               ${paymentTextHTML}
               <div class="product-detail__payment-methods">
@@ -846,10 +871,44 @@ ${colorSwatches}
                 <img src="./img/shop/revolut.svg" alt="Revolut" class="product-detail__payment-icon"/>
                 <img src="./img/shop/visa.svg" alt="Visa" class="product-detail__payment-icon"/>
                 <img src="./img/shop/mastercard.svg" alt="Mastercard" class="product-detail__payment-icon"/>
+                <img src="./img/shop/cash.svg" alt="Cash" class="product-detail__payment-icon"/>
               </div>
             </div>`;
-    }
     pageContent = pageContent.replace(/\{\{PRODUCT_PAYMENT\}\}/g, paymentHTML);
+
+    // Handle product variants (e.g. robot vacuum model choice) - standalone build
+    let variantsHTML = '';
+    if (product.variants && Array.isArray(product.variants) && product.variants.length > 0) {
+      const variantLabel = product.variantsLabel || 'Choose a robot vacuum*:';
+      const variantCards = product.variants.map((v, index) => {
+        const isActive = index === 0 ? ' active' : '';
+        const imagePath = (v.image || '').replace(/^\.\.\/img\//, './img/').replace(/^\.\/img\//, './img/');
+        const oldPriceHTML = v.oldPrice ? `<span class="product-detail__variant-price-old">€ ${v.oldPrice.toFixed(2)}</span>` : '';
+        return `                <button type="button" class="product-detail__variant-card${isActive}" data-variant-name="${(v.name || '').replace(/"/g, '&quot;')}" data-variant-id="${v.id || ''}">
+                  <div class="product-detail__variant-image">
+                    <img src="${imagePath}" alt="${(v.name || '').replace(/"/g, '&quot;')}"/>
+                  </div>
+                  <div class="product-detail__variant-info">
+                    <span class="product-detail__variant-name text">${v.name || ''}</span>
+                    <span class="product-detail__variant-include text-normal">incl. install</span>
+                    <div class="product-detail__variant-prices">
+                      ${oldPriceHTML}
+                      <span class="product-detail__variant-price text">€ ${(v.price || 0).toFixed(2)}</span>
+                    </div>
+                  </div>
+                </button>`;
+      }).join('\n');
+
+      variantsHTML = `
+            <div class="product-detail__variants">
+              <label class="text-normal product-detail__variants-label"><b>${variantLabel}</b></label>
+              <div class="product-detail__variant-cards">
+${variantCards}
+              </div>
+              <input type="hidden" name="VARIANT" id="product-variant" value="${(product.variants[0].id || product.variants[0].name || '').replace(/"/g, '&quot;')}">
+            </div>`;
+    }
+    pageContent = pageContent.replace(/\{\{PRODUCT_VARIANTS\}\}/g, variantsHTML);
 
     // Handle features
     let featuresHTML = '';
@@ -950,36 +1009,22 @@ ${stepsHTML}
     const availabilityText = product.available ?  'available' : 'Not available';
     pageContent = pageContent.replace(/\{\{PRODUCT_AVAILABILITY\}\}/g, availabilityText);
 
-    // Handle prefilled comment (home-server doesn't need "automation")
-    const automationText = (product.id === 'home-server' || product.slug === 'home-server') ? '' : ' automation';
-    const prefilledComment = `I want ${product.title.toLowerCase()}${automationText}`;
+    // Handle prefilled comment
+    let prefilledComment;
+    if (product.variants && product.variants.length > 0 && product.variants[0].name) {
+      prefilledComment = `Hello, I would like to order ${product.variants[0].name} with Installation & Automation. Please contact me.`;
+    } else {
+      prefilledComment = `Hello, I would like to order ${product.title.toLowerCase()}. Please contact me.`;
+    }
     pageContent = pageContent.replace(/\{\{PRODUCT_COMMENT_PREFILL\}\}/g, prefilledComment);
 
-    // Handle address field - only for home-server
-    // Mailchimp address type fields use 'addr1' for street address
+    // Handle address field (not used by current products; kept for template compatibility)
     let addressFieldHTML = '';
-    if (product.slug === 'home-server') {
-      addressFieldHTML = `
-            <!-- ADDRESS -->
-            <div>
-              <input
-                type="text"
-                name="addr1"
-                id="mce-addr1"
-                class="contacts-form__input"
-                placeholder="your address"
-              >
-            </div>`;
-    }
     pageContent = pageContent.replace(/\{\{PRODUCT_ADDRESS_FIELD\}\}/g, addressFieldHTML);
 
-    // Handle form intro text - remove delivery/payment text for home-server
-    let formIntroText = '';
-    if (product.slug === 'home-server') {
-      formIntroText = 'We will contact you within 24 hours.';
-    } else {
-      formIntroText = 'We will contact you within 24 hours. <br> Delivery is available within 24 hours after your request. <br> Payment is made after the service is completed.';
-    }
+    // Handle form intro text
+    const formIntroText =
+      'We will contact you within 24 hours. <br> Delivery is available within 24 hours after your request. <br> Payment is made after the service is completed.';
     pageContent = pageContent.replace(/\{\{PRODUCT_FORM_INTRO\}\}/g, formIntroText);
 
     // Handle quantity selector for products with additionalUnitPrice
@@ -1105,7 +1150,7 @@ const preRenderShopIndex = (cb) => {
   // Inject into built index.html, replacing the JS placeholder
   let indexHtml = fs.readFileSync(shopIndexPath, 'utf8');
 
-  const containerStart = '<div class="shop-content grid grid-3" id="products-container">';
+  const containerStart = '<div class="shop-content grid grid-4" id="products-container">';
   const containerIndex = indexHtml.indexOf(containerStart);
   if (containerIndex === -1) {
     console.error('Could not find products container in shop index for pre-render.');

@@ -1,6 +1,185 @@
 // Products data
 const products = [
   {
+    id: 'home-server-local',
+    title: 'Local Privacy Smart Home Server with Installation',
+    description: 'Home server with pre-installed Home Assistant and private open-source cloud.',
+    price: 450.00,
+    image: '../img/shop/banners/home-server/card-1.png',
+    images: [
+      '../img/shop/banners/home-server/card-1.jpg',
+      '../img/shop/banners/home-server/card-2.jpg',
+      '../img/shop/banners/home-server/card-3.jpg',
+      '../img/shop/banners/home-server/card-4.jpg',
+      '../img/shop/banners/home-server/card-5.jpg',
+      '../img/shop/banners/home-server/card-6.jpg',
+    ],
+    available: true,
+    slug: 'home-server-local',
+    fullDescription: 'Get a local privacy-focused smart home server, professionally installed and ready for use. The server hardware is selected individually based on your home size, number of devices, and smart home needs. </br> Everything runs locally, without cloud dependency — providing fast response, privacy, and full control over your smart home environment.',
+    features: [
+      'Individually selected local smart home server hardware',
+      'Professional installation by our technicians',
+      'Full system setup and configuration',
+      'Integration of smart home devices',
+      'Basic smart home automation',
+      'Guidance on using and managing your new home server'
+    ],
+    benefits: [
+      '<b>Automation</b> – Smart routines for everyday comfort and convenience, running quietly in the background.',
+      '<b>Privacy First</b> – Your data stays private and inside your home.',
+      '<b>Smart Home Integration</b> – All your devices in one private ecosystem.',
+      '<b>Peace of Mind</b> - Full control, stability, and independence from the cloud.'
+    ],
+    category: 'Home server & gateways',
+  },
+  {
+    id: 'home-server-remote',
+    title: 'Local Privacy Smart Home Server with Installation + Remote Access',
+    description: 'Local home server with secure remote access, professionally installed and configured on the Robonomics platform.',
+    price: 600.00,
+    image: '../img/shop/banners/home-server-remote/card-1.png',
+    images: [
+      '../img/shop/banners/home-server-remote/card-1.jpg',
+      '../img/shop/banners/home-server-remote/card-2.jpg',
+      '../img/shop/banners/home-server-remote/card-3.jpg',
+      '../img/shop/banners/home-server-remote/card-4.jpg',
+      '../img/shop/banners/home-server-remote/card-5.jpg',
+      '../img/shop/banners/home-server-remote/card-6.jpg',
+      '../img/shop/banners/home-server-remote/card-7.jpg',
+      '../img/shop/banners/home-server-remote/card-8.jpg',
+      '../img/shop/banners/home-server-remote/card-9.jpg',
+      '../img/shop/banners/home-server-remote/card-10.jpg',
+      '../img/shop/banners/home-server-remote/card-11.jpg',
+      '../img/shop/banners/home-server-remote/card-12.jpg',
+    ],
+    available: true,
+    slug: 'home-server-remote',
+    colors: ['#0080ea', '#ff2caf'], // Blue, Pink,
+    fullDescription: 'Get a local smart home server, individually selected for your home, with additional secure remote access powered by Web3 technologies. <br/> The system is built around a local smart home server chosen according to your home size, number of devices, and required performance. All core smart home logic runs locally — fast, stable, and independent from the cloud. Remote access is provided via the Web3-based Robonomics platform, enabling decentralized and secure access to your smart home from anywhere in the world. <br/> This approach avoids vendor lock-in and traditional cloud services, combining local reliability with unrestricted remote control.',
+    features: [
+      'Individually selected local smart home server hardware',
+      'Web3 Robonomics server for secure remote access',
+      'Professional installation by our technicians',
+      'Full system setup and configuration',
+      'Integration of smart home devices',
+      'Basic smart home automation',
+      'Guidance on using and managing your new home server'
+    ],
+    benefits: [
+      '<b>Privacy First</b> – No hidden data logs or corporate cloud storage. Your data stays private and inside your home.',
+      '<b>Secure Local & Remote Access</b> – Full control of your smart home locally and remotely without relying on traditional cloud services.',
+      '<b>No Vendor Lock-In</b> – Freedom to use devices from different manufacturers without being tied to a single ecosystem.',
+      '<b>Open & Transparent Platform</b> - Built on open-source technologies with a transparent architecture you can trust.',
+      '<b>Full Ownership & Control</b> - You own the system, the data, and the infrastructure, not a third-party service.',
+      '<b>Peace of Mind</b> - A stable, independent smart home that works reliably today and in the future.'
+    ],
+    category: 'Home server & gateways'
+  },
+  {
+    id: 'smart-curtain',
+    title: 'Smart Curtain System Installation & Automation',
+    description: 'Smart curtains system with smart home integration',
+    price: 350.00,
+    oldPrice: 400.00,
+    additionalUnitPrice: 10.00, // Price for each additional unit after the first one
+    warning: "! Permanent power supply (pre-installed power cable) is required. Track length up to 4 meters.",
+    image: '../img/shop/smart-curtains/card-1.png',
+    images: [
+      '../img/shop/banners/smart-curtains/card-1.jpg',
+      '../img/shop/banners/smart-curtains/card-2.jpg',
+      '../img/shop/banners/smart-curtains/card-3.jpg',
+      '../img/shop/banners/smart-curtains/card-4.jpg',
+      '../img/shop/banners/smart-curtains/card-5.jpg',
+      '../img/shop/banners/smart-curtains/card-6.jpg',
+    ],
+    available: true,
+    slug: 'smart-curtains-installation',
+    fullDescription: 'Get smart motorized curtains with professional installation and smart home automation included. We install and configure the system, set up schedules and scenarios, and integrate smart curtains into your smart home for effortless daily control.',
+    features: [
+      'Two motorized curtain tracks (blackout + sheer) with permanent power supply',
+      'Professional installation by our technicians',
+      'Configuration and integration with your smart home system (e.g., Home Assistant, Alexa, Google Home)',
+      'Guidance on using and automating your new smart curtains'
+    ],
+    benefits: [
+      'Automation – Curtains open and close by schedule or smart scenarios (morning, bedtime, leaving home, or returning)',
+      'Effortless Comfort – Ideal for large and heavy curtains',
+      'Smart Home Integration - Connect it to your existing smart home ecosystem',
+      'Cozy & Private Atmosphere – Maximum comfort and privacy, especially in bedrooms with blackout curtains'
+    ],
+    category: 'Smart Curtains'
+  },
+  {
+    id: 'smart-robot-vacuum',
+    title: 'Smart Robot Vacuum with Installation & Automation',
+    description: 'Robot vacuum with smart home integration',
+    price: 400.00,
+    oldPrice: 450.00,
+    additionalUnitPrice: 10.00, // Price for each additional unit after the first one
+    image: '../img/shop/robot-vacuum/card-1.png',
+    images: [
+      '../img/shop/banners/robot-vacuum/card-1.jpg',
+      '../img/shop/banners/robot-vacuum/card-2.jpg',
+      '../img/shop/banners/robot-vacuum/card-3.jpg',
+      '../img/shop/banners/robot-vacuum/card-4.jpg',
+    ],
+    available: true,
+    slug: 'smart-robot-vacuum-installation',
+    fullDescription: 'Get a smart robot vacuum with professional installation and smart home automation included. We set up cleaning schedules, navigation, and smart home integration for effortless daily cleaning.',
+    features: [
+      'Smart robot vacuum cleaner (choose one of two available models)',
+      'Professional installation by our technicians',
+      'Configuration and integration with your smart home system (e.g., Home Assistant, Alexa, Google Home)',
+      'Guidance on using and automating your new smart cleaning system'
+    ],
+    benefits: [
+      'Automation — Robot vacuum cleans automatically by schedule or smart scenarios',
+      'Remote Control – Start, stop, or schedule cleaning from anywhere',
+      'Smart Home Integration - Connect it to your existing smart home ecosystem',
+      'Peace of Mind – No more worrying about dust, hair, or daily cleaning'
+    ],
+    category: 'Smart Robot Vacuum',
+    variants: [
+      { id: 'h40', name: 'Xiaomi Robot Vacuum H40', price: 400.00, oldPrice: 450.00, image: '../img/shop/smart-vacuum-robot-1.png' },
+      { id: 'x20max', name: 'Xiaomi Robot Vacuum X20 Max', price: 800.00, oldPrice: 850.00, image: '../img/shop/smart-vacuum-robot-2.png' }
+    ]
+  },
+  {
+    id: 'smart-ptz-camera',
+    title: 'Smart PTZ Camera with Installation & Automation',
+    description: 'Indoor PTZ Wi-Fi camera with smart home integration.',
+    price: 180.00,
+    oldPrice: 230.00,
+    additionalUnitPrice: 10.00, // Price for each additional unit after the first one
+    image: '../img/shop/ptz-camera/card-1.png',
+    images: [
+      '../img/shop/banners/ptz-camera/card-1.jpg',
+      '../img/shop/banners/ptz-camera/card-2.jpg',
+      '../img/shop/banners/ptz-camera/card-3.jpg',
+      '../img/shop/banners/ptz-camera/card-4.jpg',
+      '../img/shop/banners/ptz-camera/card-5.jpg',
+      '../img/shop/banners/ptz-camera/card-6.jpg',
+      '../img/shop/banners/ptz-camera/card-7.jpg',
+    ],
+    available: true,
+    slug: 'smart-ptz-camera-installation',
+    fullDescription: 'Get a indoor PTZ camera with professional installation and smart home automation included. We install and configure the camera, set up monitoring scenarios, notifications, and integrate it into your smart home system for reliable everyday security. <br/> A single smart camera with panoramic view and remote control is often all you need for home security and peace of mind.',
+    features: [
+      'Reolink WIFI Indoor PTZ Camera 8MP E1 Zoom (E340) White',
+      'Professional installation by our technicians',
+      'Configuration and integration with your smart home system (e.g., Home Assistant, Alexa, Google Home)',
+      'Guidance on using and automating your new smart camera'
+    ],
+    benefits: [
+      'Automation – motion detection alerts',
+      'Remote access – live video streaming from anywhere with pan, tilt, and zoom for full room control',
+      'Smart Home Integration - Connect it to your existing smart home ecosystem',
+      'Peace of mind – always know what’s happening at home'
+    ],
+    category: 'Smart PTZ Camera'
+  },
+  {
     id: 'boiler-switch-upgrade',
     title: 'Boiler Switch Upgrade',
     description: 'Upgrade your boiler with a smart switch.',
@@ -98,121 +277,6 @@ const products = [
       'Peace of Mind - No more forgetting to turn the heating off'
     ],
     category: 'Smart Switches'
-  },
-  {
-    id: 'home-server',
-    title: 'Home server with an open-source cloud',
-    description: 'Home server with pre-installed Home Assistant and private open-source cloud.',
-    price: 0.00,
-    oldPrice: 119.00,
-    paymentExtraTextOff: true,
-    delivery: 'FedEX',
-    image: '../img/shop/banners/home-server/card-1.png',
-    images: [
-      '../img/shop/banners/home-server/card-1.jpg',
-      '../img/shop/banners/home-server/card-2.jpg',
-      '../img/shop/banners/home-server/card-3.jpg',
-      '../img/shop/banners/home-server/card-4.jpg',
-      '../img/shop/banners/home-server/card-5.jpg',
-      '../img/shop/banners/home-server/card-6.jpg',
-      '../img/shop/banners/home-server/card-7.jpg',
-      '../img/shop/banners/home-server/card-8.jpg',
-      '../img/shop/banners/home-server/card-9.jpg',
-      '../img/shop/banners/home-server/card-10.jpg',
-    ],
-    available: true,
-    slug: 'home-server',
-    colors: ['#0080ea', '#ff2caf', '#ffd217'], // Blue, Pink, Yellow
-    fullDescription: 'A home server is the control center of your smart home. It runs locally with Home Assistant, connects all your devices, keeps your data private, and provides secure remote access via Robonomics — without cloud dependency or regional restrictions.',
-    features: [
-      'Home server with pre-installed Home Assistant',
-      'Power cable',
-      'Setup guide',
-      'Free support',
-      '3-year free subscription to the open-source cloud',
-    ],
-    benefits: [
-      '<b>SURVEILLANCE-FREE</b> – No hidden data logs on corporate servers while still allowing secure remote access.',
-      '<b>NO VENDOR LOCK-IN</b> – Supports over 3000 integrations with devices from various manufacturers.',
-      '<b>OPEN HARDWARE</b> – Open processor architecture and open-source code ensure a trustless system.'
-    ],
-    category: 'Home server & gateways',
-    howItWorksSteps: [
-      {
-        image: '../img/shop/installation-setup.png',
-        title: 'INSTALLATION & SETUP',
-        description: 'Set up local operation using the setup guide.'
-      },
-      {
-        image: '../img/shop/connection.png',
-        title: 'DEVICE CONNECTION',
-        description: 'Add and manage your smart devices in one unified system.'
-      },
-      {
-        image: '../img/shop/remote-setup.png',
-        title: 'REMOTE ACCESS SETUP',
-        description: 'Integrate Robonomics for secure, globally accessible remote access.'
-      }
-    ],
-    extraSectionsHtml: `
-        <section class="home-server-section">
-          <h2 class="subtitle">VENDOR AGNOSTIC SMART HOME HEART</h2>
-          <div class="grid grid-2">
-            <div class="product-content">
-              <p class="text-normal"> The server comes pre-installed with Home Assistant, an open-source home automation platform, giving you full control of your smart home without relying on third-party cloud services.</p>
-              <p class="text-normal">Its modular design allow you to easily add components, automations and integrations, supporting over 3,000 devices from various manufacturers without vendor lock-in.</p>
-              <p class="text-normal">With support for Zigbee and Wi-Fi protocols, you can connect a wide range of devices, from temperature sensors to energy consumption monitors, all to a local server.</p>
-            </div>
-            <img src="../img/shop/vendor.png" alt="VENDOR AGNOSTIC SMART HOME SCHEME" >
-          </div>
-        </section>
-
-        <section class="home-server-section">
-          <h2 class="subtitle">DESIGNED FOR PRIVACY</h2>
-          <div class="grid grid-2">
-            <img src="../img/shop/privacy.png" alt="" aria-hidden="true"/>
-            <div class="product-content">
-              <p class="text-normal">Our smart home server eliminates corporate interference, keeping your data local or encrypted with your personal key in decentralized Web3 storage. Enjoy complete privacy with no tracking, no surveillance-just secure, trustless control over your smart home.</p>
-              <p class="text-normal">With Robonomics Web3 cloud and p2p remote control, you get cryptographic access to all the functions of smart home:</p>
-              <ul class="product-detail__features-list">
-                <li class="text-normal">Access current device states remotely</li>
-                <li class="text-normal">Control devices via encrypted parachain or Libp2p</li>
-                <li class="text-normal">Back up and restore Home Assistant configurations</li>
-                <li class="text-normal">Store your home's digital twin in a secure, decentralized cloud</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section class="home-server-section">
-          <h2 class="subtitle">OPEN AND EFFICIENT HARDWARE</h2>
-          <div class="grid grid-2">
-            <div class="product-content">
-              <p class="text-normal">Our Home Server is powered by a RISC-V. processor and features fully transparent circuit board schematics. RISC-V is an open and modular processor architecture that comes with a BSD license. Unlike proprietary ARM, it offers flexibility for customization without licensing restrictions, making it ideal for trustless loT devices and servers.</p>
-              <img src="../img/shop/hardware.png" alt="open and efficient hardware">
-            </div>
-            <ul class="product-detail__features-list">
-              <li class="text-normal"><b>Processor:</b> StarFive JH-7110 with RISC-V 4-core CPU, 2 MB L2 cache, up to 1.5 GHz, RV64GC ISA support</li>
-              <li class="text-normal"><b>GPU:</b> IMG BXE-4-32 MC1, up to 600 MHz</li>
-              <li class="text-normal"><b>Memory:</b> 8 GB LPDDR4 SDRAM, up to 2800 Mbps</li>
-              <li class="text-normal"><b>Storage:</b> 32 GB TF card (minimum)</li>
-              <li class="text-normal"><b>Interfaces:</b> 2x Gigabit Ethernet ports, 4x USB 3.0 Type-A ports, 40-pin GPIO header, M.2 connector, eMMC socket, 2-pin fan header</li>
-              <li class="text-normal"><b>Power:</b> 5V DC via USB-C, up to 30 W (minimum 3 A) or 5V input via 40-pin GPIO</li>
-              <li class="text-normal"><b>OS:</b> Ubuntu 24.04 LTS</li>
-            </ul>
-          </div>
-        </section>
-
-        <section class="home-server-section">
-          <h2 class="subtitle text-center">INSTALLATION &amp; SETUP</h2>
-          <ul class="product-detail__features-list">
-            <li class="text-normal"><b>Home server on RISC‑V with pre-installed OS</b></li>
-            <li class="text-normal"><b>Home Assistant Core installation and initial configuration</b></li>
-            <li class="text-normal"><b>Robonomics integration and remote access setup</b></li>
-            <li class="text-normal"><b>Connecting Zigbee / Wi‑Fi devices and basic automations</b></li>
-          </ul>
-        </section>
-    `
   }
 ];
 
