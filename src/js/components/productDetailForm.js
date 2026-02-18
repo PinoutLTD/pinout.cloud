@@ -153,6 +153,154 @@ function initProductDetailForm() {
   });
 
   /* -----------------------------
+     Additional options selection (e.g. Altruist sensor options)
+  ----------------------------- */
+  const additionalOptionGroups = document.querySelectorAll('.product-detail__option-group');
+
+  // Store selected options
+  const selectedOptions = {};
+
+  // Map data-option-group-id to option ID and name (for altruist groups that use this)
+  const optionGroupMap = {
+    'insight-color': { id: '12', name: 'Insight Color' },
+    'urban-emotion': { id: '13', name: 'Urban Emotion' },
+    'urban-color': { id: '14', name: 'Urban Color' },
+    'uv-cover-color': { id: '15', name: 'UV Cover Color' }
+  };
+
+  // Initialize with default selections (keyed by OpenCart option ID)
+  additionalOptionGroups.forEach(group => {
+    let optionId = group.dataset.option;
+    let optionName = group.dataset.optionName;
+    const groupId = group.dataset.optionGroupId;
+    if (!optionId && groupId && optionGroupMap[groupId]) {
+      optionId = optionGroupMap[groupId].id;
+      optionName = optionGroupMap[groupId].name;
+    }
+    const activeOption = group.querySelector('.product-detail__option-swatch.active');
+    if (activeOption && optionId) {
+      const valueId = activeOption.dataset.valueId || '';
+      const label = activeOption.dataset.valueLabel || '';
+      selectedOptions[optionId] = {
+        optionName: optionName || '',
+        label: label || '',
+        valueId: valueId || ''
+      };
+    }
+  });
+
+  // Function to update the comment textarea based on selected options
+  function updateCommentWithOptions() {
+    const commentTextarea = document.getElementById('mce-COMMENT');
+    const productInput = document.querySelector('input[name="PRODUCT"]');
+    if (!commentTextarea || !productInput) return;
+
+    const productName = productInput.value;
+
+    const byName = {};
+    for (const [optId, opt] of Object.entries(selectedOptions)) {
+      byName[opt.optionName] = opt;
+    }
+    const insightColor = byName['Insight Color'];
+    const urbanColor = byName['Urban Color'];
+    const urbanEmotion = byName['Urban Emotion'];
+    const uvCoverColor = byName['UV Cover Color'];
+
+    const optionParts = [];
+
+    // Insight color: "blue (insight)"
+    if (insightColor) {
+      optionParts.push(`${insightColor.label.toLowerCase()} (insight)`);
+    }
+
+    // Urban color with emotion: "pink (emotion / smile)"
+    if (urbanColor && urbanEmotion) {
+      optionParts.push(`${urbanColor.label.toLowerCase()} (emotion / ${urbanEmotion.label.toLowerCase()})`);
+    } else if (urbanColor) {
+      optionParts.push(`${urbanColor.label.toLowerCase()}`);
+    }
+
+    // UV cover color with protection label: "cyan (protection)"
+    if (uvCoverColor) {
+      optionParts.push(`${uvCoverColor.label.toLowerCase()} (protection)`);
+    }
+
+    // Generic Color option (e.g. home-server-remote)
+    if (byName['Color'] && !byName['Insight Color']) {
+      optionParts.push(byName['Color'].label.toLowerCase());
+    }
+
+    if (optionParts.length > 0) {
+      // Join with comma, but last one with " and "
+      let optionsText;
+      if (optionParts.length === 1) {
+        optionsText = optionParts[0];
+      } else if (optionParts.length === 2) {
+        optionsText = optionParts.join(' and ');
+      } else {
+        optionsText = optionParts.slice(0, -1).join(', ') + ' and ' + optionParts[optionParts.length - 1];
+      }
+      commentTextarea.value = `Hello, I would like to order ${productName} — ${optionsText}. Please contact me.`;
+    } else {
+      commentTextarea.value = `Hello, I would like to order ${productName}. Please contact me.`;
+    }
+  }
+
+  // Handle option swatch clicks
+  document.querySelectorAll('.product-detail__option-swatch').forEach(swatch => {
+    swatch.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const optionGroup = swatch.closest('.product-detail__option-group');
+      let optionId = optionGroup ? optionGroup.dataset.option : swatch.dataset.option;
+      let optionName = optionGroup ? optionGroup.dataset.optionName : swatch.dataset.optionName;
+      const groupId = optionGroup ? optionGroup.dataset.optionGroupId : null;
+      if (!optionId && groupId && optionGroupMap[groupId]) {
+        optionId = optionGroupMap[groupId].id;
+        optionName = optionGroupMap[groupId].name;
+      }
+
+      // Remove active from siblings
+      if (optionGroup) {
+        optionGroup.querySelectorAll('.product-detail__option-swatch').forEach(s => s.classList.remove('active'));
+      }
+
+      swatch.classList.add('active');
+
+      const valueId = swatch.dataset.valueId || '';
+      const label = swatch.dataset.valueLabel || '';
+
+      const hiddenInput = document.getElementById('opt-' + optionId) || (groupId ? document.getElementById('opt-' + groupId) : null);
+      if (hiddenInput) {
+        hiddenInput.value = valueId || '';
+      }
+
+      // Navigate swiper to image when option has data-image-index (e.g. home-server-remote color)
+      const imageIndex = parseInt(swatch.dataset.imageIndex, 10);
+      if (!isNaN(imageIndex) && imageIndex >= 0 && window.mainSwiper) {
+        window.mainSwiper.slideTo(imageIndex, 300);
+      }
+
+      // Store selection
+      if (optionId) {
+        selectedOptions[optionId] = {
+          optionName: optionName || '',
+          label: label,
+          valueId: valueId || ''
+        };
+      }
+
+      // Update comment
+      updateCommentWithOptions();
+    });
+  });
+
+  // Initial comment update if there are additional options
+  if (additionalOptionGroups.length > 0) {
+    updateCommentWithOptions();
+  }
+
+  /* -----------------------------
      Phone mask (simple & safe)
      Format: +123 456 789 012
   ----------------------------- */

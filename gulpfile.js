@@ -171,7 +171,7 @@ const generateProductPages = (cb) => {
 
     // Handle color options
     let colorOptionsHTML = '';
-    if (product.colors && Array.isArray(product.colors) && product.colors.length > 0) {
+    if (product.colors && Array.isArray(product.colors) && product.colors.length > 0 && !product.additionalOptions) {
       const colorSwatches = product.colors.map((color, index) => {
         const isActive = index === 0 ? ' active' : '';
         const colorValue = typeof color === 'string' ? color : (color.value || color);
@@ -209,7 +209,7 @@ ${colorSwatches}
 
     // Handle color input in form (separate from color options display)
     let colorInputHTML = '';
-    if (product.colors && Array.isArray(product.colors) && product.colors.length > 0) {
+    if (product.colors && Array.isArray(product.colors) && product.colors.length > 0 && !product.additionalOptions) {
       const defaultColor = typeof product.colors[0] === 'string' ? product.colors[0] : (product.colors[0].value || product.colors[0]);
       let defaultColorName = typeof product.colors[0] === 'object' && product.colors[0].name ? product.colors[0].name : '';
       if (!defaultColorName) {
@@ -221,6 +221,39 @@ ${colorSwatches}
       colorInputHTML = `<input type="hidden" name="COLOR" id="product-color" value="${defaultColorName}">`;
     }
     pageContent = pageContent.replace(/\{\{PRODUCT_COLOR_INPUT\}\}/g, colorInputHTML);
+
+    // Handle additional options (e.g. altruist sensor options)
+    let additionalOptionsHTML = '';
+    let additionalOptionsInputsHTML = '';
+    if (product.additionalOptions && Array.isArray(product.additionalOptions) && product.additionalOptions.length > 0) {
+      additionalOptionsHTML = product.additionalOptions.map(optionGroup => {
+        const optionItems = optionGroup.values.map((val, index) => {
+          const isActive = index === 0 ? ' active' : '';
+          if (optionGroup.type === 'color') {
+            return `                <button type="button" class="product-detail__option-swatch product-detail__option-swatch--color${isActive}" data-value-id="${val.id}" data-value-label="${val.label}" aria-label="Select ${val.label}" style="background-color: ${val.value};"></button>`;
+          } else if (optionGroup.type === 'icon') {
+            return `                <button type="button" class="product-detail__option-swatch product-detail__option-swatch--icon${isActive}" data-value-id="${val.id}" data-value-label="${val.label}" aria-label="Select ${val.label}">${val.icon}</button>`;
+          }
+          return '';
+        }).join('');
+
+        return `
+            <div class="product-detail__option-group" data-option="${optionGroup.option}" data-option-name="${optionGroup.name}">
+              <label class="text-normal">${optionGroup.name}:</label>
+              <div class="product-detail__option-swatches">
+${optionItems}
+              </div>
+            </div>`;
+      }).join('');
+
+      // Create hidden inputs for each option group
+      additionalOptionsInputsHTML = product.additionalOptions.map(optionGroup => {
+        const defaultValue = optionGroup.values[0] ? optionGroup.values[0].id : '';
+        return `<input type="hidden" name="option[${optionGroup.option}]" id="opt-${optionGroup.option}" value="${defaultValue}">`;
+      }).join('');
+    }
+    pageContent = pageContent.replace(/\{\{PRODUCT_ADDITIONAL_OPTIONS\}\}/g, additionalOptionsHTML);
+    pageContent = pageContent.replace(/\{\{PRODUCT_ADDITIONAL_OPTIONS_INPUTS\}\}/g, additionalOptionsInputsHTML);
 
     // Handle warning (above delivery) - show only when product has warning key
     let warningHTML = '';
@@ -399,10 +432,35 @@ ${stepsHTML}
 
     // Handle prefilled comment (use first variant name if product has variants, e.g. robot vacuum)
     let prefilledComment;
-    if (product.variants && product.variants.length > 0 && product.variants[0].name) {
+    if (product.additionalOptions && product.additionalOptions.length > 0) {
+      // Build prefilled comment with default (first) option selections
+      const byName = {};
+      product.additionalOptions.forEach(og => {
+        if (og.values && og.values.length > 0) {
+          byName[og.name] = og.values[0].label;
+        }
+      });
+      const parts = [];
+      if (byName['Insight Color']) parts.push(byName['Insight Color'].toLowerCase() + ' (insight)');
+      if (byName['Urban Color'] && byName['Urban Emotion']) {
+        parts.push(byName['Urban Color'].toLowerCase() + ' (emotion / ' + byName['Urban Emotion'].toLowerCase() + ')');
+      } else if (byName['Urban Color']) {
+        parts.push(byName['Urban Color'].toLowerCase());
+      }
+      if (byName['UV Cover Color']) parts.push(byName['UV Cover Color'].toLowerCase() + ' (protection)');
+      // Generic fallback for products with just Color (e.g. home-server-remote)
+      if (byName['Color'] && !byName['Insight Color']) parts.push(byName['Color'].toLowerCase());
+      
+      let optionsText;
+      if (parts.length === 1) optionsText = parts[0];
+      else if (parts.length === 2) optionsText = parts.join(' and ');
+      else optionsText = parts.slice(0, -1).join(', ') + ' and ' + parts[parts.length - 1];
+      
+      prefilledComment = `Hello, I would like to order ${product.title} — ${optionsText}. Please contact me.`;
+    } else if (product.variants && product.variants.length > 0 && product.variants[0].name) {
       prefilledComment = `Hello, I would like to order ${product.variants[0].name} with Installation & Automation. Please contact me.`;
     } else {
-      prefilledComment = `Hello, I would like to order  ${product.title.toLowerCase()}. Please contact me.`;
+      prefilledComment = `Hello, I would like to order ${product.title.toLowerCase()}. Please contact me.`;
     }
     pageContent = pageContent.replace(/\{\{PRODUCT_COMMENT_PREFILL\}\}/g, prefilledComment);
 
@@ -553,6 +611,7 @@ const images = () => {
         'src/assets/img/**/*.png',
         'src/assets/img/**/*.svg',
         'src/assets/img/**/*.jpeg',
+        'src/assets/img/**/*.gif',
     ])
     .pipe(dest('dist/img'))
 }
@@ -579,8 +638,8 @@ async function watchAll() {
   watch('src/assets/styles/**/*.css', styles);
   watch('src/assets/img/svg/**/*.svg', svgSprites);
   watch('src/js/**/*.js', scripts);
-  watch('.src/assets/img/*.{jpg,jpeg,png,svg}', images);
-  watch('.src/assets/img/**/*.{jpg,jpeg,png,svg}', images);
+  watch('.src/assets/img/*.{jpg,jpeg,png,svg, gif}', images);
+  watch('.src/assets/img/**/*.{jpg,jpeg,png,svg, gif}', images);
   watch('src/resources/**', resources);
 }
 
@@ -782,7 +841,7 @@ const generateProductPagesShop = (cb) => {
 
     // Handle color options
     let colorOptionsHTML = '';
-    if (product.colors && Array.isArray(product.colors) && product.colors.length > 0) {
+    if (product.colors && Array.isArray(product.colors) && product.colors.length > 0 && !product.additionalOptions) {
       const colorSwatches = product.colors.map((color, index) => {
         const isActive = index === 0 ? ' active' : '';
         const colorValue = typeof color === 'string' ? color : (color.value || color);
@@ -820,7 +879,7 @@ ${colorSwatches}
 
     // Handle color input in form (separate from color options display)
     let colorInputHTML = '';
-    if (product.colors && Array.isArray(product.colors) && product.colors.length > 0) {
+    if (product.colors && Array.isArray(product.colors) && product.colors.length > 0 && !product.additionalOptions) {
       const defaultColor = typeof product.colors[0] === 'string' ? product.colors[0] : (product.colors[0].value || product.colors[0]);
       let defaultColorName = typeof product.colors[0] === 'object' && product.colors[0].name ? product.colors[0].name : '';
       if (!defaultColorName) {
@@ -832,6 +891,39 @@ ${colorSwatches}
       colorInputHTML = `<input type="hidden" name="COLOR" id="product-color" value="${defaultColorName}">`;
     }
     pageContent = pageContent.replace(/\{\{PRODUCT_COLOR_INPUT\}\}/g, colorInputHTML);
+
+    // Handle additional options (e.g. altruist sensor options)
+    let additionalOptionsHTML = '';
+    let additionalOptionsInputsHTML = '';
+    if (product.additionalOptions && Array.isArray(product.additionalOptions) && product.additionalOptions.length > 0) {
+      additionalOptionsHTML = product.additionalOptions.map(optionGroup => {
+        const optionItems = optionGroup.values.map((val, index) => {
+          const isActive = index === 0 ? ' active' : '';
+          if (optionGroup.type === 'color') {
+            return `                <button type="button" class="product-detail__option-swatch product-detail__option-swatch--color${isActive}" data-value-id="${val.id}" data-value-label="${val.label}" aria-label="Select ${val.label}" style="background-color: ${val.value};"></button>`;
+          } else if (optionGroup.type === 'icon') {
+            return `                <button type="button" class="product-detail__option-swatch product-detail__option-swatch--icon${isActive}" data-value-id="${val.id}" data-value-label="${val.label}" aria-label="Select ${val.label}">${val.icon}</button>`;
+          }
+          return '';
+        }).join('');
+
+        return `
+            <div class="product-detail__option-group" data-option="${optionGroup.option}" data-option-name="${optionGroup.name}">
+              <label class="text-normal">${optionGroup.name}:</label>
+              <div class="product-detail__option-swatches">
+${optionItems}
+              </div>
+            </div>`;
+      }).join('');
+
+      // Create hidden inputs for each option group
+      additionalOptionsInputsHTML = product.additionalOptions.map(optionGroup => {
+        const defaultValue = optionGroup.values[0] ? optionGroup.values[0].id : '';
+        return `<input type="hidden" name="option[${optionGroup.option}]" id="opt-${optionGroup.option}" value="${defaultValue}">`;
+      }).join('');
+    }
+    pageContent = pageContent.replace(/\{\{PRODUCT_ADDITIONAL_OPTIONS\}\}/g, additionalOptionsHTML);
+    pageContent = pageContent.replace(/\{\{PRODUCT_ADDITIONAL_OPTIONS_INPUTS\}\}/g, additionalOptionsInputsHTML);
 
     // Handle warning (above delivery) - show only when product has warning key
     let warningHTML = '';
@@ -1011,7 +1103,32 @@ ${stepsHTML}
 
     // Handle prefilled comment
     let prefilledComment;
-    if (product.variants && product.variants.length > 0 && product.variants[0].name) {
+    if (product.additionalOptions && product.additionalOptions.length > 0) {
+      // Build prefilled comment with default (first) option selections
+      const byName = {};
+      product.additionalOptions.forEach(og => {
+        if (og.values && og.values.length > 0) {
+          byName[og.name] = og.values[0].label;
+        }
+      });
+      const parts = [];
+      if (byName['Insight Color']) parts.push(byName['Insight Color'].toLowerCase() + ' (insight)');
+      if (byName['Urban Color'] && byName['Urban Emotion']) {
+        parts.push(byName['Urban Color'].toLowerCase() + ' (emotion / ' + byName['Urban Emotion'].toLowerCase() + ')');
+      } else if (byName['Urban Color']) {
+        parts.push(byName['Urban Color'].toLowerCase());
+      }
+      if (byName['UV Cover Color']) parts.push(byName['UV Cover Color'].toLowerCase() + ' (protection)');
+      // Generic fallback for products with just Color (e.g. home-server-remote)
+      if (byName['Color'] && !byName['Insight Color']) parts.push(byName['Color'].toLowerCase());
+      
+      let optionsText;
+      if (parts.length === 1) optionsText = parts[0];
+      else if (parts.length === 2) optionsText = parts.join(' and ');
+      else optionsText = parts.slice(0, -1).join(', ') + ' and ' + parts[parts.length - 1];
+      
+      prefilledComment = `Hello, I would like to order ${product.title} — ${optionsText}. Please contact me.`;
+    } else if (product.variants && product.variants.length > 0 && product.variants[0].name) {
       prefilledComment = `Hello, I would like to order ${product.variants[0].name} with Installation & Automation. Please contact me.`;
     } else {
       prefilledComment = `Hello, I would like to order ${product.title.toLowerCase()}. Please contact me.`;
@@ -1406,6 +1523,14 @@ const shopImages = () => {
   .pipe(dest('shopBuild/img/shop'));
 };
 
+// Copy GIFs without processing (preserves animation)
+const shopGifs = () => {
+  return src([
+    'src/assets/img/shop/**/*.gif',
+  ])
+  .pipe(dest('shopBuild/img/shop'));
+};
+
 // Copy shared images needed by shop (logos, decor, etc.)
 const shopSharedImages = () => {
   return src([
@@ -1449,6 +1574,7 @@ exports['build:shop'] = series(
   cleanShopTemp,
   stylesShopBuild,
   shopImages,
+  shopGifs,
   shopSharedImages,
   shopFavicons,
   shopResources

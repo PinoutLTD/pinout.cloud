@@ -427,6 +427,9 @@
 
 .product-detail__swiper .swiper-slide {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   aspect-ratio: 1;
 }
 
@@ -694,6 +697,77 @@
   outline-offset: 2px;
 }
 
+/* Additional Options (Altruist sensor options) */
+.product-detail__option-group {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.product-detail__option-group label {
+  display: block;
+  min-width: 150px;
+  font-weight: 600;
+}
+
+.product-detail__option-swatches {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.product-detail__option-swatch {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  padding: 0;
+}
+
+.product-detail__option-swatch--color {
+  border: 2px solid #e0e0e0;
+}
+
+.product-detail__option-swatch--icon {
+  font-size: 1.5rem;
+  background-color: #f5f5f5;
+}
+
+.product-detail__option-swatch:hover {
+  transform: scale(1.1);
+}
+
+.product-detail__option-swatch.active {
+  border-color: #000000;
+  padding: 0.4rem;
+  box-shadow: 0 0 0 1px rgba(147, 146, 146, 0.1);
+}
+
+.product-detail__option-swatch:focus-visible {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* SVG icon styling for option swatches */
+.product-detail__option-swatch--icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.product-detail__option-swatch--icon {
+  width: 3rem;
+  height: 3rem;
+  padding: 0.25rem;
+}
+
 .product-detail__payment p {
   margin-bottom: calc(var(--space) * 0.8);
 }
@@ -721,6 +795,10 @@
   gap: calc(var(--space) * 3);
   margin-bottom: calc(var(--space) * 4);
   align-items: start;
+}
+
+.product-detail__whats-included a {
+  color: var(--text-accent);
 }
 
 .product-detail__whats-included .subtitle,
@@ -849,7 +927,7 @@
 
 .product-detail__form .contacts-form__textarea {
   resize: vertical;
-  min-height: 75px;
+  min-height: 84px;
 }
 
 .product-detail__contact-methods {
@@ -1024,5 +1102,9 @@
 
   .shop-content.grid {
     row-gap: calc(var(--space) * 0.6);
+  }
+
+  .product-detail__option-group label {
+    min-width: unset;
   }
 }

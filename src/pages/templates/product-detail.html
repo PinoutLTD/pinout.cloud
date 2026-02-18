@@ -82,7 +82,7 @@
               </div>
 
               {{PRODUCT_WARNING}}
-              {{PRODUCT_DELIVERY}} {{PRODUCT_PAYMENT}} {{PRODUCT_VARIANTS}} {{PRODUCT_COLOR_OPTIONS}}
+              {{PRODUCT_DELIVERY}} {{PRODUCT_PAYMENT}} {{PRODUCT_VARIANTS}} {{PRODUCT_COLOR_OPTIONS}} {{PRODUCT_ADDITIONAL_OPTIONS}}
 
               <div class="product-detail__actions">
                 <a
@@ -246,10 +246,8 @@
                   id="mce-COMMENT"
                   class="product-detail__textarea contacts-form__input contacts-form__textarea"
                   placeholder="your message (optional)"
-                  maxlength="100"
-                >
-{{PRODUCT_COMMENT_PREFILL}}</textarea
-                >
+                  maxlength="250"
+                >{{PRODUCT_COMMENT_PREFILL}}</textarea>
               </div>
 
               <!-- TERMS -->
@@ -277,6 +275,9 @@
 
               <!-- COLOR -->
               {{PRODUCT_COLOR_INPUT}}
+
+              <!-- ADDITIONAL OPTIONS -->
+              {{PRODUCT_ADDITIONAL_OPTIONS_INPUTS}}
 
               <input type="hidden" name="REQUEST" value="new product" />
 

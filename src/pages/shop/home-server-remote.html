@@ -166,13 +166,13 @@
                 <img src="./img/shop/cash.svg" alt="Cash" class="product-detail__payment-icon"/>
               </div>
             </div>  
-            <div class="product-detail__color-options">
+            <div class="product-detail__option-group" data-option="16" data-option-name="Color">
               <label class="text-normal">Color:</label>
-              <div class="product-detail__color-swatches">
-                <button type="button" class="product-detail__color-swatch active" data-color="#0080ea" data-color-name="blue" data-image-index="0" aria-label="Select blue color" style="background-color: #0080ea;"></button>
-                <button type="button" class="product-detail__color-swatch" data-color="#ff2caf" data-color-name="pink" data-image-index="1" aria-label="Select pink color" style="background-color: #ff2caf;"></button>
+              <div class="product-detail__option-swatches">
+                <button type="button" class="product-detail__option-swatch product-detail__option-swatch--color active" data-value-id="43" data-value-label="Blue" data-image-index="0" aria-label="Select Blue" style="background-color: #0080ea;"></button>
+                <button type="button" class="product-detail__option-swatch product-detail__option-swatch--color" data-value-id="44" data-value-label="Pink" data-image-index="1" aria-label="Select Pink" style="background-color: #ff2caf;"></button>
               </div>
-            </div>
+            </div> 
 
               <div class="product-detail__actions">
                 <a
@@ -380,10 +380,8 @@
                   id="mce-COMMENT"
                   class="product-detail__textarea contacts-form__input contacts-form__textarea"
                   placeholder="your message (optional)"
-                  maxlength="100"
-                >
-Hello, I would like to order  local privacy smart home server with installation + remote access. Please contact me.</textarea
-                >
+                  maxlength="250"
+                >Hello, I would like to order Local Privacy Smart Home Server with Installation + Remote Access — blue. Please contact me.</textarea>
               </div>
 
               <!-- TERMS -->
@@ -409,8 +407,11 @@ Hello, I would like to order  local privacy smart home server with installation 
               <!-- PRODUCT -->
               <input type="hidden" name="PRODUCT" value="Local Privacy Smart Home Server with Installation + Remote Access" />
 
-              <!-- COLOR -->
-              <input type="hidden" name="COLOR" id="product-color" value="blue">
+              <!-- COLOR (numeric value ID: 43 Blue, 44 Pink) -->
+              <input type="hidden" name="OPT_COLOR" id="opt-16" value="43">
+
+              <!-- ADDITIONAL OPTIONS -->
+              
 
               <input type="hidden" name="REQUEST" value="new product" />
 
