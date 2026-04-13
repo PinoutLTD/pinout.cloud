@@ -166,8 +166,11 @@ const generateProductPages = (cb) => {
     pageContent = pageContent.replace(/\{\{PRODUCT_ADDITIONAL_PRICING\}\}/g, additionalPricingHTML);
 
     // Handle description
-    const description = product.fullDescription || product.description;
-    pageContent = pageContent.replace(/\{\{PRODUCT_DESCRIPTION\}\}/g, description);
+    const description = product.fullDescription || product.description || '';
+    const descriptionHTML = (typeof description === 'string' && description.includes('<p'))
+      ? description
+      : `<p class="text-normal">${description}</p>`;
+    pageContent = pageContent.replace(/\{\{PRODUCT_DESCRIPTION\}\}/g, descriptionHTML);
 
     // Handle color options
     let colorOptionsHTML = '';
@@ -297,6 +300,58 @@ ${optionItems}
               </div>
             </div>`;
     pageContent = pageContent.replace(/\{\{PRODUCT_PAYMENT\}\}/g, paymentHTML);
+
+    // Handle setup options (e.g. "Choose your setup" cards)
+    let setupHTML = '';
+    if (product.setupOptions && Array.isArray(product.setupOptions) && product.setupOptions.length > 0) {
+      const setupLabel = product.setupLabel || 'Choose your setup:';
+      const setupCards = product.setupOptions.map((opt, index) => {
+        const isActive = index === 0 ? ' active' : '';
+        const title = (opt.title || '').replace(/"/g, '&quot;');
+        const iconBluePath = (opt.iconBlue || '').replace(/^\.\.\//, '../../').replace(/^\.\//, '../../');
+        const iconWhitePath = (opt.iconWhite || '').replace(/^\.\.\//, '../../').replace(/^\.\//, '../../');
+        const iconHTML = (iconBluePath || iconWhitePath)
+          ? `<span class="product-detail__setup-icon-wrap" aria-hidden="true">
+              ${iconBluePath ? `<img src="${iconBluePath}" alt="" class="product-detail__setup-icon product-detail__setup-icon--blue"/>` : ''}
+              ${iconWhitePath ? `<img src="${iconWhitePath}" alt="" class="product-detail__setup-icon product-detail__setup-icon--white"/>` : ''}
+            </span>`
+          : '';
+        const totalOld = typeof opt.totalOld === 'number' ? `€ ${opt.totalOld.toFixed(2)}` : (opt.totalOld || '');
+        const totalAdd = typeof opt.totalAdd === 'number' ? `+ € ${opt.totalAdd.toFixed(2)}` : (opt.totalAdd || '');
+        const totalParts = [
+          totalOld ? `<span class="product-detail__setup-total-old">${totalOld}</span>` : '',
+          totalAdd ? `<span class="product-detail__setup-total-add">${totalAdd}</span>` : ''
+        ].filter(Boolean).join(' ');
+
+        const bullets = (opt.bullets && Array.isArray(opt.bullets))
+          ? opt.bullets.map(b => `<li class="text-normal">${b}</li>`).join('')
+          : '';
+
+        return `                <button type="button" class="product-detail__setup-card${isActive}" data-setup-title="${title}" data-setup-id="${(opt.id || '').replace(/"/g, '&quot;')}">
+                  <div class="text-normal product-detail__setup-card-head">
+                    <span class="product-detail__setup-title text-normal">${opt.title || ''}</span>
+                    ${iconHTML}
+                  </div>
+                  <ul class="product-detail__setup-bullets">
+                    ${bullets}
+                  </ul>
+                  <div class="product-detail__setup-total">
+                    <span class="text-normal"><b>Total:</b></span>
+                    <span class="text-normal product-detail__setup-total-values">${totalParts}</span>
+                  </div>
+                </button>`;
+      }).join('\n');
+
+      setupHTML = `
+            <div class="product-detail__setup">
+              <label class="text-normal product-detail__setup-label"><b>${setupLabel}</b></label>
+              <div class="product-detail__setup-cards">
+${setupCards}
+              </div>
+              <input type="hidden" name="SETUP" id="product-setup" value="${(product.setupOptions[0].id || product.setupOptions[0].title || '').replace(/"/g, '&quot;')}">
+            </div>`;
+    }
+    pageContent = pageContent.replace(/\{\{PRODUCT_SETUP\}\}/g, setupHTML);
 
     // Handle product variants (e.g. robot vacuum model choice)
     let variantsHTML = '';
@@ -450,12 +505,12 @@ ${stepsHTML}
       if (byName['UV Cover Color']) parts.push(byName['UV Cover Color'].toLowerCase() + ' (protection)');
       // Generic fallback for products with just Color (e.g. home-server-remote)
       if (byName['Color'] && !byName['Insight Color']) parts.push(byName['Color'].toLowerCase());
-      
+
       let optionsText;
       if (parts.length === 1) optionsText = parts[0];
       else if (parts.length === 2) optionsText = parts.join(' and ');
       else optionsText = parts.slice(0, -1).join(', ') + ' and ' + parts[parts.length - 1];
-      
+
       prefilledComment = `Hello, I would like to order ${product.title} — ${optionsText}. Please contact me.`;
     } else if (product.variants && product.variants.length > 0 && product.variants[0].name) {
       prefilledComment = `Hello, I would like to order ${product.variants[0].name} with Installation & Automation. Please contact me.`;
@@ -836,8 +891,11 @@ const generateProductPagesShop = (cb) => {
     pageContent = pageContent.replace(/\{\{PRODUCT_ADDITIONAL_PRICING\}\}/g, additionalPricingHTML);
 
     // Handle description
-    const description = product.fullDescription || product.description;
-    pageContent = pageContent.replace(/\{\{PRODUCT_DESCRIPTION\}\}/g, description);
+    const description = product.fullDescription || product.description || '';
+    const descriptionHTML = (typeof description === 'string' && description.includes('<p'))
+      ? description
+      : `<p class="text-normal">${description}</p>`;
+    pageContent = pageContent.replace(/\{\{PRODUCT_DESCRIPTION\}\}/g, descriptionHTML);
 
     // Handle color options
     let colorOptionsHTML = '';
@@ -967,6 +1025,58 @@ ${optionItems}
               </div>
             </div>`;
     pageContent = pageContent.replace(/\{\{PRODUCT_PAYMENT\}\}/g, paymentHTML);
+
+    // Handle setup options (e.g. "Choose your setup" cards)
+    let setupHTML = '';
+    if (product.setupOptions && Array.isArray(product.setupOptions) && product.setupOptions.length > 0) {
+      const setupLabel = product.setupLabel || 'Choose your setup:';
+      const setupCards = product.setupOptions.map((opt, index) => {
+        const isActive = index === 0 ? ' active' : '';
+        const title = (opt.title || '').replace(/"/g, '&quot;');
+        const iconBluePath = (opt.iconBlue || '').replace(/^\.\.\//, '../../').replace(/^\.\//, '../../');
+        const iconWhitePath = (opt.iconWhite || '').replace(/^\.\.\//, '../../').replace(/^\.\//, '../../');
+        const iconHTML = (iconBluePath || iconWhitePath)
+          ? `<span class="product-detail__setup-icon-wrap" aria-hidden="true">
+              ${iconBluePath ? `<img src="${iconBluePath}" alt="" class="product-detail__setup-icon product-detail__setup-icon--blue"/>` : ''}
+              ${iconWhitePath ? `<img src="${iconWhitePath}" alt="" class="product-detail__setup-icon product-detail__setup-icon--white"/>` : ''}
+            </span>`
+          : '';
+        const totalOld = typeof opt.totalOld === 'number' ? `€ ${opt.totalOld.toFixed(2)}` : (opt.totalOld || '');
+        const totalAdd = typeof opt.totalAdd === 'number' ? `+ € ${opt.totalAdd.toFixed(2)}` : (opt.totalAdd || '');
+        const totalParts = [
+          totalOld ? `<span class="product-detail__setup-total-old">${totalOld}</span>` : '',
+          totalAdd ? `<span class="product-detail__setup-total-add">${totalAdd}</span>` : ''
+        ].filter(Boolean).join(' ');
+
+        const bullets = (opt.bullets && Array.isArray(opt.bullets))
+          ? opt.bullets.map(b => `<li class="text-normal">${b}</li>`).join('')
+          : '';
+
+        return `                <button type="button" class="product-detail__setup-card${isActive}" data-setup-title="${title}" data-setup-id="${(opt.id || '').replace(/"/g, '&quot;')}">
+                  <div class="product-detail__setup-card-head">
+                    <span class="text-normal product-detail__setup-title">${opt.title || ''}</span>
+                    ${iconHTML}
+                  </div>
+                  <ul class="product-detail__setup-bullets">
+                    ${bullets}
+                  </ul>
+                  <div class="product-detail__setup-total">
+                    <span class="text-normal"><b>Total:</b></span>
+                    <span class="text-normal product-detail__setup-total-values">${totalParts}</span>
+                  </div>
+                </button>`;
+      }).join('\n');
+
+      setupHTML = `
+            <div class="product-detail__setup">
+              <label class="text-normal product-detail__setup-label"><b>${setupLabel}</b></label>
+              <div class="product-detail__setup-cards">
+${setupCards}
+              </div>
+              <input type="hidden" name="SETUP" id="product-setup" value="${(product.setupOptions[0].id || product.setupOptions[0].title || '').replace(/"/g, '&quot;')}">
+            </div>`;
+    }
+    pageContent = pageContent.replace(/\{\{PRODUCT_SETUP\}\}/g, setupHTML);
 
     // Handle product variants (e.g. robot vacuum model choice) - standalone build
     let variantsHTML = '';
@@ -1121,12 +1231,12 @@ ${stepsHTML}
       if (byName['UV Cover Color']) parts.push(byName['UV Cover Color'].toLowerCase() + ' (protection)');
       // Generic fallback for products with just Color (e.g. home-server-remote)
       if (byName['Color'] && !byName['Insight Color']) parts.push(byName['Color'].toLowerCase());
-      
+
       let optionsText;
       if (parts.length === 1) optionsText = parts[0];
       else if (parts.length === 2) optionsText = parts.join(' and ');
       else optionsText = parts.slice(0, -1).join(', ') + ' and ' + parts[parts.length - 1];
-      
+
       prefilledComment = `Hello, I would like to order ${product.title} — ${optionsText}. Please contact me.`;
     } else if (product.variants && product.variants.length > 0 && product.variants[0].name) {
       prefilledComment = `Hello, I would like to order ${product.variants[0].name} with Installation & Automation. Please contact me.`;
@@ -1338,8 +1448,8 @@ const fixShopAssetPathsStandalone = (cb) => {
         content = content.replace(/href="\.\.\/(about-us|why-smart-home|solutions|cyprus-lifestyle|for-construction|contact-us|privacy-policy)"/g, 'href="#contact"');
 
         // Fix footer image path
-        content = content.replace(/src="\.\.\/img\/decor-legs\.svg"/g, 'src="./img/decor-legs.svg');
-        content = content.replace(/src="\.\/img\/decor-legs\.svg"/g, 'src="./img/decor-legs.svg');
+        content = content.replace(/src="\.\.\/img\/decor-legs\.svg"/g, 'src="./img/decor-legs.svg"');
+        content = content.replace(/src="\.\/img\/decor-legs\.svg"/g, 'src="./img/decor-legs.svg"');
 
         // Fix favicon paths
         content = content.replace(/href="\/android-icon-192x192\.png"/g, 'href="./img/favicon/android-chrome-192x192.png"');

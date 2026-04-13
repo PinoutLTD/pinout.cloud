@@ -272,7 +272,7 @@ const products = [
   },
   {
     id: 'boiler-switch-upgrade',
-    title: 'Boiler Switch Upgrade',
+    title: 'Boiler Switch Upgrade - Home Assistant',
     description: 'Upgrade your boiler with a smart switch.',
     price: 160.00,
     oldPrice: 200.00,
@@ -288,18 +288,61 @@ const products = [
     available: true,
     slug: 'boiler-switch-upgrade',
     // Additional details for product page
-    fullDescription: 'Upgrade your home with a smart boiler heater switch! This service includes both the smart switch, professional installation by our expert technicians and programming according to your needs.',
+    fullDescription: `
+      <p class="text-normal"><b>Control your boiler smartly and enjoy hot water exactly when you need it.</b></p>
+      <p class="text-normal product-detail__desc-lead">Upgrade your existing boiler with smart automation — no replacement needed.</p>
+
+      <p class="text-normal">
+        We install a system that automatically controls your water heating, combining comfort and energy savings. <br/> Start your morning with hot water ready — no waiting for it to heat up.
+      </p>
+
+      <p class="text-normal product-detail__desc-heading"><b>What you get:</b></p>
+      <ul class="product-detail__features-list">
+        <li class="text-normal">Hot water ready in the morning or at your preferred time</li>
+        <li class="text-normal">Smart home integration with Home Assistant</li>
+        <li class="text-normal">Automatic schedules</li>
+        <li class="text-normal">Save up to 30% on energy</li>
+      </ul>
+
+      <p class="text-normal product-detail__desc-heading"><b>How it works:</b></p>
+      <p class="text-normal">
+        Your existing boiler is upgraded with a smart controller using a 20A Wi‑Fi smart switch designed for boiler heaters.<br/>It is integrated into your smart home system via Home Assistant, where we set up automation and full control of your boiler.<br/> Water is heated automatically based on your preferred schedule and daily routines.
+        No more waiting, no more wasted energy.
+      </p>
+    `,
     features: [
       'A smart switch for boiler heater 20A, Wi-Fi',
       'Professional installation by our technicians',
-      'Configuration and integration with your smart home system (e.g., Home Assistant, Alexa, Google Home)',
+      'Integration with your smart home system via Home Assistant',
+      'If you don’t have Home Assistant yet — choose the package with pre-installation for boiler integration and future smart home use',
+      'Automation setup and control configuration',
       'Guidance on using and automating your new smart switch'
     ],
     benefits: [
-      'Energy Efficiency - Schedule and automate your boiler heating for optimal savings',
-      'Remote Control - Turn your boiler on or off from anywhere using your smartphone',
-      'Smart Home Integration - Connect it to your existing smart home ecosystem',
-      'Peace of Mind - No more worrying about whether you left the heater on'
+      'Energy Efficiency — Automate your boiler heating to reduce energy consumption',
+      'Smart Automation — Water heating runs automatically based on your daily routine',
+      'Smart Home Integration — Powered by Home Assistant for a unified system',
+      'Easy Expansion — Add new smart home services without paying for Home Assistant setup again'
+    ],
+    setupLabel: 'Choose your setup:',
+    setupOptions: [
+      {
+        id: 'existing-home-assistant',
+        title: 'Already have Home Assistant',
+        iconBlue: '../img/shop/hass-blue.svg',
+        iconWhite: '../img/shop/hass-white.svg',
+        bullets: ['Boiler integration', 'Automation setup'],
+        totalAdd: 0.00,
+      },
+      {
+        id: 'new-home-assistant',
+        title: 'New system Home Assistant',
+        iconBlue: '../img/shop/hass-blue.svg',
+        iconWhite: '../img/shop/hass-white.svg',
+        bullets: ['Smart Home setup (one-time)', 'Boiler integration', 'Automation setup'],
+        totalOld: 450.00,
+        totalAdd: 150.00,
+      }
     ],
     category: 'Smart Switches'
   },

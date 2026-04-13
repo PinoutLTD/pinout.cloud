@@ -12,7 +12,7 @@
   font-variation-settings: 'GRAD' 132, 'wdth' 148;
 }
 
-.header .nav__item  {
+.header .nav__item {
   font-size: 20px;
 }
 
@@ -21,5 +21,116 @@
 }
 
 .nav__link:focus-visible {
-  color: var(--color-blue-link)
+  color: var(--color-blue-link);
+}
+
+.nav__item--featured {
+  margin-left: 4px;
+}
+
+.nav__link--featured {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border: 1px solid color-mix(in srgb, var(--color-blue-link) 55%, transparent);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-blue-link) 35%, transparent),
+    color-mix(in srgb, var(--color-blue-link) 14%, transparent)
+  );
+  transition: background 160ms ease, border-color 160ms ease, filter 160ms ease;
+}
+
+.nav__link--featured::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-green);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-green) 25%, transparent);
+}
+
+.nav__link--featured:hover {
+  border-color: color-mix(in srgb, var(--color-blue-link) 70%, transparent);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-blue-link) 45%, transparent),
+    color-mix(in srgb, var(--color-blue-link) 18%, transparent)
+  );
+  filter: saturate(1.05);
+}
+
+.nav__link--featured:focus-visible {
+  outline: 3px solid rgba(0, 92, 255, 0.35);
+  outline-offset: 3px;
+  color: inherit;
+}
+
+.dark .nav__link--featured {
+  border-color: color-mix(in srgb, var(--color-blue-link) 55%, transparent);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-blue-link) 38%, transparent),
+    color-mix(in srgb, var(--color-blue-link) 18%, transparent)
+  );
+}
+
+.dark .nav__link--featured:hover {
+  border-color: color-mix(in srgb, var(--color-blue-link) 70%, transparent);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-blue-link) 48%, transparent),
+    color-mix(in srgb, var(--color-blue-link) 22%, transparent)
+  );
+}
+
+.nav__item.nav__item--featured {
+  padding: 0 !important;
+  background-color: transparent !important;
+  color: inherit !important;
+}
+
+.dark .nav__item.nav__item--featured {
+  padding: 0 !important;
+  background-color: transparent !important;
+  color: inherit !important;
+}
+
+/* If the featured "shop" item is also active, keep it looking like the primary active pill */
+.nav__item--featured.nav__item--active {
+  padding: 0;
+  background-color: transparent;
+}
+
+.nav__item--featured.nav__item--active .nav__link--featured {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-blue-link) 55%, transparent),
+    color-mix(in srgb, var(--color-blue-link) 24%, transparent)
+  );
+  border-color: color-mix(
+    in srgb,
+    var(--color-dark) 35%,
+    var(--color-blue-link) 65%
+  );
+  color: var(--color-dark);
+}
+
+.dark .nav__item--featured.nav__item--active .nav__link--featured {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-blue-link) 65%, transparent),
+    color-mix(in srgb, var(--color-blue-link) 28%, transparent)
+  );
+  border-color: color-mix(
+    in srgb,
+    var(--color-dark) 35%,
+    var(--color-blue-link) 65%
+  );
+  color: var(--color-dark);
 }

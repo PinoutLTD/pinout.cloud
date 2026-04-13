@@ -21,20 +21,28 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   // activate current nav link
-  const navLinks = document.querySelector('.header__list').querySelectorAll('.nav__item');
-  navLinks.forEach(link => {
-    if(link.querySelector('.nav__link').href === window.location.href){
-        if(!document.body.classList.contains('dark')) {
-          link.style.backgroundColor = '#191919'
-          link.style.color = '#ffffff'
-          link.style.padding = '2px 5px'
-        } else {
-          link.style.backgroundColor = '#ffffff'
-          link.style.color = '#191919'
-          link.style.padding = '2px 5px'
-        }
+  const navList = document.querySelector('.header__list');
+  const navItems = navList?.querySelectorAll('.nav__item') ?? [];
+  const currentPathname = window.location.pathname.replace(/\/+$/, '') || '/';
+
+  navItems.forEach((item) => {
+    const anchor = item.querySelector('.nav__link');
+    if (!anchor?.href) return;
+
+    let linkPathname = '/';
+    try {
+      linkPathname = new URL(anchor.href).pathname.replace(/\/+$/, '') || '/';
+    } catch (_) {
+      return;
     }
-  })
+
+    const isExactMatch = linkPathname === currentPathname;
+    const isShopSectionMatch = currentPathname.startsWith('/shop') && linkPathname === '/shop';
+
+    if (isExactMatch || isShopSectionMatch) {
+      item.classList.add('nav__item--active');
+    }
+  });
 
 
   // plans details drag&drop

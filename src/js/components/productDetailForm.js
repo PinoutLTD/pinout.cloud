@@ -99,6 +99,37 @@ function initProductDetailForm() {
   });
 
   /* -----------------------------
+     Setup selection (e.g. "Choose your setup" cards)
+  ----------------------------- */
+  document.querySelectorAll('.product-detail__setup-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      document
+        .querySelectorAll('.product-detail__setup-card')
+        .forEach(c => c.classList.remove('active'));
+
+      card.classList.add('active');
+
+      const setupTitle = card.getAttribute('data-setup-title') || card.dataset.setupTitle || '';
+      const setupId = card.getAttribute('data-setup-id') || card.dataset.setupId || setupTitle || '';
+      const setupInput = document.getElementById('product-setup');
+      const commentTextarea = document.getElementById('mce-COMMENT');
+      const productInput = document.querySelector('input[name="PRODUCT"]');
+
+      if (setupInput) {
+        setupInput.value = setupId;
+      }
+
+      if (commentTextarea && productInput) {
+        const productName = productInput.value;
+        commentTextarea.value = setupTitle
+          ? `Hello, I would like to order ${productName} — ${setupTitle}. Please contact me.`
+          : `Hello, I would like to order ${productName}. Please contact me.`;
+      }
+    });
+  });
+
+  /* -----------------------------
      Color selection
   ----------------------------- */
   document.querySelectorAll('.product-detail__color-swatch').forEach(swatch => {

@@ -193,6 +193,156 @@
   margin-bottom: calc(var(--space) * 0.5);
 }
 
+.product-detail__setup {
+  margin-bottom: calc(var(--space) * 0.5);
+}
+
+.product-detail__setup-label {
+  display: block;
+  margin-bottom: calc(var(--space) * 0.5);
+}
+
+.product-detail__setup-label b {
+  font-weight: 600;
+}
+
+.product-detail__setup-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space);
+}
+
+.product-detail__setup-card {
+  padding: calc(var(--space) * 0.7) calc(var(--space) * 0.5);
+  border: 2px solid #000;
+  border-radius: 12px;
+  background-color: var(--color-light);
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    color 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--space) * 0.5);
+  min-height: 160px;
+  min-width: 0; /* prevent flex/grid overflow squeezing one side */
+}
+
+.product-detail__setup-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--space) * 0.5);
+}
+
+.product-detail__setup-title {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.product-detail__setup-icon-wrap {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.product-detail__setup-icon {
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  inset: 0;
+}
+
+.product-detail__setup-icon--white {
+  opacity: 0;
+}
+
+.product-detail__setup-card.active .product-detail__setup-icon--blue {
+  opacity: 0;
+}
+
+.product-detail__setup-card.active .product-detail__setup-icon--white {
+  opacity: 1;
+}
+
+.product-detail__setup-card:hover {
+  border-color: var(--text-accent);
+}
+
+.product-detail__setup-card.active {
+  background-color: var(--text-accent);
+  border-color: var(--text-accent);
+  color: var(--color-light);
+}
+
+.product-detail__setup-title {
+  font-family: var(--font-family);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.product-detail__setup-bullets {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.product-detail__setup-bullets li {
+  position: relative;
+  padding-left: 30px;
+}
+
+.product-detail__setup-bullets li::before {
+  content: '✔';
+  position: absolute;
+  left: 0;
+  top: 0;
+  line-height: 1.2;
+  color: currentColor;
+}
+
+.product-detail__setup-total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: calc(var(--space) * 0.5);
+  margin-top: auto;
+}
+
+.product-detail__setup-total .text-normal {
+  font-family: var(--font-family);
+  font-size: 24px;
+  font-variation-settings: 'GRAD' 132, 'wdth' 148;
+}
+
+.product-detail__setup-total-values {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.product-detail__setup-total-old {
+  font-size: 14px;
+  opacity: 0.55;
+  text-decoration: line-through;
+}
+
+.product-detail__setup-total-add {
+  font-weight: 700;
+}
+
+.product-detail__setup-card.active .product-detail__setup-title,
+.product-detail__setup-card.active .product-detail__setup-total,
+.product-detail__setup-card.active .product-detail__setup-bullets,
+.product-detail__setup-card.active .product-detail__setup-total-old,
+.product-detail__setup-card.active .product-detail__setup-total-add {
+  color: inherit;
+}
+
 .product-detail__variants-label {
   display: block;
   margin-bottom: calc(var(--space) * 0.5);
@@ -311,6 +461,23 @@
   line-height: 1.6;
 }
 
+.product-detail__description .product-detail__desc-heading {
+  margin-top: calc(var(--space) * 0.8);
+  margin-bottom: calc(var(--space) * 0.3);
+}
+
+.product-detail__description .product-detail__desc-heading b {
+  font-weight: 600;
+}
+
+.product-detail__description .product-detail__desc-heading:first-child {
+  margin-top: 0;
+}
+
+.product-detail__description .product-detail__desc-lead {
+  margin-bottom: calc(var(--space) * 0.6);
+}
+
 .product-detail__features {
   margin-top: calc(var(--space) * 1);
 }
@@ -384,8 +551,12 @@
   overflow: hidden !important;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1420px) {
   .product-detail__variant-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .product-detail__setup-cards {
     grid-template-columns: 1fr;
   }
 }
@@ -656,6 +827,14 @@
   margin-top: 0;
 }
 
+.product-detail__description ul {
+  padding-left: 15px;
+}
+
+.product-detail__description b {
+  font-weight: 600;
+}
+
 /* Color Options */
 .product-detail__color-options {
   display: flex;
@@ -815,6 +994,7 @@
 
 .product-detail__features-list li {
   position: relative;
+  font-weight: 300;
   padding-left: calc(var(--space) * 0.2);
 }
 
