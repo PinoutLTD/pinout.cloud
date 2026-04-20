@@ -27,6 +27,12 @@ const resources = () => {
   .pipe(dest('dist/resources'))
 }
 
+// Copy static documents (PDFs, etc.) to /docs in output
+const docs = () => {
+  return src('src/docs/**')
+    .pipe(dest('dist/docs'));
+}
+
 const styles = () => {
     return src('src/assets/styles/**/*.css')
     .pipe(sourceMaps.init())
@@ -696,13 +702,15 @@ async function watchAll() {
   watch('.src/assets/img/*.{jpg,jpeg,png,svg, gif}', images);
   watch('.src/assets/img/**/*.{jpg,jpeg,png,svg, gif}', images);
   watch('src/resources/**', resources);
+  watch('src/docs/**', docs);
 }
 
 exports.clean = clean;
+exports.docs = docs;
 exports.styles = styles;
 exports.htmlInclude = htmlInclude;
 exports.scripts = scripts;
-exports.default = series(clean, resources, generateProductPages, htmlInclude, htmlPages, processProductPages, fixShopAssetPaths, scripts, styles, images, svgSprites, watchAll, watchFiles)
+exports.default = series(clean, resources, docs, generateProductPages, htmlInclude, htmlPages, processProductPages, fixShopAssetPaths, scripts, styles, images, svgSprites, watchAll, watchFiles)
 
 const minImages = () => {
     return src([
@@ -1690,4 +1698,4 @@ exports['build:shop'] = series(
   shopResources
 );
 
-exports.build = series(clean, resources, generateProductPagesBuild, htmlMinify, htmlPagesMinify, fixShopAssetPathsBuild, scriptsBuild, stylesBuild, minImages, svgSprites)
+exports.build = series(clean, resources, docs, generateProductPagesBuild, htmlMinify, htmlPagesMinify, fixShopAssetPathsBuild, scriptsBuild, stylesBuild, minImages, svgSprites)
