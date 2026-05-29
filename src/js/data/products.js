@@ -1,6 +1,380 @@
 // Products data
 const products = [
-    {
+  {
+    id: 'biohacking-apartment',
+    title: 'Biohacking Apartment',
+    description: 'Your home can support your health, sleep and recovery.',
+    price: "from 3,300.00",
+    image: '../img/shop/banners/biohacking/card-1.png',
+    images: [
+      '../img/shop/banners/biohacking/card-1.png',
+      '../img/shop/banners/biohacking/card-2.png',
+      '../img/shop/banners/biohacking/card-3.png',
+      '../img/shop/banners/biohacking/card-4.png',
+      '../img/shop/banners/biohacking/card-5.png',
+      '../img/shop/banners/biohacking/card-6.png',
+    ],
+    available: true,
+    slug: 'biohacking-apartment',
+    fullDescription: '<b>Your home can support your health, sleep and recovery.</b><br> Your sleep. Your recovery. Your energy. Your well-being. <br> The space you live in directly affects sleep quality, stress levels, concentration, and overall well-being.<br> We help optimize your apartment for better recovery, sleep, relaxation, and everyday well-being using biohacking and smart home technologies.<br>If you use Apple Watch, Garmin, Oura Ring, or Whoop to monitor sleep, recovery, and overall health, the system helps create optimal conditions for deeper rest, lower stress levels, and more effective recovery after physical exertion and an intensive lifestyle.<br>The system continuously monitors air quality, CO₂ levels, humidity, temperature, and indoor climate parameters, automatically maintaining a healthy indoor environment for sleep, relaxation, and comfortable living.<br>Intelligent lighting adapts to the body’s circadian rhythms, supporting natural melatonin production in the evening and healthy energy levels during the day.<br>Air purification systems, smart climate control, and automated scenarios create a comfortable environment where the body can recover more effectively and maintain high energy levels every day — especially important for life on an island with a hot climate, high humidity, and periodic dust storms.<br>This is not just smart home automation.<br>It is a personalized biohacking system designed for health, recovery, and a higher quality of life.',
+    delivery: false,
+    serviceSummary: [
+      { line: '*Final cost depends on the apartment layout, selected equipment, number of automated zones, and project complexity. A consultation with our specialist is required for an accurate quotation. <br> Service cost includes equipment and materials.' },
+      { label: 'Project timeline', value: 'approximately 7 days (from request to completed setup, depending on project scope and equipment availability).' },
+      { label: 'On-site work time', value: 'approximately 8–12 hours (depending on the apartment size, number of automated zones, and project complexity).' },
+    ],
+    howItWorksHtml: `
+        <section class="product-detail__bio-schedule">
+          <div class="product-detail__bio-schedule-board">
+            <img src="../img/shop/banners/biohacking/decor.png" alt="" class="product-detail__bio-schedule-decor" loading="lazy"/>
+            <div class="product-detail__bio-schedule-zone product-detail__bio-schedule-zone--day">
+              <h2 class="subtitle product-detail__bio-schedule-title">LIVING ROOM 07:00–22:00</h2>
+              <div class="product-detail__bio-schedule-list">
+                <article class="product-detail__bio-schedule-item">
+                  <img src="../img/shop/banners/biohacking/curtains.svg" alt="" class="product-detail__bio-schedule-icon"/>
+                  <div class="product-detail__bio-schedule-copy">
+                    <h3>6:00–7:00 — Living Room Wake-Up Preparation</h3>
+                    <ul>
+                      <li>Blackout curtains open automatically.</li>
+                      <li>A comfortable indoor microclimate is prepared in the room.</li>
+                    </ul>
+                  </div>
+                </article>
+                <article class="product-detail__bio-schedule-item">
+                  <img src="../img/shop/banners/biohacking/lightning.svg" alt="" class="product-detail__bio-schedule-icon"/>
+                  <div class="product-detail__bio-schedule-copy">
+                    <h3>20:00 — Start Evening Recovery Mode</h3>
+                    <p><b>Lighting:</b></p>
+                    <ul>
+                      <li>Cold white light is turned off;</li>
+                      <li>Red/amber light is activated;</li>
+                      <li>Lighting brightness is reduced.</li>
+                    </ul>
+                    <p class="product-detail__bio-schedule-goal">Goal: supporting natural melatonin production, reducing nervous system stimulation, and preparing the body for sleep.</p>
+                  </div>
+                </article>
+                <article class="product-detail__bio-schedule-item">
+                  <img src="../img/shop/banners/biohacking/blackout-mode.svg" alt="" class="product-detail__bio-schedule-icon"/>
+                  <div class="product-detail__bio-schedule-copy">
+                    <h3>21:00 — Blackout Mode</h3>
+                    <p>Blackout curtains close automatically.</p>
+                    <p class="product-detail__bio-schedule-goal">Goal: supporting melatonin production, reducing light pollution, and improving sleep quality.</p>
+                  </div>
+                </article>
+                <article class="product-detail__bio-schedule-item">
+                  <img src="../img/shop/banners/biohacking/temperature.svg" alt="" class="product-detail__bio-schedule-icon"/>
+                  <div class="product-detail__bio-schedule-copy">
+                    <h3>Indoor Temperature:</h3>
+                    <p><b>Morning 21–23°C</b><br><em>Comfortable wake-up, activation of the body, and a feeling of alertness.</em></p>
+                    <p><b>Daytime 22–24°C</b><br><em>Maintaining normal energy levels, concentration, comfortable work, and daily activity.</em></p>
+                    <p><b>Evening 20–22°C</b><br><em>Lowering the temperature and preparing the body for sleep.</em></p>
+                  </div>
+                </article>
+                <article class="product-detail__bio-schedule-item">
+                  <img src="../img/shop/banners/biohacking/humidity.svg" alt="" class="product-detail__bio-schedule-icon"/>
+                  <div class="product-detail__bio-schedule-copy">
+                    <h3>Humidity Control Throughout the Day</h3>
+                    <p><b>Recommended range:</b> 40–55% humidity.</p>
+                    <p class="product-detail__bio-schedule-goal">Goal: reducing dryness caused by air conditioners and heating, improving breathing, and maintaining a comfortable indoor microclimate.</p>
+                  </div>
+                </article>
+                <article class="product-detail__bio-schedule-item">
+                  <img src="../img/shop/banners/biohacking/co2.svg" alt="" class="product-detail__bio-schedule-icon"/>
+                  <div class="product-detail__bio-schedule-copy">
+                    <h3>CO₂ Monitoring</h3>
+                    <p>Altruist Inside sensor for timely indoor ventilation and air quality monitoring.</p>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <div class="product-detail__bio-schedule-zone product-detail__bio-schedule-zone--night">
+              <h2 class="subtitle product-detail__bio-schedule-title">BEDROOM 20:00–07:00</h2>
+              <div class="product-detail__bio-schedule-list">
+                <article class="product-detail__bio-schedule-item">
+                  <img src="../img/shop/banners/biohacking/blackout-mode.svg" alt="" class="product-detail__bio-schedule-icon"/>
+                  <div class="product-detail__bio-schedule-copy">
+                    <h3>20:00 Start — Evening Recovery Mode</h3>
+                    <ul>
+                      <li>Cold white light is turned off;</li>
+                      <li>Lighting brightness is reduced;</li>
+                      <li>Red/amber light is activated;</li>
+                    </ul>
+                    <p>A comfortable indoor microclimate is prepared in the room.</p>
+                  </div>
+                </article>
+                <article class="product-detail__bio-schedule-item">
+                  <img src="../img/shop/banners/biohacking/lightning.svg" alt="" class="product-detail__bio-schedule-icon"/>
+                  <div class="product-detail__bio-schedule-copy">
+                    <h3>21:00 — Blackout Mode</h3>
+                    <p>Blackout curtains close automatically.</p>
+                    <p class="product-detail__bio-schedule-goal">Goal: supporting melatonin production, reducing light pollution, and improving sleep quality.</p>
+                  </div>
+                </article>
+                <article class="product-detail__bio-schedule-item">
+                  <img src="../img/shop/banners/biohacking/lights-off.svg" alt="" class="product-detail__bio-schedule-icon"/>
+                  <div class="product-detail__bio-schedule-copy">
+                    <h3>22:30–23:00 — Sleep Mode</h3>
+                    <p>Red/amber light turns off.</p>
+                  </div>
+                </article>
+                <article class="product-detail__bio-schedule-item">
+                  <img src="../img/shop/banners/biohacking/curtains.svg" alt="" class="product-detail__bio-schedule-icon"/>
+                  <div class="product-detail__bio-schedule-copy">
+                    <h3>6:00–7:00 — RECOVERY WAKE-UP</h3>
+                    <ul>
+                      <li>Blackout curtains open automatically.</li>
+                      <li>Bright white light is activated (if it is still dark outside).</li>
+                    </ul>
+                    <p class="product-detail__bio-schedule-goal">Goal: gentle wake-up, synchronization of circadian rhythms, and increased morning energy.</p>
+                  </div>
+                </article>
+                <article class="product-detail__bio-schedule-item">
+                  <img src="../img/shop/banners/biohacking/temperature.svg" alt="" class="product-detail__bio-schedule-icon"/>
+                  <div class="product-detail__bio-schedule-copy">
+                    <h3>Temperature:</h3>
+                    <p>Recommended range: 18–22°C.</p>
+                    <p class="product-detail__bio-schedule-goal">Goal: improving deep sleep, reducing nighttime awakenings, and supporting comfortable sleep onset.</p>
+                  </div>
+                </article>
+                <article class="product-detail__bio-schedule-item">
+                  <img src="../img/shop/banners/biohacking/humidity.svg" alt="" class="product-detail__bio-schedule-icon"/>
+                  <div class="product-detail__bio-schedule-copy">
+                    <h3>Humidity Control:</h3>
+                    <p>Recommended range: 40–50% humidity.</p>
+                    <p class="product-detail__bio-schedule-goal">Goal: reducing dryness caused by air conditioners and heating, improving breathing during sleep, and maintaining a comfortable indoor microclimate.</p>
+                  </div>
+                </article>
+                <article class="product-detail__bio-schedule-item">
+                  <img src="../img/shop/banners/biohacking/co2.svg" alt="" class="product-detail__bio-schedule-icon"/>
+                  <div class="product-detail__bio-schedule-copy">
+                    <h3>CO₂ Monitoring</h3>
+                    <p>Altruist Inside sensor for timely indoor ventilation and air quality monitoring.</p>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <div class="product-detail__bio-schedule-night-mode">
+              <h2 class="subtitle product-detail__bio-schedule-title">20:00–06:00 — NIGHT MOVEMENT MODE THROUGHOUT THE APARTMENT</h2>
+              <div class="product-detail__bio-schedule-night-row">
+                <img src="../img/shop/banners/biohacking/moon.svg" alt="" class="product-detail__bio-schedule-icon"/>
+                <p class="text-normal">Motion-based night lighting: when movement is detected in the corridor, bathroom, or kitchen, dim red light with minimal brightness is automatically activated without suppressing melatonin.</p>
+              </div>
+            </div>
+          </div>
+        </section>`,
+    features: [
+      'Smart air conditioner control with automated cooling and heating scenarios for daytime, evening and sleep modes.',
+      'Smart underfloor heating automation with programmable temperature control for comfortable heating in the morning and evening.',
+      'Two Altruist Inside air quality sensors for monitoring CO₂, temperature and humidity levels in the bedroom and living room.',
+      'Altruist Urban outdoor climate sensor for monitoring outdoor air quality, dust levels, temperature and humidity to help create a comfortable indoor microclimate.',
+      'Smart lighting system with automated circadian lighting scenarios, red/amber evening light and bright white wake-up light.',
+      'Motion sensors with automatic dim red night lighting in the corridor, bathroom and kitchen.',
+      'Automated blackout curtains with opening and closing scenarios for sleep and wake-up routines.',
+      'Air purification system with automatic air quality control for the bedroom and living room.',
+      'Smart humidity control system for maintaining a comfortable indoor microclimate during the day and sleep.',
+      'Installation and configuration of a local smart home server.',
+      'Professional installation by our technicians.',
+      'Guidance on using and automating your new smart biohacking home'
+    ],
+    benefits: [
+      '<b>Comfort & Convenience</b> – the apartment automatically adapts to your lifestyle, sleep schedule and indoor climate needs.',
+      '<b>Better Sleep & Recovery</b> – optimized temperature, humidity, lighting and blackout scenarios for deeper sleep and improved recovery.',
+      '<b>Healthy Indoor Climate</b> – monitoring of CO₂, humidity, dust and air quality in real time.',
+      '<b>Circadian Lighting</b> - red/amber evening light and bright wake-up light for natural melatonin support and healthier daily rhythms.',
+      '<b>Dust Storm Protection </b> - smart air purification and climate control even during poor outdoor air conditions.',
+      '<b>Smart Automation</b> - fully automated day, evening and sleep scenarios without constant manual control.',
+      '<b>Reliability</b> - runs on a local smart home server without cloud dependency.'
+    ],
+    category: 'Biohacking'
+  },
+  {
+    id: 'water-control',
+    title: 'Smart hot water control',
+    description: 'Get full control over your hot water with a smart boiler management system.',
+    price: 1250.00,
+    image: '../img/shop/banners/water-control/card-1.png',
+    images: [
+      '../img/shop/banners/water-control/card-1.png',
+      '../img/shop/banners/water-control/card-2.png',
+      '../img/shop/banners/water-control/card-3.png',
+      '../img/shop/banners/water-control/card-4.png',
+      '../img/shop/banners/water-control/card-5.png',
+      '../img/shop/banners/water-control/card-6.png',
+      '../img/shop/banners/water-control/card-7.png',
+    ],
+    available: true,
+    slug: 'water-control',
+    fullDescription: 'Get full control over your hot water with a smart boiler management system. We install and configure a solution that maintains the desired temperature, controls heating based on a schedule, and allows you to manage everything through a mobile app.<br>The system reduces energy consumption by activating heating only when needed and operates on a local server without reliance on cloud services.<br>You can check the water temperature at any time, control the boiler remotely, and set up scenarios tailored to your lifestyle.',
+    delivery: false,
+    serviceSummary: [
+      { line: 'Total service cost, including equipment and materials' },
+      { label: 'Project timeline', value: '7 days (from request to completed setup)' },
+      { label: 'On-site work time', value: '1 working day (after initial inspection by an engineer)' },
+    ],
+    features: [
+      'Installation and setup of a temperature sensor in the rooftop tank',
+      'Installation of a Cat6 cable from the boiler to the apartment electrical panel',
+      'Installation and configuration of a local smart home server',
+      'Replacement of the standard boiler switch with a smart controller connected to the server',
+      'Installation and setup of a custom water heating control and scheduling system developed by our engineers',
+      'Mobile app setup for remote access',
+      'User training on how to operate the system'
+    ],
+    benefits: [
+      '<b>Automation</b> – the boiler runs on schedules and smart scenarios',
+      '<b>Energy Savings</b> – heating only when needed',
+      '<b>Smarter Ventilation Decisions</b> – Avoid opening windows during dust storms, high noise levels, or poor outdoor air quality.',
+      '<b>Remote Access</b> - control from anywhere via smartphone',
+      '<b>Precise Temperature Control</b> - always comfortable hot water',
+      '<b>Ease of Use</b> - simple controls and intuitive interface',
+      '<b>Reliability</b> - runs on a local server without cloud dependency',
+    ],
+    category: 'Water control'
+  },
+  {
+    id: 'altruist-and-purifiers',
+    title: 'Air Quality Control During Dust Storms',
+    description: 'Ensure clean and safe air at home even during dust storms.',
+    price: 1050.00,
+    image: '../img/shop/banners/altruist-and-purifiers/card-1.png',
+    images: [
+      '../img/shop/banners/altruist-and-purifiers/card-1.png',
+      '../img/shop/banners/altruist-and-purifiers/card-2.png',
+      '../img/shop/banners/altruist-and-purifiers/card-3.png',
+      '../img/shop/banners/altruist-and-purifiers/card-4.png',
+      '../img/shop/banners/altruist-and-purifiers/card-5.png',
+      '../img/shop/banners/altruist-and-purifiers/card-6.png',
+    ],
+    available: true,
+    slug: 'altruist-and-purifiers',
+    fullDescription: 'Ensure clean and safe air at home even during dust storms.<br>We install and configure an air monitoring and purification system that automatically responds to changes in air quality and maintains a comfortable environment.<br>The system tracks outdoor dust levels and indoor CO₂ concentration, automatically controlling air purifiers. Everything runs on a local smart home server, with control and monitoring available through mobile app.<br>You can always check the air quality and be confident that the system maintains a healthy indoor climate. It also suggests when it’s safe to open the windows and when it’s better to keep them closed.',
+    delivery: false,
+    serviceSummary: [
+      { line: 'Total service cost, including equipment and materials' },
+      { label: 'Project timeline', value: '7 days (from request to completed setup)' },
+      { label: 'On-site work time', value: '4–6 hours (within one day)' },
+    ],
+    howItWorksHtml: `
+        <section class="product-detail__dust-story">
+          <div class="layout product-detail__dust-story-inner">
+            <div class="product-detail__dust-story-top grid grid-2">
+              <div class="product-detail__dust-story-hero-frame">
+                <img src="../img/shop/banners/altruist-and-purifiers/dust-storm-1.png" alt="Line chart: air quality across Cyprus cities during the Saharan dust storm, April 2-4, 2026"/>
+              </div>
+              <div class="product-detail__dust-story-intro">
+                <p class="text-normal">During dust storms, for example, the Saharan dust storm in Cyprus (April 2-4, 2026, lasting 53 hours), air quality deteriorates not only outdoors but also indoors.</p>
+                <p class="text-normal">The main issue is coarse dust particles. They behave differently:</p>
+                <ul class="product-detail__dust-story-list text-normal">
+                  <li>particles easily enter indoor spaces through windows, gaps, and ventilation</li>
+                  <li>not all air purifiers detect them accurately</li>
+                  <li>many consumer devices fail to trigger automatic purification in time</li>
+                </ul>
+              </div>
+            </div>
+            <div class="product-detail__dust-story-dashboards" role="group" aria-label="Sensor dashboard screenshots">
+              <div class="product-detail__dust-story-dash-card">
+                <img src="../img/shop/banners/altruist-and-purifiers/dust-storm-2.png" alt="Air quality dashboard: detailed measurements during the dust storm" loading="lazy"/>
+              </div>
+              <div class="product-detail__dust-story-dash-card">
+                <img src="../img/shop/banners/altruist-and-purifiers/dust-storm-3.png" alt="Air quality dashboard: city comparison view" loading="lazy"/>
+              </div>
+              <div class="product-detail__dust-story-dash-card">
+                <img src="../img/shop/banners/altruist-and-purifiers/dust-storm-4.png" alt="Air quality dashboard: timeline and sensor readings" loading="lazy"/>
+              </div>
+            </div>
+            <div class="product-detail__dust-story-meta text-normal">
+              <a href="https://x.com/SensorsSocial/status/2040375444797591705" class="product-detail__dust-story-social" target="_blank" rel="noopener noreferrer" aria-label="Sensors Social on X">
+                <img src="../img/shop/banners/altruist-and-purifiers/sensors-social-icon.png" alt="" width="28" height="28" loading="lazy"/>
+              </a>
+              <p class="product-detail__dust-story-meta-copy text-normal">
+                <a href="https://x.com/SensorsSocial/status/2040375444797591705" class="product-detail__dust-story-meta-handle" target="_blank" rel="noopener noreferrer"><b>x.com/SensorsSocial</b></a>
+                <span class="product-detail__dust-story-meta-detail"> Cyprus Saharan Dust Storm — full analysis. April 2–4, 2026. 53 hours. 7 cities. 26 sensors. 50,000+ measurements.</span>
+              </p>
+            </div>
+            <div class="product-detail__dust-story-columns grid grid-2">
+              <div class="product-detail__dust-story-col">
+                <h3 class="product-detail__dust-story-col-title subtitle">Health Risks</h3>
+                <p class="text-normal product-detail__dust-story-lead">Such dust can:</p>
+                <ul class="product-detail__dust-story-list text-normal">
+                  <li>penetrate deep into the lungs</li>
+                  <li>cause irritation of the eyes and respiratory system</li>
+                  <li>worsen allergies and asthma</li>
+                  <li>lead to fatigue, headaches, and a general decline in well-being</li>
+                </ul>
+              </div>
+              <div class="product-detail__dust-story-col">
+                <h3 class="product-detail__dust-story-col-title subtitle">Everyday Inconveniences</h3>
+                <ul class="product-detail__dust-story-list text-normal">
+                  <li>it's not possible to properly ventilate the space</li>
+                  <li>dust settles on furniture and surfaces</li>
+                  <li>sleep and concentration are affected</li>
+                  <li>it's difficult to know when it's safe to open the windows</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>`,
+    features: [
+      'Installation of an outdoor dust sensor and a CO₂ sensor in the bedroom',
+      'Installation and setup of a local smart home server',
+      'Selection, supply, and installation of two air purifiers (living room and bedroom)',
+      'Integration of air purifiers with the smart home system and setup of automatic scenarios',
+      'Mobile app setup for remote access',
+      'User training on how to operate the system'
+    ],
+    benefits: [
+      '<b>Automatic Air Purification</b> – the system reacts to dust and CO₂ without your involvement',
+      '<b>Healthy Indoor Climate</b> – real-time air quality monitoring',
+      '<b>Dust Storm Protection</b> – clean air even in harsh conditions',
+      '<b>Remote Control</b> - manage everything via smartphone from anywhere',
+      '<b>Comfort</b> - fully automated, no constant attention needed',
+      '<b>Reliability</b> - runs on a local server without cloud dependency',
+    ],
+    category: 'Altruist'
+  },
+  {
+    id: 'remote-property-monitoring',
+    title: 'Remote Property Monitoring in Cyprus',
+    description: 'Monitor your property in Cyprus from anywhere in the world.',
+    price: 1550.00,
+    image: '../img/shop/banners/remote-property-monitoring/card-1.png',
+    images: [
+      '../img/shop/banners/remote-property-monitoring/card-1.png',
+      '../img/shop/banners/remote-property-monitoring/card-2.png',
+      '../img/shop/banners/remote-property-monitoring/card-3.png',
+      '../img/shop/banners/remote-property-monitoring/card-4.png',
+    ],
+    available: true,
+    slug: 'remote-property-monitoring',
+    fullDescription: 'Monitor your property in Cyprus from anywhere in the world. We install and configure a system that allows you to track your apartment in real time, receive instant notifications, and quickly respond to any events.<br>The system combines video surveillance, motion sensors, door opening sensors, water leak detection, and energy monitoring into a single platform. All devices are connected to a local smart home server, ensuring stable and secure operation without reliance on cloud services.<br>You will always know what’s happening in your property — even when you’re abroad.',
+    delivery: false,
+    serviceSummary: [
+      { line: 'Total service cost, including equipment and materials' },
+      { label: 'Project timeline', value: '7 days (from request to completed setup)' },
+      { label: 'On-site work time', value: '1–2 working days' },
+    ],
+    features: [
+      'Installation and setup of an energy monitoring system',
+      'Installation of water leak sensors',
+      'Installation of an online PTZ camera in the living room',
+      'Installation of motion sensors in every room',
+      'Installation of door sensors for the entrance and balcony doors',
+      'Installation and configuration of a local smart home server connecting all devices',
+      'Setup of event notifications and remote access to property data',
+      'Mobile app installation for remote access',
+      'User training on how to operate the system'
+    ],
+    benefits: [
+      '<b>Full Control</b> – all property data in one app',
+      '<b>Security</b> – instant alerts for motion, door openings, and water leaks',
+      '<b>Video Monitoring</b> – real-time camera access',
+      '<b>Remote Access</b> - control your system from anywhere in the world',
+      '<b>Piece of Mind</b> - always know your property is safe',
+      '<b>Reliability</b> - runs on a local server without cloud dependency',
+    ],
+    category: 'Remote property monitoring'
+  },
+  {
     id: 'altruist',
     title: 'Altruist Air Quality Sensors with Installation & Setup',
     description: 'Get an air quality monitoring system with professional installation.',
@@ -236,116 +610,116 @@ const products = [
       { id: 'x20max', name: 'Xiaomi Robot Vacuum X20 Max', price: 800.00, oldPrice: 850.00, image: '../img/shop/smart-vacuum-robot-2.png' }
     ]
   },
-  {
-    id: 'smart-ptz-camera',
-    title: 'Smart PTZ Camera with Installation & Automation',
-    description: 'Indoor PTZ Wi-Fi camera with smart home integration.',
-    price: 180.00,
-    oldPrice: 230.00,
-    additionalUnitPrice: 10.00, // Price for each additional unit after the first one
-    image: '../img/shop/ptz-camera/card-1.png',
-    images: [
-      '../img/shop/banners/ptz-camera/card-1.jpg',
-      '../img/shop/banners/ptz-camera/card-2.jpg',
-      '../img/shop/banners/ptz-camera/card-3.jpg',
-      '../img/shop/banners/ptz-camera/card-4.jpg',
-      '../img/shop/banners/ptz-camera/card-5.jpg',
-      '../img/shop/banners/ptz-camera/card-6.jpg',
-      '../img/shop/banners/ptz-camera/card-7.jpg',
-    ],
-    available: true,
-    slug: 'smart-ptz-camera-installation',
-    fullDescription: 'Get a indoor PTZ camera with professional installation and smart home automation included. We install and configure the camera, set up monitoring scenarios, notifications, and integrate it into your smart home system for reliable everyday security. <br/> A single smart camera with panoramic view and remote control is often all you need for home security and peace of mind.',
-    features: [
-      'Reolink WIFI Indoor PTZ Camera 8MP E1 Zoom (E340) White',
-      'Professional installation by our technicians',
-      'Configuration and integration with your smart home system (e.g., Home Assistant, Alexa, Google Home)',
-      'Guidance on using and automating your new smart camera'
-    ],
-    benefits: [
-      'Automation – motion detection alerts',
-      'Remote access – live video streaming from anywhere with pan, tilt, and zoom for full room control',
-      'Smart Home Integration - Connect it to your existing smart home ecosystem',
-      'Peace of mind – always know what’s happening at home'
-    ],
-    category: 'Smart PTZ Camera'
-  },
-  {
-    id: 'boiler-switch-upgrade',
-    title: 'Boiler Switch Upgrade - Home Assistant',
-    description: 'Upgrade your boiler with a smart switch.',
-    price: 160.00,
-    oldPrice: 200.00,
-    image: '../img/shop/banners/boiler-heater/card-1.png',
-    images: [
-      '../img/shop/banners/boiler-heater/card-1.jpg',
-      '../img/shop/banners/boiler-heater/card-2.jpg',
-      '../img/shop/banners/boiler-heater/card-3.jpg',
-      '../img/shop/banners/boiler-heater/card-4.jpg',
-      '../img/shop/banners/boiler-heater/card-5.jpg',
-      '../img/shop/banners/boiler-heater/card-6.jpg',
-    ],
-    available: true,
-    slug: 'boiler-switch-upgrade',
-    // Additional details for product page
-    fullDescription: `
-      <p class="text-normal"><b>Control your boiler smartly and enjoy hot water exactly when you need it.</b></p>
-      <p class="text-normal product-detail__desc-lead">Upgrade your existing boiler with smart automation — no replacement needed.</p>
+  // {
+  //   id: 'smart-ptz-camera',
+  //   title: 'Smart PTZ Camera with Installation & Automation',
+  //   description: 'Indoor PTZ Wi-Fi camera with smart home integration.',
+  //   price: 180.00,
+  //   oldPrice: 230.00,
+  //   additionalUnitPrice: 10.00, // Price for each additional unit after the first one
+  //   image: '../img/shop/ptz-camera/card-1.png',
+  //   images: [
+  //     '../img/shop/banners/ptz-camera/card-1.jpg',
+  //     '../img/shop/banners/ptz-camera/card-2.jpg',
+  //     '../img/shop/banners/ptz-camera/card-3.jpg',
+  //     '../img/shop/banners/ptz-camera/card-4.jpg',
+  //     '../img/shop/banners/ptz-camera/card-5.jpg',
+  //     '../img/shop/banners/ptz-camera/card-6.jpg',
+  //     '../img/shop/banners/ptz-camera/card-7.jpg',
+  //   ],
+  //   available: true,
+  //   slug: 'smart-ptz-camera-installation',
+  //   fullDescription: 'Get a indoor PTZ camera with professional installation and smart home automation included. We install and configure the camera, set up monitoring scenarios, notifications, and integrate it into your smart home system for reliable everyday security. <br/> A single smart camera with panoramic view and remote control is often all you need for home security and peace of mind.',
+  //   features: [
+  //     'Reolink WIFI Indoor PTZ Camera 8MP E1 Zoom (E340) White',
+  //     'Professional installation by our technicians',
+  //     'Configuration and integration with your smart home system (e.g., Home Assistant, Alexa, Google Home)',
+  //     'Guidance on using and automating your new smart camera'
+  //   ],
+  //   benefits: [
+  //     'Automation – motion detection alerts',
+  //     'Remote access – live video streaming from anywhere with pan, tilt, and zoom for full room control',
+  //     'Smart Home Integration - Connect it to your existing smart home ecosystem',
+  //     'Peace of mind – always know what’s happening at home'
+  //   ],
+  //   category: 'Smart PTZ Camera'
+  // },
+  // {
+  //   id: 'boiler-switch-upgrade',
+  //   title: 'Boiler Switch Upgrade - Home Assistant',
+  //   description: 'Upgrade your boiler with a smart switch.',
+  //   price: 160.00,
+  //   oldPrice: 200.00,
+  //   image: '../img/shop/banners/boiler-heater/card-1.png',
+  //   images: [
+  //     '../img/shop/banners/boiler-heater/card-1.jpg',
+  //     '../img/shop/banners/boiler-heater/card-2.jpg',
+  //     '../img/shop/banners/boiler-heater/card-3.jpg',
+  //     '../img/shop/banners/boiler-heater/card-4.jpg',
+  //     '../img/shop/banners/boiler-heater/card-5.jpg',
+  //     '../img/shop/banners/boiler-heater/card-6.jpg',
+  //   ],
+  //   available: true,
+  //   slug: 'boiler-switch-upgrade',
+  //   // Additional details for product page
+  //   fullDescription: `
+  //     <p class="text-normal"><b>Control your boiler smartly and enjoy hot water exactly when you need it.</b></p>
+  //     <p class="text-normal product-detail__desc-lead">Upgrade your existing boiler with smart automation — no replacement needed.</p>
 
-      <p class="text-normal">
-        We install a system that automatically controls your water heating, combining comfort and energy savings. <br/> Start your morning with hot water ready — no waiting for it to heat up.
-      </p>
+  //     <p class="text-normal">
+  //       We install a system that automatically controls your water heating, combining comfort and energy savings. <br/> Start your morning with hot water ready — no waiting for it to heat up.
+  //     </p>
 
-      <p class="text-normal product-detail__desc-heading"><b>What you get:</b></p>
-      <ul class="product-detail__features-list">
-        <li class="text-normal">Hot water ready in the morning or at your preferred time</li>
-        <li class="text-normal">Smart home integration with Home Assistant</li>
-        <li class="text-normal">Automatic schedules</li>
-        <li class="text-normal">Save up to 30% on energy</li>
-      </ul>
+  //     <p class="text-normal product-detail__desc-heading"><b>What you get:</b></p>
+  //     <ul class="product-detail__features-list">
+  //       <li class="text-normal">Hot water ready in the morning or at your preferred time</li>
+  //       <li class="text-normal">Smart home integration with Home Assistant</li>
+  //       <li class="text-normal">Automatic schedules</li>
+  //       <li class="text-normal">Save up to 30% on energy</li>
+  //     </ul>
 
-      <p class="text-normal product-detail__desc-heading"><b>How it works:</b></p>
-      <p class="text-normal">
-        Your existing boiler is upgraded with a smart controller using a 20A Wi‑Fi smart switch designed for boiler heaters.<br/>It is integrated into your smart home system via Home Assistant, where we set up automation and full control of your boiler.<br/> Water is heated automatically based on your preferred schedule and daily routines.
-        No more waiting, no more wasted energy.
-      </p>
-    `,
-    features: [
-      'A smart switch for boiler heater 20A, Wi-Fi',
-      'Professional installation by our technicians',
-      'Integration with your smart home system via Home Assistant',
-      'If you don’t have Home Assistant yet — choose the package with pre-installation for boiler integration and future smart home use',
-      'Automation setup and control configuration',
-      'Guidance on using and automating your new smart switch'
-    ],
-    benefits: [
-      'Energy Efficiency — Automate your boiler heating to reduce energy consumption',
-      'Smart Automation — Water heating runs automatically based on your daily routine',
-      'Smart Home Integration — Powered by Home Assistant for a unified system',
-      'Easy Expansion — Add new smart home services without paying for Home Assistant setup again'
-    ],
-    setupLabel: 'Choose your setup:',
-    setupOptions: [
-      {
-        id: 'existing-home-assistant',
-        title: 'Already have Home Assistant',
-        iconBlue: '../img/shop/hass-blue.svg',
-        iconWhite: '../img/shop/hass-white.svg',
-        bullets: ['Boiler integration', 'Automation setup'],
-        totalAdd: 0.00,
-      },
-      {
-        id: 'new-home-assistant',
-        title: 'New system Home Assistant',
-        iconBlue: '../img/shop/hass-blue.svg',
-        iconWhite: '../img/shop/hass-white.svg',
-        bullets: ['Smart Home setup (one-time)', 'Boiler integration', 'Automation setup'],
-        totalOld: 450.00,
-        totalAdd: 150.00,
-      }
-    ],
-    category: 'Smart Switches'
-  },
+  //     <p class="text-normal product-detail__desc-heading"><b>How it works:</b></p>
+  //     <p class="text-normal">
+  //       Your existing boiler is upgraded with a smart controller using a 20A Wi‑Fi smart switch designed for boiler heaters.<br/>It is integrated into your smart home system via Home Assistant, where we set up automation and full control of your boiler.<br/> Water is heated automatically based on your preferred schedule and daily routines.
+  //       No more waiting, no more wasted energy.
+  //     </p>
+  //   `,
+  //   features: [
+  //     'A smart switch for boiler heater 20A, Wi-Fi',
+  //     'Professional installation by our technicians',
+  //     'Integration with your smart home system via Home Assistant',
+  //     'If you don’t have Home Assistant yet — choose the package with pre-installation for boiler integration and future smart home use',
+  //     'Automation setup and control configuration',
+  //     'Guidance on using and automating your new smart switch'
+  //   ],
+  //   benefits: [
+  //     'Energy Efficiency — Automate your boiler heating to reduce energy consumption',
+  //     'Smart Automation — Water heating runs automatically based on your daily routine',
+  //     'Smart Home Integration — Powered by Home Assistant for a unified system',
+  //     'Easy Expansion — Add new smart home services without paying for Home Assistant setup again'
+  //   ],
+  //   setupLabel: 'Choose your setup:',
+  //   setupOptions: [
+  //     {
+  //       id: 'existing-home-assistant',
+  //       title: 'Already have Home Assistant',
+  //       iconBlue: '../img/shop/hass-blue.svg',
+  //       iconWhite: '../img/shop/hass-white.svg',
+  //       bullets: ['Boiler integration', 'Automation setup'],
+  //       totalAdd: 0.00,
+  //     },
+  //     {
+  //       id: 'new-home-assistant',
+  //       title: 'New system Home Assistant',
+  //       iconBlue: '../img/shop/hass-blue.svg',
+  //       iconWhite: '../img/shop/hass-white.svg',
+  //       bullets: ['Smart Home setup (one-time)', 'Boiler integration', 'Automation setup'],
+  //       totalOld: 450.00,
+  //       totalAdd: 150.00,
+  //     }
+  //   ],
+  //   category: 'Smart Switches'
+  // },
   {
     id: 'air-conditioner-upgrade',
     title: 'Air Conditioner Upgrade',

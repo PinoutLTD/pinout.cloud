@@ -67,6 +67,49 @@ const htmlPages = () => {
 // Set to true to force regeneration of existing pages, false to skip them
 const FORCE_REGENERATE_PRODUCT_PAGES = true; // Auto-regenerate when template or products.js changes
 
+function formatProductPrice(price) {
+  if (typeof price === 'number') {
+    return `€ ${price.toFixed(2)}`;
+  }
+
+  if (typeof price === 'string') {
+    const normalized = price.trim();
+    if (!normalized) return '';
+    if (normalized.includes('€')) return normalized;
+    if (/^from\b/i.test(normalized)) {
+      return normalized.replace(/^from\s*/i, 'from € ');
+    }
+    return `€ ${normalized}`;
+  }
+
+  return '';
+}
+
+function formatAdditionalPrice(price) {
+  return typeof price === 'number' ? price.toFixed(2) : '';
+}
+
+/** Renders optional lines after delivery, before payment (see product.serviceSummary in products.js). */
+function buildProductServiceSummaryHTML(product) {
+  if (!product.serviceSummary || !Array.isArray(product.serviceSummary) || product.serviceSummary.length === 0) {
+    return '';
+  }
+  const paragraphs = product.serviceSummary.map((item) => {
+    if (item.line) {
+      return `              <p class="text-normal"><b>${item.line}</b></p>`;
+    }
+    if (item.label != null && item.value != null) {
+      return `              <p class="text-normal"><b>${item.label}:</b> ${item.value}</p>`;
+    }
+    return '';
+  }).filter(Boolean);
+  if (paragraphs.length === 0) return '';
+  return `
+            <div class="product-detail__service-summary">
+${paragraphs.join('\n')}
+            </div>`;
+}
+
 const generateProductPages = (cb) => {
   // Read products data
   const productsPath = path.join(__dirname, 'src/js/data/products.js');
@@ -153,20 +196,20 @@ const generateProductPages = (cb) => {
     pageContent = pageContent.replace(/\{\{PRODUCT_IMAGES_THUMBS\}\}/g, thumbsHTML);
     pageContent = pageContent.replace(/\{\{PRODUCT_IMAGES_SLIDES\}\}/g, slidesHTML);
 
-    pageContent = pageContent.replace(/\{\{PRODUCT_PRICE\}\}/g, product.price.toFixed(2));
+    pageContent = pageContent.replace(/\{\{PRODUCT_PRICE\}\}/g, formatProductPrice(product.price));
 
     // Handle old price
     const oldPriceHTML = product.oldPrice
-      ? `<span class="text product-detail__price-old">€ ${product.oldPrice.toFixed(2)}</span>`
+      ? `<span class="text product-detail__price-old">${formatProductPrice(product.oldPrice)}</span>`
       : '';
     pageContent = pageContent.replace(/\{\{PRODUCT_OLD_PRICE\}\}/g, oldPriceHTML);
 
     // Handle additional pricing for multiple units
     let additionalPricingHTML = '';
-    if (product.additionalUnitPrice) {
+    if (product.additionalUnitPrice && typeof product.price === 'number') {
       additionalPricingHTML = `
             <div class="product-detail__additional-pricing">
-              <p class="text-normal">Get your first upgrade for <span class="product-detail__additional-price">€&nbsp${product.price.toFixed(2)}</span>. Each additional one is only <span class="product-detail__additional-price">€&nbsp+${product.additionalUnitPrice.toFixed(2)}</span>!</p>
+              <p class="text-normal">Get your first upgrade for <span class="product-detail__additional-price">€&nbsp${formatAdditionalPrice(product.price)}</span>. Each additional one is only <span class="product-detail__additional-price">€&nbsp+${formatAdditionalPrice(product.additionalUnitPrice)}</span>!</p>
             </div>`;
     }
     pageContent = pageContent.replace(/\{\{PRODUCT_ADDITIONAL_PRICING\}\}/g, additionalPricingHTML);
@@ -274,21 +317,24 @@ ${optionItems}
     }
     pageContent = pageContent.replace(/\{\{PRODUCT_WARNING\}\}/g, warningHTML);
 
-    // Handle delivery text
+    // Handle delivery text (delivery: false omits the block; string = custom; omit key = default copy)
     let deliveryHTML = '';
-    if (product.delivery) {
+    if (product.delivery === false) {
+      deliveryHTML = '';
+    } else if (product.delivery) {
       deliveryHTML = `
             <div class="product-detail__delivery">
               <p class="text-normal"><b>Delivery:</b> ${product.delivery}</p>
             </div>`;
     } else {
-      // Default delivery text
       deliveryHTML = `
             <div class="product-detail__delivery">
               <p class="text-normal"><b>Delivery:</b> Within 24 hours, the service is available across Cyprus after placing your order.</p>
             </div>`;
     }
     pageContent = pageContent.replace(/\{\{PRODUCT_DELIVERY\}\}/g, deliveryHTML);
+
+    pageContent = pageContent.replace(/\{\{PRODUCT_SERVICE_SUMMARY\}\}/g, buildProductServiceSummaryHTML(product));
 
     // Handle payment section
     let paymentHTML = '';
@@ -366,7 +412,7 @@ ${setupCards}
       const variantCards = product.variants.map((v, index) => {
         const isActive = index === 0 ? ' active' : '';
         const imagePath = (v.image || '').replace(/^\.\.\//, '../../').replace(/^\.\//, '../../');
-        const oldPriceHTML = v.oldPrice ? `<span class="product-detail__variant-price-old">€ ${v.oldPrice.toFixed(2)}</span>` : '';
+        const oldPriceHTML = v.oldPrice ? `<span class="product-detail__variant-price-old">${formatProductPrice(v.oldPrice)}</span>` : '';
         return `                <button type="button" class="product-detail__variant-card${isActive}" data-variant-name="${(v.name || '').replace(/"/g, '&quot;')}" data-variant-id="${v.id || ''}">
                   <div class="product-detail__variant-image">
                     <img src="${imagePath}" alt="${(v.name || '').replace(/"/g, '&quot;')}"/>
@@ -880,20 +926,20 @@ const generateProductPagesShop = (cb) => {
     pageContent = pageContent.replace(/\{\{PRODUCT_IMAGES_THUMBS\}\}/g, thumbsHTML);
     pageContent = pageContent.replace(/\{\{PRODUCT_IMAGES_SLIDES\}\}/g, slidesHTML);
 
-    pageContent = pageContent.replace(/\{\{PRODUCT_PRICE\}\}/g, product.price.toFixed(2));
+    pageContent = pageContent.replace(/\{\{PRODUCT_PRICE\}\}/g, formatProductPrice(product.price));
 
     // Handle old price
     const oldPriceHTML = product.oldPrice
-      ? `<span class="text product-detail__price-old">€ ${product.oldPrice.toFixed(2)}</span>`
+      ? `<span class="text product-detail__price-old">${formatProductPrice(product.oldPrice)}</span>`
       : '';
     pageContent = pageContent.replace(/\{\{PRODUCT_OLD_PRICE\}\}/g, oldPriceHTML);
 
     // Handle additional pricing for multiple units
     let additionalPricingHTML = '';
-    if (product.additionalUnitPrice) {
+    if (product.additionalUnitPrice && typeof product.price === 'number') {
       additionalPricingHTML = `
             <div class="product-detail__additional-pricing">
-              <p class="text-normal">Get your first upgrade for <span class="product-detail__additional-price">€&nbsp${product.price.toFixed(2)}</span>. Each additional one is only <span class="product-detail__additional-price">€&nbsp+${product.additionalUnitPrice.toFixed(2)}</span>!</p>
+              <p class="text-normal">Get your first upgrade for <span class="product-detail__additional-price">€&nbsp${formatAdditionalPrice(product.price)}</span>. Each additional one is only <span class="product-detail__additional-price">€&nbsp+${formatAdditionalPrice(product.additionalUnitPrice)}</span>!</p>
             </div>`;
     }
     pageContent = pageContent.replace(/\{\{PRODUCT_ADDITIONAL_PRICING\}\}/g, additionalPricingHTML);
@@ -1001,21 +1047,24 @@ ${optionItems}
     }
     pageContent = pageContent.replace(/\{\{PRODUCT_WARNING\}\}/g, warningHTML);
 
-    // Handle delivery text
+    // Handle delivery text (delivery: false omits the block; string = custom; omit key = default copy)
     let deliveryHTML = '';
-    if (product.delivery) {
+    if (product.delivery === false) {
+      deliveryHTML = '';
+    } else if (product.delivery) {
       deliveryHTML = `
             <div class="product-detail__delivery">
               <p class="text-normal"><b>Delivery:</b> ${product.delivery}</p>
             </div>`;
     } else {
-      // Default delivery text
       deliveryHTML = `
             <div class="product-detail__delivery">
               <p class="text-normal"><b>Delivery:</b> Within 24 hours, the service is available across Cyprus after placing your order.</p>
             </div>`;
     }
     pageContent = pageContent.replace(/\{\{PRODUCT_DELIVERY\}\}/g, deliveryHTML);
+
+    pageContent = pageContent.replace(/\{\{PRODUCT_SERVICE_SUMMARY\}\}/g, buildProductServiceSummaryHTML(product));
 
     // Handle payment section
     let paymentHTML = '';
@@ -1093,7 +1142,7 @@ ${setupCards}
       const variantCards = product.variants.map((v, index) => {
         const isActive = index === 0 ? ' active' : '';
         const imagePath = (v.image || '').replace(/^\.\.\/img\//, './img/').replace(/^\.\/img\//, './img/');
-        const oldPriceHTML = v.oldPrice ? `<span class="product-detail__variant-price-old">€ ${v.oldPrice.toFixed(2)}</span>` : '';
+        const oldPriceHTML = v.oldPrice ? `<span class="product-detail__variant-price-old">${formatProductPrice(v.oldPrice)}</span>` : '';
         return `                <button type="button" class="product-detail__variant-card${isActive}" data-variant-name="${(v.name || '').replace(/"/g, '&quot;')}" data-variant-id="${v.id || ''}">
                   <div class="product-detail__variant-image">
                     <img src="${imagePath}" alt="${(v.name || '').replace(/"/g, '&quot;')}"/>
@@ -1360,7 +1409,7 @@ const preRenderShopIndex = (cb) => {
       .replace(/^\.\/img\//, './img/');
 
     const oldPriceHTML = product.oldPrice
-      ? `<span class="text shop-content__price-old">€ ${product.oldPrice.toFixed(2)}</span>`
+      ? `<span class="text shop-content__price-old">${formatProductPrice(product.oldPrice)}</span>`
       : '';
 
     return `
@@ -1373,7 +1422,7 @@ const preRenderShopIndex = (cb) => {
                 <h3 class="text">${product.title}</h3>
                 <p class="text-normal">${product.description}</p>
                 <div class="shop-content__price">
-                  <span class="text shop-content__price-main">€ ${product.price.toFixed(2)}</span>
+                  <span class="text shop-content__price-main">${formatProductPrice(product.price)}</span>
                   ${oldPriceHTML}
                 </div>
               </div>

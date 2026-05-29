@@ -52,15 +52,15 @@ const swiperSpecialOffer = new Swiper('.swiper-solutions', {
     resistance: true,
     resistanceRatio: 0.85,
 
-    direction: 'vertical',
+    direction: 'horizontal',
     breakpoints: {
       0: {
         direction: 'horizontal',
-        slidesPerView: 5,
+        slidesPerView: 'auto',
       },
       871: {
-        direction: 'vertical',
-        slidesPerView: 5,
+        direction: 'horizontal',
+        slidesPerView: 'auto',
       }
     }
   });

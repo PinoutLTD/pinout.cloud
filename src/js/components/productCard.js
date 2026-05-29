@@ -1,4 +1,22 @@
 // Product Card Component
+function formatProductPrice(price) {
+  if (typeof price === 'number') {
+    return `€ ${price.toFixed(2)}`;
+  }
+
+  if (typeof price === 'string') {
+    const normalized = price.trim();
+    if (!normalized) return '';
+    if (normalized.includes('€')) return normalized;
+    if (/^from\b/i.test(normalized)) {
+      return normalized.replace(/^from\s*/i, 'from € ');
+    }
+    return `€ ${normalized}`;
+  }
+
+  return '';
+}
+
 function createProductCard(product) {
   const isAvailable = product.available;
   const cardClass = isAvailable ? 'shop-content__card' : 'shop-content__card unavailable';
@@ -7,7 +25,7 @@ function createProductCard(product) {
   // Use absolute path from root to ensure links work in both dev and production builds
   const linkHref = isAvailable ? `/shop/${product.slug}` : '#';
 
-  const oldPriceHTML = product.oldPrice ? `<span class="text shop-content__price-old">€ ${product.oldPrice.toFixed(2)}</span>` : '';
+  const oldPriceHTML = product.oldPrice ? `<span class="text shop-content__price-old">${formatProductPrice(product.oldPrice)}</span>` : '';
 
   // Use first image from images array if available, otherwise fall back to image property
   const productImage = (product.images && product.images.length > 0)
@@ -24,7 +42,7 @@ function createProductCard(product) {
           <h3 class="text">${product.title}</h3>
           <p class="text-normal">${product.description}</p>
           <div class="shop-content__price">
-            <span class="text shop-content__price-main">€ ${product.price.toFixed(2)}</span>
+            <span class="text shop-content__price-main">${formatProductPrice(product.price)}</span>
             ${oldPriceHTML}
           </div>
         </div>
