@@ -1,6 +1,140 @@
 // Products data
 const products = [
   {
+    id: 'backup-internet',
+    title: 'Backup Internet and Power Supply',
+    description: 'Power outages should not mean losing access to the internet.',
+    price: 1550.00,
+    image: '../img/shop/banners/backup-internet/card-1.png',
+    images: [
+      '../img/shop/banners/backup-internet/card-1.png',
+      '../img/shop/banners/backup-internet/card-2.png',
+      '../img/shop/banners/backup-internet/card-3.png',
+      '../img/shop/banners/backup-internet/card-4.png',
+      '../img/shop/banners/backup-internet/card-5.png',
+      '../img/shop/banners/backup-internet/card-6.png',
+    ],
+    available: true,
+    slug: 'backup-internet',
+    fullDescription: `
+      <p class="text-normal"><b>Power outages should not mean losing access to the internet.</b></p>
+      <p class="text-normal">The combination of Starlink and the EcoFlow backup power system allows you to maintain internet connectivity during power interruptions, ensuring the operation of internet access, video surveillance, smart home systems and other important devices.</p>
+      <p class="text-normal">We create a complete turnkey solution: selecting the optimal location for the Starlink antenna, installing the equipment, carefully routing the cable into the property and configuring the backup power system. The system automatically keeps the internet running during power outages, allowing you to stay connected even during extended interruptions to the electrical supply.</p>
+      <p class="text-normal">We integrate the system with Home Assistant, providing a single interface for monitoring power status, EcoFlow battery level and energy consumption.</p>
+      <p class="text-normal">As a result, you receive an autonomous communication system that continues to operate even when the rest of the neighborhood is without electricity.</p>
+      <p class="text-normal">EcoFlow power stations are used as the backup power solution — modern battery systems with high capacity, a built-in inverter and support for Home Assistant integration. They automatically provide power to the equipment during power outages and require no complex maintenance.</p>
+      <p class="text-normal product-detail__desc-heading"><b>Two system configurations are available:</b></p>
+      <p class="text-normal"><b>Standard Backup</b> — provides power for Starlink, the home network and the Home Assistant server for up to 10 hours during a power outage. Suitable for most residential use cases and short-term power interruptions.</p>
+      <p class="text-normal"><b>Extended Backup</b> — provides autonomous system operation for up to 24 hours or more. Recommended for properties with frequent power outages, remote work setups, video surveillance systems and users who require maximum independence from the electrical grid.</p>
+    `,
+    delivery: false,
+    serviceSummary: [
+      { line: '<b>Total service cost, including equipment and materials</b>' },
+      { label: 'Project timeline', value: 'approximately 2–3 weeks, depending on equipment availability' },
+      { label: 'On-site work time', value: 'approximately 4–8 hours' },
+    ],
+    features: [
+      'Starlink Internet System Ordering, Installation and Alignment',
+      'Cable Routing and Property Integration',
+      'EcoFlow Backup Power Station',
+      'EcoFlow Integration and Configuration',
+      'Home Assistant Local Server',
+      'Home Assistant Dashboard Setup',
+      'System testing, commissioning and user training'
+    ],
+    benefits: [
+      '<b>Internet That Stays Online During Power Outages</b><br> Maintain internet access even during power interruptions, keeping communications, security cameras and smart home systems operational.',
+      '<b>Backup Power Tailored to Your Needs</b><br> Choose between configurations providing up to 10 hours or up to 24 hours of autonomous operation, depending on your requirements and usage scenarios.',
+      '<b>Built-In Smart Home Foundation</b><br>The package includes a local Home Assistant server, creating a centralized platform for your smart home. Connect lighting, climate control, sensors, security systems and other smart devices in a single application, with the flexibility to expand the system over time.',
+      '<b>Professional Turnkey Installation</b><br>We handle equipment procurement, installation, configuration and testing, delivering a complete ready-to-use solution.'
+    ],
+    howItWorksHtml: '',
+    category: 'Backup Internet',
+    showVariantInclInstall: false,
+    variantsLabel: '',
+    variants: [
+      { id: 'delta3plus', name: 'Standard Backup / up to 10h (with EcoFlow Delta 3 Plus)', price: 1550.00, image: '../img/shop/banners/backup-internet/backup-1.png' },
+      { id: 'delta3pro', name: 'Extended Backup / up to 24h (with EcoFlow Delta Pro 3)', price: 3500.00, image: '../img/shop/banners/backup-internet/backup-2.png' }
+    ]
+  },
+  {
+    id: 'ikea-smart-home',
+    title: 'IKEA Smart Home with local server',
+    description: 'IKEA Smart Home with Local Server is a simple and affordable way to get started with smart home technology.',
+    price: 1100.00,
+    image: '../img/shop/banners/ikea/card-1.png',
+    images: [
+      '../img/shop/banners/ikea/card-1.png',
+      '../img/shop/banners/ikea/card-2.png',
+      '../img/shop/banners/ikea/card-3.png',
+    ],
+    available: true,
+    slug: 'ikea-smart-home',
+    fullDescription: `
+      <p class="text-normal">IKEA Smart Home with Local Server is a simple and affordable way to get started with smart home technology. This ready-to-use package allows you to automate lighting, use smart sensors, and control devices from a single app without complex installation or costly renovations.</p>
+      <p class="text-normal">Most devices can be installed without any construction work: smart bulbs replace existing ones, wireless buttons can be placed wherever convenient, and sensors operate on batteries. It’s an ideal solution for anyone who wants to experience modern smart home technology and gradually expand the system over time.</p>
+      <p class="text-normal">The solution is built around IKEA smart devices and a local Home Assistant server, providing fast performance, independence from cloud services, and extensive automation capabilities. Control your lighting, create custom routines, receive notifications, and add new devices whenever needed.</p>
+      <p class="text-normal">The system is especially suitable for rental properties. No permanent modifications are required, so when you move, the equipment can be easily removed, relocated, and installed in your new home while keeping all settings, automations, and configurations intact.</p>
+    `,
+    features: [
+      'Home Assistant Local Server',
+      'IKEA KAJPLATS Smart LED Bulbs',
+      'IKEA STYRBAR Wireless Remote Controls',
+      'IKEA PARASOLL Door & Window Sensor',
+      'IKEA BADRING Water Leak Sensors',
+      'IKEA LADDA Rechargeable Batteries',
+      'Installation and configuration of all devices',
+      'Setup of a unified smart home dashboard',
+      'Mobile app setup for local access',
+      'Creation of smart automation scenarios',
+      'System testing, commissioning and user training'
+    ],
+    benefits: [
+      '<b>Easy Entry into Smart Home Technology</b> – an affordable way to start using smart lighting, sensors and everyday automations without the complexity of a full-scale smart home system.',
+      '<b>No Renovation Required</b> – most devices can be installed without rewiring or electrical modifications, making the system ideal for apartments and rental properties.',
+      '<b>Move with You</b> – easily relocate the entire system to a new home while keeping all settings, dashboards and automations.',
+      '<b>Unified Local Control</b> – all devices are managed through a single app and a dedicated Home Assistant server, providing fast response times, enhanced data privacy and independence from cloud services.'
+    ],
+    category: 'IKEA',
+    showVariantInclInstall: false,
+    variantsLabel: '',
+    variants: [
+      {
+        id: '1B',
+        name: '1 bedroom',
+        price: 1100.00,
+        iconBlack: '../img/shop/banners/ikea/icon-1-black.svg',
+        iconWhite: '../img/shop/banners/ikea/icon-1-white.svg',
+      },
+      {
+        id: '2B',
+        name: '2 bedroom',
+        price: 1200.00,
+        iconBlack: '../img/shop/banners/ikea/icon-2-black.svg',
+        iconWhite: '../img/shop/banners/ikea/icon-2-white.svg',
+      },
+    ],
+    delivery: false,
+    serviceSummary: [
+      { line: '<b>Complete solution including equipment and installation</b>' },
+      { label: 'Project timeline', value: '7 business days.' },
+      { label: 'On-site work time', value: 'approximately 4 hours' },
+    ],
+    howItWorksHtml: `
+      <section class="product-detail__ikea-more">
+        <div class="grid grid-2">
+        <div class="ikea-more__descr">
+          <h3 class="subtitle">IKEA Smart Home and Home Assistant</h3>
+          <p>The package combines IKEA Smart Home devices with the power of Home Assistant, creating a single platform for managing lighting, sensors, and automations. Thanks to Zigbee connectivity and open standards, the system can be expanded with additional devices and integrations as your needs grow.</p>
+          <p>A local Home Assistant server provides fast device response, reliable operation, and a high level of data privacy. All automations run within your home network without constant dependence on external cloud services.</p>
+          <p>The system supports custom automation scenarios for everyday tasks, scheduled lighting control, sensor-based notifications, and centralized management of all connected devices through a single interface.</p>
+          <p>The open ecosystem makes it easy to integrate additional lighting, climate control, security, and home monitoring equipment in the future without replacing the existing system.</p>
+        </div>
+          <img src="../img/shop/banners/ikea/ikea-bg.png" alt="" loading="lazy"/>
+        </div>
+      </section>`,
+  },
+  {
     id: 'biohacking-apartment',
     title: 'Biohacking Apartment',
     description: 'Your home can support your health, sleep and recovery.',
@@ -16,7 +150,18 @@ const products = [
     ],
     available: true,
     slug: 'biohacking-apartment',
-    fullDescription: '<b>Your home can support your health, sleep and recovery.</b><br> Your sleep. Your recovery. Your energy. Your well-being. <br> The space you live in directly affects sleep quality, stress levels, concentration, and overall well-being.<br> We help optimize your apartment for better recovery, sleep, relaxation, and everyday well-being using biohacking and smart home technologies.<br>If you use Apple Watch, Garmin, Oura Ring, or Whoop to monitor sleep, recovery, and overall health, the system helps create optimal conditions for deeper rest, lower stress levels, and more effective recovery after physical exertion and an intensive lifestyle.<br>The system continuously monitors air quality, CO₂ levels, humidity, temperature, and indoor climate parameters, automatically maintaining a healthy indoor environment for sleep, relaxation, and comfortable living.<br>Intelligent lighting adapts to the body’s circadian rhythms, supporting natural melatonin production in the evening and healthy energy levels during the day.<br>Air purification systems, smart climate control, and automated scenarios create a comfortable environment where the body can recover more effectively and maintain high energy levels every day — especially important for life on an island with a hot climate, high humidity, and periodic dust storms.<br>This is not just smart home automation.<br>It is a personalized biohacking system designed for health, recovery, and a higher quality of life.',
+    fullDescription: `
+      <p class="text-normal product-detail__desc-heading"><b>Your home can support your health, sleep and recovery.</b></p>
+      <p class="text-normal">Your sleep. Your recovery. Your energy. Your well-being.</p>
+      <p class="text-normal">The space you live in directly affects sleep quality, stress levels, concentration, and overall well-being.</p>
+      <p class="text-normal">We help optimize your apartment for better recovery, sleep, relaxation, and everyday well-being using biohacking and smart home technologies.</p>
+      <p class="text-normal">If you use Apple Watch, Garmin, Oura Ring, or Whoop to monitor sleep, recovery, and overall health, the system helps create optimal conditions for deeper rest, lower stress levels, and more effective recovery after physical exertion and an intensive lifestyle.</p>
+      <p class="text-normal">The system continuously monitors air quality, CO₂ levels, humidity, temperature, and indoor climate parameters, automatically maintaining a healthy indoor environment for sleep, relaxation, and comfortable living.</p>
+      <p class="text-normal">Intelligent lighting adapts to the body’s circadian rhythms, supporting natural melatonin production in the evening and healthy energy levels during the day.</p>
+      <p class="text-normal">Air purification systems, smart climate control, and automated scenarios create a comfortable environment where the body can recover more effectively and maintain high energy levels every day — especially important for life on an island with a hot climate, high humidity, and periodic dust storms.</p>
+      <p class="text-normal">This is not just smart home automation.</p>
+      <p class="text-normal">It is a personalized biohacking system designed for health, recovery, and a higher quality of life.</p>
+    `,
     delivery: false,
     serviceSummary: [
       { line: '*Final cost depends on the apartment layout, selected equipment, number of automated zones, and project complexity. A consultation with our specialist is required for an accurate quotation. <br> Service cost includes equipment and materials.' },
@@ -204,7 +349,11 @@ const products = [
     ],
     available: true,
     slug: 'water-control',
-    fullDescription: 'Get full control over your hot water with a smart boiler management system. We install and configure a solution that maintains the desired temperature, controls heating based on a schedule, and allows you to manage everything through a mobile app.<br>The system reduces energy consumption by activating heating only when needed and operates on a local server without reliance on cloud services.<br>You can check the water temperature at any time, control the boiler remotely, and set up scenarios tailored to your lifestyle.',
+    fullDescription: `
+      <p class="text-normal">Get full control over your hot water with a smart boiler management system. We install and configure a solution that maintains the desired temperature, controls heating based on a schedule, and allows you to manage everything through a mobile app.</p>
+      <p class="text-normal">The system reduces energy consumption by activating heating only when needed and operates on a local server without reliance on cloud services.</p>
+      <p class="text-normal">You can check the water temperature at any time, control the boiler remotely, and set up scenarios tailored to your lifestyle.</p>
+    `,
     delivery: false,
     serviceSummary: [
       { line: 'Total service cost, including equipment and materials' },
@@ -247,7 +396,12 @@ const products = [
     ],
     available: true,
     slug: 'altruist-and-purifiers',
-    fullDescription: 'Ensure clean and safe air at home even during dust storms.<br>We install and configure an air monitoring and purification system that automatically responds to changes in air quality and maintains a comfortable environment.<br>The system tracks outdoor dust levels and indoor CO₂ concentration, automatically controlling air purifiers. Everything runs on a local smart home server, with control and monitoring available through mobile app.<br>You can always check the air quality and be confident that the system maintains a healthy indoor climate. It also suggests when it’s safe to open the windows and when it’s better to keep them closed.',
+    fullDescription: `
+      <p class="text-normal">Ensure clean and safe air at home even during dust storms.</p>
+      <p class="text-normal">We install and configure an air monitoring and purification system that automatically responds to changes in air quality and maintains a comfortable environment.</p>
+      <p class="text-normal">The system tracks outdoor dust levels and indoor CO₂ concentration, automatically controlling air purifiers. Everything runs on a local smart home server, with control and monitoring available through mobile app.</p>
+      <p class="text-normal">You can always check the air quality and be confident that the system maintains a healthy indoor climate. It also suggests when it’s safe to open the windows and when it’s better to keep them closed.</p>
+    `,
     delivery: false,
     serviceSummary: [
       { line: 'Total service cost, including equipment and materials' },
@@ -346,7 +500,11 @@ const products = [
     ],
     available: true,
     slug: 'remote-property-monitoring',
-    fullDescription: 'Monitor your property in Cyprus from anywhere in the world. We install and configure a system that allows you to track your apartment in real time, receive instant notifications, and quickly respond to any events.<br>The system combines video surveillance, motion sensors, door opening sensors, water leak detection, and energy monitoring into a single platform. All devices are connected to a local smart home server, ensuring stable and secure operation without reliance on cloud services.<br>You will always know what’s happening in your property — even when you’re abroad.',
+    fullDescription: `
+      <p class="text-normal">Monitor your property in Cyprus from anywhere in the world. We install and configure a system that allows you to track your apartment in real time, receive instant notifications, and quickly respond to any events.</p>
+      <p class="text-normal">The system combines video surveillance, motion sensors, door opening sensors, water leak detection, and energy monitoring into a single platform. All devices are connected to a local smart home server, ensuring stable and secure operation without reliance on cloud services.</p>
+      <p class="text-normal">You will always know what’s happening in your property — even when you’re abroad.</p>
+    `,
     delivery: false,
     serviceSummary: [
       { line: 'Total service cost, including equipment and materials' },
@@ -435,7 +593,12 @@ const products = [
         ]
       }
     ],
-    fullDescription: 'Get an air quality monitoring system with professional installation. <br> The system includes indoor and outdoor sensors and helps you choose the right time to ventilate, as well as understand the conditions for creating a comfortable indoor climate.<br>We install and configure a system that measures indoor CO₂ levels, temperature, and humidity, as well as outdoor air conditions and noise levels. This helps you understand when it’s best to ventilate bedrooms or children’s rooms, and when it’s better to keep windows closed — for example during dust storms, high noise levels, or poor outdoor air quality.<br>Based on this data, automations can be set up to manage humidification, cooling, or heating. All readings are available for local viewing and displayed on a clear sensor map.',
+    fullDescription: `
+      <p class="text-normal">Get an air quality monitoring system with professional installation.</p>
+      <p class="text-normal">The system includes indoor and outdoor sensors and helps you choose the right time to ventilate, as well as understand the conditions for creating a comfortable indoor climate.</p>
+      <p class="text-normal">We install and configure a system that measures indoor CO₂ levels, temperature, and humidity, as well as outdoor air conditions and noise levels. This helps you understand when it’s best to ventilate bedrooms or children’s rooms, and when it’s better to keep windows closed — for example during dust storms, high noise levels, or poor outdoor air quality.</p>
+      <p class="text-normal">Based on this data, automations can be set up to manage humidification, cooling, or heating. All readings are available for local viewing and displayed on a clear sensor map.</p>
+    `,
     features: [
       'Inside — indoor air quality sensor (CO₂, T°, RH, hPa)',
       'Urban — outdoor air quality sensor (PM2.5, PM10, T°, RH, hPa, dB)',
@@ -470,7 +633,10 @@ const products = [
     ],
     available: true,
     slug: 'home-server-local',
-    fullDescription: 'Get a local privacy-focused smart home server, professionally installed and ready for use. The server hardware is selected individually based on your home size, number of devices, and smart home needs. </br> Everything runs locally, without cloud dependency — providing fast response, privacy, and full control over your smart home environment.',
+    fullDescription: `
+      <p class="text-normal">Get a local privacy-focused smart home server, professionally installed and ready for use. The server hardware is selected individually based on your home size, number of devices, and smart home needs.</p>
+      <p class="text-normal">Everything runs locally, without cloud dependency — providing fast response, privacy, and full control over your smart home environment.</p>
+    `,
     features: [
       'Individually selected local smart home server hardware',
       'Professional installation by our technicians',
@@ -521,7 +687,11 @@ const products = [
         ]
       }
     ],
-    fullDescription: 'Get a local smart home server, individually selected for your home, with additional secure remote access powered by Web3 technologies. <br/> The system is built around a local smart home server chosen according to your home size, number of devices, and required performance. All core smart home logic runs locally — fast, stable, and independent from the cloud. Remote access is provided via the Web3-based Robonomics platform, enabling decentralized and secure access to your smart home from anywhere in the world. <br/> This approach avoids vendor lock-in and traditional cloud services, combining local reliability with unrestricted remote control.',
+    fullDescription: `
+      <p class="text-normal">Get a local smart home server, individually selected for your home, with additional secure remote access powered by Web3 technologies.</p>
+      <p class="text-normal">The system is built around a local smart home server chosen according to your home size, number of devices, and required performance. All core smart home logic runs locally — fast, stable, and independent from the cloud. Remote access is provided via the Web3-based Robonomics platform, enabling decentralized and secure access to your smart home from anywhere in the world.</p>
+      <p class="text-normal">This approach avoids vendor lock-in and traditional cloud services, combining local reliability with unrestricted remote control.</p>
+    `,
     features: [
       'Individually selected local smart home server hardware',
       'Web3 Robonomics server for secure remote access',

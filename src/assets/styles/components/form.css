@@ -10,6 +10,7 @@
 
 .contacts-form__text h2 {
   margin-bottom: calc(var(--space) * 0.5);
+  hyphens: auto;
 }
 
 .contacts-form__text span {
@@ -38,8 +39,9 @@
   height: 50px;
 }
 
+/* Phone uses intl-tel-input plugin (see vendor css). */
 
-.contacts-form .mc_fieldset  {
+.contacts-form .mc_fieldset {
   border: none;
   margin-bottom: calc(var(--space) * 0.5);
 }
@@ -56,7 +58,6 @@
   border: none;
   transition: transform 0.35s ease-in-out;
 }
-
 
 .contacts-form__btn:hover {
   transform: scale(1.1);

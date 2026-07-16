@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@htmlLang">
   @include('../partials/head.html', {
-    "pageTitle": "Cypress Lifestyle / Pinout",
+    "pageTitle": "@meta_cyprusLifestyleTitle",
   })
 <body>
   <!-- website header -->
@@ -12,15 +12,15 @@
       <div class="cyprus-lifestyle__layout">
         <div class="cyprus-lifestyle__wrapper cyprus-lifestyle__top-wrapper">
           <div class="cyprus-lifestyle__top-wrapper--lett layout">
-            <h2 class="page-title"><b>The joy & health</b> of your family</h2>
+            <h2 class="page-title"><b>@cyprusLifestyle_titleBold</b>@cyprusLifestyle_titleSuffix</h2>
             <div class="cyprus-lifestyle__decor-2">
-              <img src="./img/cyprus-lifestyle-decor-2.png" alt="" aria-hidden="true"/>
+              <img src="/img/cyprus-lifestyle-decor-2.png" alt="" aria-hidden="true"/>
             </div>
-            <p class="text-normal">Among the many smart home automation solutions, the engineers at Pinout have chosen two that are especially relevant for Cyprus. This is a place where families value the gentle Mediterranean climate and strive for longevity and a healthier lifestyle — quite different from our friends in bustling megacities.</p>
-            <p class="text-normal">The hot climate and relaxed atmosphere of this island, beloved by many Europeans, set a special pace of life, making us all a little less anxious, a bit more carefree...</p>
+            <p class="text-normal">@cyprusLifestyle_introP1</p>
+            <p class="text-normal">@cyprusLifestyle_introP2</p>
           </div>
           <div class="cyprus-lifestyle__decor">
-            <img src="./img/cyprus-lifestyle-decor-1.png" alt="" aria-hidden="true"/>
+            <img src="/img/cyprus-lifestyle-decor-1.png" alt="" aria-hidden="true"/>
           </div>
         </div>
 
@@ -45,13 +45,13 @@
               </div>
             </div>
             <div class="cyprus-lifestyle__car">
-              <img src="./img/cyprus-lifestyle-car.svg" alt="" aria-hidden="true">
+              <img src="/img/cyprus-lifestyle-car.svg" alt="" aria-hidden="true">
             </div>
           </div>
           <div class="cyprus-lifestyle__bottom-wrapper--right layout">
-            <h3 class="subtitle">Taking care of your family's health & living a carefree life on a sunny island</h3>
-            <p class="text-normal">Building on these features, we’ve created our first support program for private clients. After reviewing our past developments, exploring dozens of smart home solutions, and testing them in the real-life conditions of Cyprus, we developed an automation system that seamlessly fits your lifestyle.</p>
-            <p class="text-normal">It supports your interest in biohacking, ensures ideal conditions for healthy sleep, and helps reduce stress — giving you the ability to check and turn off the air conditioner right from a taxi on your way to a concert of your favorite band.</p>
+            <h3 class="subtitle">@cyprusLifestyle_subtitleHealth</h3>
+            <p class="text-normal">@cyprusLifestyle_bodyP1</p>
+            <p class="text-normal">@cyprusLifestyle_bodyP2</p>
           </div>
         </div>
       </div>
@@ -59,23 +59,23 @@
         <div class="cyprus-lifestyle__promo">
           <div class="layout">
             <form class="cyprus-lifestyle__form">
-              <input class="cyprus-lifestyle__input" type="text" placeholder="Enter the secret code">
-              <span class="text-normal hide">checking your code...</span>
-              <button class="btn text-normal text-uppercase">Submit</button>
+              <input class="cyprus-lifestyle__input" type="text" placeholder="@cyprusLifestyle_codePlaceholder">
+              <span class="text-normal hide">@cyprusLifestyle_codeChecking</span>
+              <button class="btn text-normal text-uppercase">@cyprusLifestyle_codeSubmit</button>
             </form>
             <div class="cyprus-lifestyle__form-link">
-              <h4 class="subtitle">Your<br/> VIP Service from Pinout</h4>
-              <a href="#" class="link-font" target="_blank">Welcome to Alva Pines</a>
+              <h4 class="subtitle">@cyprusLifestyle_vipTitle</h4>
+              <a href="#" class="link-font" target="_blank">@cyprusLifestyle_welcomeAlva</a>
             </div>
-            <span class="text-normal cyprus-lifestyle__form-wrong">Wrong code. Try again.</span>
+            <span class="text-normal cyprus-lifestyle__form-wrong">@cyprusLifestyle_codeWrong</span>
           </div>
         </div>
 
         <div class="cyprus-lifestyle__footer layout">
-          <h3 class="subtitle">Don't become robots — let the robots work for you.</h3>
+          <h3 class="subtitle">@cyprusLifestyle_footerTagline</h3>
         </div>
         <div class="cyprus-lifestyle__cat">
-          <img src="./img/cyprus-lifestyle-cat.png" alt="" aria-hidden="true"/>
+          <img src="/img/cyprus-lifestyle-cat.png" alt="" aria-hidden="true"/>
         </div>
     </section>
   </main>

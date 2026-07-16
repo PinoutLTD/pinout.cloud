@@ -1,4 +1,5 @@
 .header {
+  position: relative;
   margin-bottom: var(--space);
 }
 
@@ -6,6 +7,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
+}
+
+.header__nav {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
 }
 
 .dark .header__logo svg path {
@@ -19,11 +34,10 @@
 
 /* logo animation */
 .logo-circle-black {
-  animation: bounce 8s ease-in infinite .15s;
+  animation: bounce 8s ease-in infinite 0.15s;
 }
 
 @keyframes bounce {
-
   30% {
     transform: none;
     animation-timing-function: ease-in;
@@ -41,7 +55,6 @@
     transform: none;
     animation-timing-function: ease-in;
   }
-
 
   80% {
     transform: none;
@@ -62,7 +75,6 @@
   }
 }
 
-
 @keyframes slidein {
   from {
     transform: translateX(0%);
@@ -73,26 +85,32 @@
   }
 }
 
-
-
-@media screen and (max-width: 940px) {
+@media screen and (max-width: 1040px) {
   .header__decor {
     display: none;
   }
 
   .header__nav {
-    position: absolute;
+    position: fixed;
     top: 133px;
     left: 0;
     right: 0;
     width: 100%;
-    height: 100vh;
+    max-width: 100%;
+    height: calc(100vh - 133px);
+    height: calc(100dvh - 133px);
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: var(--bg-body);
     z-index: 55;
     opacity: 0;
     visibility: hidden;
     transform: translateX(-20%);
-    transition: transform 0.33s ease-in-out, opacity 0.33s ease-in-out, visibility 0.33s ease-in-out;
+    transition: transform 0.33s ease-in-out, opacity 0.33s ease-in-out,
+      visibility 0.33s ease-in-out;
+    box-sizing: border-box;
   }
 
   .header__nav--active {
@@ -102,24 +120,39 @@
   }
 
   .header__list {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
     padding: 20px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
   }
 
   .header__list .nav__item {
     font-size: 32px;
+    text-align: center;
   }
 
   .header__list .nav__item:not(:last-child) {
     margin-right: 0;
     margin-bottom: var(--space);
   }
+
+  .header__list .nav__link {
+    display: inline-block;
+  }
+
+  .header__list .nav__item--featured {
+    margin-left: 0;
+  }
 }
 
 @media screen and (max-width: 475px) {
   .header__nav {
     top: 115px;
+    height: calc(100vh - 115px);
+    height: calc(100dvh - 115px);
   }
 }

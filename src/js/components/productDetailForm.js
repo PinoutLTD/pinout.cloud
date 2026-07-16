@@ -3,7 +3,9 @@ function initProductDetailForm() {
   const form = document.querySelector('.product-detail__form');
   if (!form) return;
 
-  const phoneInput = form.querySelector('#mce-PHONE');
+  const OC = typeof OrderComment !== 'undefined' ? OrderComment : null;
+  const phoneHiddenInput = form.querySelector('#mce-PHONE');
+  const phoneInput = form.querySelector('#phone-input');
 
   /* -----------------------------
      Contact method selection
@@ -43,60 +45,82 @@ function initProductDetailForm() {
     });
   });
 
-  /* -----------------------------
-     Quantity selection
-  ----------------------------- */
-  document.querySelectorAll('.product-detail__contact-method[data-quantity]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      document
-        .querySelectorAll('.product-detail__contact-method[data-quantity]')
-        .forEach(b => b.classList.remove('active'));
-
-      btn.classList.add('active');
-
-      const quantityInput = document.getElementById('quantity');
-      if (quantityInput) {
-        quantityInput.value = btn.dataset.quantity;
-      }
-    });
-  });
+  // Quantity selector removed (no QUANTITY field in product forms).
 
   /* -----------------------------
      Product variant selection (e.g. robot vacuum model)
   ----------------------------- */
-  document.querySelectorAll('.product-detail__variant-card').forEach(card => {
-    card.addEventListener('click', (e) => {
+  function syncProductDetailPriceFromVariant(card, scope) {
+    const root = scope || document;
+    const defaultPrice = root.querySelector('.product-detail__price-main');
+    const defaultOldPrice = root.querySelector('.product-detail__price-old');
+    const currentPriceEl = card.querySelector('.product-detail__variant-price');
+    const currentOldPriceEl = card.querySelector('.product-detail__variant-price-old');
+    const nextPrice = currentPriceEl ? currentPriceEl.textContent.trim() : '';
+
+    // Only overwrite when the variant card actually has a price (OpenCart may strip nested text)
+    if (defaultPrice && nextPrice) {
+      defaultPrice.textContent = nextPrice;
+    }
+
+    if (defaultOldPrice) {
+      const nextOldPrice = currentOldPriceEl ? currentOldPriceEl.textContent.trim() : '';
+      if (nextOldPrice) {
+        defaultOldPrice.textContent = nextOldPrice;
+        defaultOldPrice.hidden = false;
+        defaultOldPrice.style.removeProperty('display');
+      } else {
+        // IKEA / Backup Internet variants have no old price — hide header old price
+        defaultOldPrice.textContent = '';
+        defaultOldPrice.hidden = true;
+        defaultOldPrice.style.display = 'none';
+      }
+    }
+  }
+
+  const variantCardsWrap = document.querySelector('.product-detail__variant-cards');
+  if (variantCardsWrap) {
+    const productDetailRoot =
+      variantCardsWrap.closest('.product-detail') ||
+      variantCardsWrap.closest('main') ||
+      document;
+
+    variantCardsWrap.addEventListener('click', (e) => {
+      const card = e.target && e.target.closest ? e.target.closest('.product-detail__variant-card') : null;
+      if (!card) return;
       e.preventDefault();
-      document
+
+      variantCardsWrap
         .querySelectorAll('.product-detail__variant-card')
         .forEach(c => c.classList.remove('active'));
-
       card.classList.add('active');
 
       const variantName = card.getAttribute('data-variant-name') || card.dataset.variantName || '';
-      const variantId = card.getAttribute('data-variant-id') || card.dataset.variantId || variantName || '';
-      const variantInput = document.getElementById('product-variant');
-      const commentTextarea = document.getElementById('mce-COMMENT');
-      const defaultPrice = document.querySelector('.product-detail__price-main');
-      const defaultOldPrice = document.querySelector('.product-detail__price-old');
-      const currentPrice = card.querySelector('.product-detail__variant-price').innerText;
-      const currentOldPrice = card.querySelector('.product-detail__variant-price-old').innerText;
+      let variantId = card.getAttribute('data-variant-id') || card.dataset.variantId || '';
+      if (!variantId) {
+        const nested = card.querySelector('[data-variant-id]');
+        if (nested) {
+          variantId = nested.getAttribute('data-variant-id') || nested.dataset.variantId || '';
+        }
+      }
+      if (!variantId) variantId = variantName || '';
 
-      defaultOldPrice.innerText = currentOldPrice;
-      defaultPrice.innerText = currentPrice;
+      const variantInput = form.querySelector('#product-variant') || document.getElementById('product-variant');
+      const commentTextarea = form.querySelector('#mce-COMMENT') || document.getElementById('mce-COMMENT');
 
+      syncProductDetailPriceFromVariant(card, productDetailRoot);
 
       if (variantInput) {
-        // Store the internal variant ID (or fall back to name)
         variantInput.value = variantId;
       }
 
       if (commentTextarea && variantName) {
-        commentTextarea.value = `Hello, I would like to order ${variantName} with Installation & Automation. Please contact me.`;
+        commentTextarea.value = OC
+          ? OC.buildWithVariant(variantName)
+          : `Hello, I would like to order ${variantName} with Installation & Automation. Please contact me.`;
       }
     });
-  });
+  }
 
   /* -----------------------------
      Setup selection (e.g. "Choose your setup" cards)
@@ -122,9 +146,11 @@ function initProductDetailForm() {
 
       if (commentTextarea && productInput) {
         const productName = productInput.value;
-        commentTextarea.value = setupTitle
-          ? `Hello, I would like to order ${productName} — ${setupTitle}. Please contact me.`
-          : `Hello, I would like to order ${productName}. Please contact me.`;
+        commentTextarea.value = OC
+          ? OC.buildWithSetup(productName, setupTitle)
+          : setupTitle
+            ? `Hello, I would like to order ${productName} — ${setupTitle}. Please contact me.`
+            : `Hello, I would like to order ${productName}. Please contact me.`;
       }
     });
   });
@@ -220,49 +246,43 @@ function initProductDetailForm() {
     }
   });
 
-  // Function to update the comment textarea based on selected options
   function updateCommentWithOptions() {
     const commentTextarea = document.getElementById('mce-COMMENT');
     const productInput = document.querySelector('input[name="PRODUCT"]');
     if (!commentTextarea || !productInput) return;
 
     const productName = productInput.value;
+    if (OC) {
+      commentTextarea.value = OC.buildFromSelectedOptions(productName, selectedOptions);
+      return;
+    }
 
     const byName = {};
-    for (const [optId, opt] of Object.entries(selectedOptions)) {
+    for (const [, opt] of Object.entries(selectedOptions)) {
       byName[opt.optionName] = opt;
     }
     const insightColor = byName['Insight Color'];
     const urbanColor = byName['Urban Color'];
     const urbanEmotion = byName['Urban Emotion'];
     const uvCoverColor = byName['UV Cover Color'];
-
     const optionParts = [];
 
-    // Insight color: "blue (insight)"
     if (insightColor) {
       optionParts.push(`${insightColor.label.toLowerCase()} (insight)`);
     }
-
-    // Urban color with emotion: "pink (emotion / smile)"
     if (urbanColor && urbanEmotion) {
       optionParts.push(`${urbanColor.label.toLowerCase()} (emotion / ${urbanEmotion.label.toLowerCase()})`);
     } else if (urbanColor) {
       optionParts.push(`${urbanColor.label.toLowerCase()}`);
     }
-
-    // UV cover color with protection label: "cyan (protection)"
     if (uvCoverColor) {
       optionParts.push(`${uvCoverColor.label.toLowerCase()} (protection)`);
     }
-
-    // Generic Color option (e.g. home-server-remote)
     if (byName['Color'] && !byName['Insight Color']) {
       optionParts.push(byName['Color'].label.toLowerCase());
     }
 
     if (optionParts.length > 0) {
-      // Join with comma, but last one with " and "
       let optionsText;
       if (optionParts.length === 1) {
         optionsText = optionParts[0];
@@ -332,26 +352,56 @@ function initProductDetailForm() {
   }
 
   /* -----------------------------
-     Phone mask (simple & safe)
-     Format: +123 456 789 012
+     Phone: intl-tel-input (flags + country dropdown)
+     Submitted as single hidden PHONE (#mce-PHONE)
   ----------------------------- */
-  if (phoneInput) {
-    phoneInput.addEventListener('input', () => {
-      let value = phoneInput.value.replace(/\D/g, '');
-
-      // limit length (adjust if needed)
-      value = value.substring(0, 14);
-
-      let formatted = '';
-      if (value.length > 0) formatted = '+' + value.substring(0, 3);
-      if (value.length > 3) formatted += ' ' + value.substring(3, 6);
-      if (value.length > 6) formatted += ' ' + value.substring(6, 9);
-      if (value.length > 9) formatted += ' ' + value.substring(9, 12);
-      if (value.length > 12) formatted += ' ' + value.substring(12, 15);
-
-      phoneInput.value = formatted;
-    });
+  let iti = null;
+  function getMaxLocalDigits(iso2) {
+    // Keep this conservative; we only "trim" overly long inputs.
+    switch ((iso2 || '').toLowerCase()) {
+      case 'cy': return 8;
+      case 'gr': return 10;
+      case 'gb': return 10;
+      case 'ru': return 10;
+      case 'ua': return 9;
+      default: return 15; // E.164 max national significant number length varies; 15 is safe upper cap
+    }
   }
+
+  function applyPhoneMask() {
+    if (!phoneInput) return;
+    const iso2 = iti && iti.getSelectedCountryData ? iti.getSelectedCountryData().iso2 : '';
+    const maxLen = getMaxLocalDigits(iso2);
+    const digits = phoneInput.value.replace(/\D/g, '').slice(0, maxLen);
+    if (phoneInput.value !== digits) {
+      phoneInput.value = digits;
+    }
+  }
+
+  function syncPhoneHidden() {
+    if (!phoneHiddenInput) return;
+    applyPhoneMask();
+    const localDigits = phoneInput ? phoneInput.value.replace(/\D/g, '') : '';
+    if (iti && iti.getSelectedCountryData) {
+      const dialCode = iti.getSelectedCountryData().dialCode || '';
+      phoneHiddenInput.value = dialCode ? `+${dialCode} ${localDigits}` : localDigits;
+      return;
+    }
+    phoneHiddenInput.value = localDigits;
+  }
+
+  if (phoneInput && typeof window !== 'undefined' && window.intlTelInput) {
+    iti = window.intlTelInput(phoneInput, {
+      initialCountry: 'cy',
+      preferredCountries: ['cy', 'gr', 'gb', 'ru', 'ua'],
+      separateDialCode: true,
+    });
+    phoneInput.addEventListener('countrychange', syncPhoneHidden);
+  }
+  if (phoneInput) {
+    phoneInput.addEventListener('input', syncPhoneHidden);
+  }
+  syncPhoneHidden();
 
   /* -----------------------------
      Form validation (Mailchimp-safe)
@@ -359,8 +409,9 @@ function initProductDetailForm() {
   form.addEventListener('submit', (e) => {
     let hasError = false;
 
-    // Phone validation (at least 8 digits)
+    // Phone validation (at least 8 digits typed; also trimmed to reasonable max per country)
     if (phoneInput) {
+      applyPhoneMask();
       const digits = phoneInput.value.replace(/\D/g, '');
       if (digits.length < 8) {
         hasError = true;
@@ -369,6 +420,8 @@ function initProductDetailForm() {
         phoneInput.classList.remove('input-error');
       }
     }
+
+    syncPhoneHidden();
 
     if (hasError) {
       e.preventDefault();

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@htmlLang">
   @include('partials/head.html', {
-    "pageTitle": "Pinout LTD, Smart Solutions for your Home / Pinout",
+    "pageTitle": "@meta_homeTitle",
   })
 <body>
 
@@ -12,14 +12,14 @@
     <section class="home-banner">
       <div class="layout home-banner__container">
         <div class="home-banner__content home-banner__title">
-            <h1 class="main-title">Smart <br/> Home Solution</h1>
-            <span class="home-banner__subtitle">by Pinout  LTD</span>
+            <h1 class="main-title">@home_title</h1>
+            <span class="home-banner__subtitle">@home_subtitle</span>
         </div>
-        <a href="./solutions" aria-label="go to about us page" class="underline link-with-arrow home__link">
-          <span class="home__link--start-price">€1900</span>
-          <span class="home__link--light">check</span> our solutions </a>
+        <a href="@localePrefix/solutions" aria-label="@aria_solutions" class="underline link-with-arrow home__link">
+          <span class="home__link--start-price">@home_startPrice</span>
+          <span class="home__link--light">@home_checkSolutions</span> @home_ourSolutions</a>
         <div class="home-banner__img ">
-          <img src="./img/home-banner.svg" alt="" aria-hidden="true"/>
+          <img src="/img/home-banner.svg" alt="" aria-hidden="true"/>
         </div>
       </div>
     </section>
@@ -27,16 +27,16 @@
     <section class="home-solutions">
       <div class="layout">
         <div class="grid grid-2-min">
-          <img src="./img/home-footer.png" alt="decor" aria-hidden="true"/>
+          <img src="/img/home-footer.png" alt="decor" aria-hidden="true"/>
           <div class="home-solutions__content">
-            <h2 class="home-solutions__title">The inevitability of Smart Home solutions</h2>
+            <h2 class="home-solutions__title">@home_solutionsHeading</h2>
             <p class="home-solutions__text">
-              Nowadays Smart home solutions are becoming common life attribute for more convenience.
+              @home_solutionsText1
             </p>
             <p class="home-solutions__text">
-              Comfortable and nice place of living is a combination of design, engineering and construction. And this where our value lays.
+              @home_solutionsText2
             </p>
-            <a class="underline link-with-arrow home__link home__link--with-underline" href="./why-smart-home" aria-label="go to why smart home page"> <span class="home__link--light">why</span> smart home </a>
+            <a class="underline link-with-arrow home__link home__link--with-underline" href="@localePrefix/why-smart-home" aria-label="@aria_whySmartHome"> <span class="home__link--light">@home_why</span> @home_smartHome</a>
           </div>
         </div>
       </div>
@@ -48,11 +48,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-

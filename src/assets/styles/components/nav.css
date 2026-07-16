@@ -52,7 +52,6 @@
   height: 6px;
   border-radius: 999px;
   background: var(--color-green);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-green) 25%, transparent);
 }
 
 .nav__link--featured:hover {

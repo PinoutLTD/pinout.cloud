@@ -37,7 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const isExactMatch = linkPathname === currentPathname;
-    const isShopSectionMatch = currentPathname.startsWith('/shop') && linkPathname === '/shop';
+    const isShopSectionMatch =
+      (currentPathname === '/shop' ||
+        currentPathname.startsWith('/shop/') ||
+        currentPathname === '/ru/shop' ||
+        currentPathname.startsWith('/ru/shop/')) &&
+      (linkPathname === '/shop' || linkPathname === '/ru/shop');
 
     if (isExactMatch || isShopSectionMatch) {
       item.classList.add('nav__item--active');

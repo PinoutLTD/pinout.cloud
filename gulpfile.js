@@ -1,6 +1,8 @@
-const { src, dest, series, watch } = require('gulp');
+const { src, dest, series, watch, parallel } = require('gulp');
 const fs = require('fs');
 const path = require('path');
+const { buildContext, LOCALES } = require('./src/i18n');
+const { buildPrefilledComment } = require('./src/js/orderComment');
 
 const concat = require('gulp-concat');
 const htmlMin = require('gulp-htmlmin');
@@ -18,6 +20,93 @@ const notify = require('gulp-notify');
 const sourceMaps = require('gulp-sourcemaps');
 const del = require('del');
 const browserSync = require('browser-sync').create();
+
+function distDirForLocale(locale) {
+  return locale === 'en' ? 'dist' : path.join('dist', locale);
+}
+
+// Bundled app JS output (intlTelInput is prepended raw — uglify cannot parse it)
+const MAIN_JS_OUTPUT = 'main.min.js';
+const BUNDLED_VENDOR_JS = [
+  'src/js/vendor/focus-visible.min.js',
+  'src/js/vendor/swiper-bundle.min.js',
+];
+
+const uglifyBundle = uglify({
+  toplevel: true,
+  mangle: { reserved: ['Swiper'] },
+}).on('error', notify.onError());
+
+const babelApp = babel({
+  presets: ['@babel/env'],
+  ignore: [/[/\\]vendor[/\\]/],
+});
+
+const INTL_TEL_INPUT_CSS_SRC = path.join(__dirname, 'src/assets/styles/vendor/intlTelInput.min.css');
+const INTL_TEL_INPUT_JS_SRC = path.join(__dirname, 'src/js/vendor/intlTelInput.min.js');
+
+function patchIntlTelInputCssContent(content, flagsBasePath = '../img/flags') {
+  return content.replace(
+    /--iti-path-flags-1x:\s*url\([^)]+\);\s*--iti-path-flags-2x:\s*url\([^)]+\)/,
+    `--iti-path-flags-1x: url(${flagsBasePath}/flags.png);--iti-path-flags-2x: url(${flagsBasePath}/flags@2x.png)`
+  );
+}
+
+function readIntlTelInputCssForBundle() {
+  if (!fs.existsSync(INTL_TEL_INPUT_CSS_SRC)) return '';
+  return patchIntlTelInputCssContent(fs.readFileSync(INTL_TEL_INPUT_CSS_SRC, 'utf8'));
+}
+
+function appendIntlTelInputToMainCss(mainCssPath) {
+  const vendorCss = readIntlTelInputCssForBundle();
+  if (!vendorCss || !fs.existsSync(mainCssPath)) return;
+  let mainCss = fs.readFileSync(mainCssPath, 'utf8');
+  const marker = '/* intl-tel-input */';
+  const markerIdx = mainCss.indexOf(marker);
+  if (markerIdx !== -1) {
+    mainCss = mainCss.slice(0, markerIdx);
+  }
+  fs.writeFileSync(mainCssPath, `${mainCss.trimEnd()}\n${marker}\n${vendorCss}`, 'utf8');
+}
+
+function appendIntlTelInputToMainCssTask(outputDir) {
+  return function appendIntlTelInputCss(cb) {
+    appendIntlTelInputToMainCss(path.join(__dirname, outputDir, 'styles', 'main.min.css'));
+    cb();
+  };
+}
+
+function prependIntlTelInputToMainJs(mainJsPath) {
+  if (!fs.existsSync(mainJsPath) || !fs.existsSync(INTL_TEL_INPUT_JS_SRC)) return;
+  let appJs = fs.readFileSync(mainJsPath, 'utf8');
+  const intlJs = fs.readFileSync(INTL_TEL_INPUT_JS_SRC, 'utf8');
+  if (appJs.includes('International Telephone Input v')) {
+    const intlEnd = appJs.indexOf('window.intlTelInput');
+    if (intlEnd !== -1) {
+      const afterIntl = appJs.indexOf('\n', appJs.indexOf('window.intlTelInput = intlTelInput'));
+      if (afterIntl !== -1) {
+        appJs = appJs.slice(afterIntl + 1);
+      }
+    }
+  }
+  fs.writeFileSync(mainJsPath, `${intlJs}\n${appJs}`, 'utf8');
+}
+
+function prependIntlTelInputToMainJsTask(outputDir) {
+  return function prependIntlTelInputJs(cb) {
+    prependIntlTelInputToMainJs(path.join(__dirname, outputDir, 'js', MAIN_JS_OUTPUT));
+    cb();
+  };
+}
+
+function fileIncludeOptions(locale) {
+  return {
+    prefix: '@',
+    basepath: '@file',
+    context: buildContext(locale),
+  };
+}
+
 const clean = () =>  {
     return del(['dist'])
 }
@@ -33,8 +122,11 @@ const docs = () => {
     .pipe(dest('dist/docs'));
 }
 
-const styles = () => {
-    return src('src/assets/styles/**/*.css')
+const stylesMain = () => {
+    return src([
+      'src/assets/styles/**/*.css',
+      '!src/assets/styles/vendor/intlTelInput.min.css',
+    ])
     .pipe(sourceMaps.init())
     .pipe(concat('main.css'))
     .pipe(rename({
@@ -50,18 +142,53 @@ const styles = () => {
     }))
     .pipe(sourceMaps.write())
     .pipe(dest('dist/styles/'))
-    .pipe(browserSync.stream())
+    .pipe(browserSync.stream());
 };
 
-const htmlPages = () => {
-    return src('src/pages/**/*.html')
-    .pipe(fileInclude({
-      prefix: '@',
-      basepath: '@file'
-    }))
-    .pipe(dest('dist'))
-    .pipe(browserSync.stream())
-};
+const styles = series(stylesMain, appendIntlTelInputToMainCssTask('dist'));
+
+function pagesGlobForLocale(locale) {
+  if (locale === 'en') {
+    return ['src/pages/**/*.html', '!src/pages/shop/ru/**'];
+  }
+  return [
+    'src/pages/**/*.html',
+    '!src/pages/shop/*.html',
+    'src/pages/shop/index.html',
+    'src/pages/shop/ru/**/*.html',
+  ];
+}
+
+/** Keep output paths under dist/.../shop/, not dist/.../index.html for shop/index.html */
+function pagesSrc(locale) {
+  return src(pagesGlobForLocale(locale), { base: 'src/pages' });
+}
+
+/** Generated RU products live in src/pages/shop/ru/ but publish as /ru/shop/{slug}.html */
+function flattenRuShopPages() {
+  return rename((filePath) => {
+    const dir = filePath.dirname.replace(/\\/g, '/');
+    if (dir === 'shop/ru') {
+      filePath.dirname = 'shop';
+    }
+  });
+}
+
+function pipePagesForLocale(locale) {
+  let stream = pagesSrc(locale).pipe(fileInclude(fileIncludeOptions(locale)));
+  if (locale === 'ru') {
+    stream = stream.pipe(flattenRuShopPages());
+  }
+  return stream;
+}
+
+const htmlPages = parallel(
+  ...LOCALES.map((locale) => function htmlPagesLocale() {
+    return pipePagesForLocale(locale)
+      .pipe(dest(distDirForLocale(locale)))
+      .pipe(browserSync.stream());
+  })
+);
 
 // Generate product detail pages dynamically
 // Set to true to force regeneration of existing pages, false to skip them
@@ -89,6 +216,114 @@ function formatAdditionalPrice(price) {
   return typeof price === 'number' ? price.toFixed(2) : '';
 }
 
+/** Label above variant cards; empty variantsLabel hides the label (does not fall back to robot vacuum). */
+function getVariantLabel(product) {
+  if (product.variantsLabel != null && String(product.variantsLabel).trim() !== '') {
+    return product.variantsLabel;
+  }
+  if (product.category === 'Smart Robot Vacuum') {
+    return 'Choose a robot vacuum*:';
+  }
+  return '';
+}
+
+function buildVariantLabelHTML(variantLabel) {
+  if (!variantLabel) {
+    return '';
+  }
+  return `              <label class="text-normal product-detail__variants-label"><b>${variantLabel}</b></label>\n`;
+}
+
+function normalizeVariantAssetPath(assetPath, prefix) {
+  if (!assetPath) return '';
+  if (prefix === './img/') {
+    return assetPath.replace(/^\.\.\/img\//, './img/').replace(/^\.\/img\//, './img/');
+  }
+  return assetPath.replace(/^\.\.\//, prefix).replace(/^\.\//, prefix);
+}
+
+function isHowItWorksDisabled(product) {
+  if (product.howItWorks === false) {
+    return true;
+  }
+  return product.howItWorksHtml != null && String(product.howItWorksHtml).trim() === '';
+}
+
+function hasCustomHowItWorksHtml(product) {
+  return product.howItWorksHtml != null && String(product.howItWorksHtml).trim() !== '';
+}
+
+function buildVariantInclInstallHTML(product, labels) {
+  if (product.showVariantInclInstall === false) {
+    return '';
+  }
+  const text = labels.shop_variantInclInstall || 'incl. install';
+  return `                    <span class="product-detail__variant-include text-normal">${text}</span>\n`;
+}
+
+/**
+ * Product fullDescription: use multiple <p> blocks (and optional .product-detail__desc-heading)
+ * for spacing. Legacy strings with <br> are split into paragraphs at build time.
+ */
+function buildProductDescriptionHTML(description) {
+  if (!description) {
+    return '';
+  }
+
+  let html = String(description).trim();
+
+  const singleParagraphMatch = html.match(/^<p[^>]*>([\s\S]*)<\/p>$/i);
+  if (singleParagraphMatch && !/<p[\s>]/i.test(html.slice(singleParagraphMatch[0].length))) {
+    html = singleParagraphMatch[1].trim();
+  }
+
+  if (/<p[\s>]/i.test(html) && (html.match(/<p[\s>]/gi) || []).length > 1) {
+    return html;
+  }
+
+  if (html.includes('product-detail__desc-') || /^<(div|ul|ol|section)\b/i.test(html)) {
+    return html;
+  }
+
+  const hasBreaks = /<\/?br\s*\/?>/i.test(html);
+  if (!hasBreaks) {
+    return `<p class="text-normal">${html}</p>`;
+  }
+
+  const parts = html
+    .replace(/<\/?br\s*\/?>/gi, '\n')
+    .split('\n')
+    .map((part) => part.trim())
+    .filter((part) => part.length > 0);
+
+  return parts
+    .map((part) => {
+      const isHeading =
+        /^\s*<b>[^<]+<\/b>\s*$/i.test(part) || /^\s*<b>[^<]+:<\/b>\s*$/i.test(part);
+      const className = isHeading
+        ? 'text-normal product-detail__desc-heading'
+        : 'text-normal';
+      return `<p class="${className}">${part}</p>`;
+    })
+    .join('\n');
+}
+
+function buildVariantImageHTML(v, assetPrefix) {
+  const name = (v.name || '').replace(/"/g, '&quot;');
+  const iconBlack = normalizeVariantAssetPath(v.iconBlack, assetPrefix);
+  const iconWhite = normalizeVariantAssetPath(v.iconWhite, assetPrefix);
+  if (iconBlack && iconWhite) {
+    return `                  <div class="product-detail__variant-image product-detail__variant-image--icons">
+                    <img src="${iconBlack}" alt="" class="product-detail__variant-icon product-detail__variant-icon--inactive" aria-hidden="true"/>
+                    <img src="${iconWhite}" alt="" class="product-detail__variant-icon product-detail__variant-icon--active" aria-hidden="true"/>
+                  </div>`;
+  }
+  const imagePath = normalizeVariantAssetPath(v.image, assetPrefix);
+  return `                  <div class="product-detail__variant-image">
+                    <img src="${imagePath}" alt="${name}"/>
+                  </div>`;
+}
+
 /** Renders optional lines after delivery, before payment (see product.serviceSummary in products.js). */
 function buildProductServiceSummaryHTML(product) {
   if (!product.serviceSummary || !Array.isArray(product.serviceSummary) || product.serviceSummary.length === 0) {
@@ -108,6 +343,74 @@ function buildProductServiceSummaryHTML(product) {
             <div class="product-detail__service-summary">
 ${paragraphs.join('\n')}
             </div>`;
+}
+
+function loadProductsRuBySlug() {
+  const ruPath = path.join(__dirname, 'src/js/data/products.ru.js');
+  if (!fs.existsSync(ruPath)) {
+    return {};
+  }
+  const ruContent = fs.readFileSync(ruPath, 'utf8');
+  const ruMatch = ruContent.match(/const productsRuBySlug = (\{[\s\S]*?\n\});/);
+  if (!ruMatch) {
+    return {};
+  }
+  let productsRuBySlug = {};
+  try {
+    eval(`productsRuBySlug = ${ruMatch[1]}`);
+  } catch (e) {
+    console.warn('Could not parse products.ru.js:', e.message);
+  }
+  return productsRuBySlug;
+}
+
+function normalizeHtmlAssetPaths(html) {
+  if (!html || typeof html !== 'string') return html;
+  return html
+    .replace(/src="(\.\.\/)+img\//g, 'src="/img/')
+    .replace(/src="\.\/img\//g, 'src="/img/');
+}
+
+function loadProductsHowItWorksRu() {
+  const filePath = path.join(__dirname, 'src/js/data/products-how-it-works.ru.js');
+  if (!fs.existsSync(filePath)) {
+    return {};
+  }
+  const content = fs.readFileSync(filePath, 'utf8');
+  const match = content.match(/const productsHowItWorksRu = (\{[\s\S]*?\n\});/);
+  if (!match) {
+    return {};
+  }
+  let productsHowItWorksRu = {};
+  try {
+    eval(`productsHowItWorksRu = ${match[1]}`);
+  } catch (e) {
+    console.warn('Could not parse products-how-it-works.ru.js:', e.message);
+  }
+  return productsHowItWorksRu;
+}
+
+function localizeProduct(product, locale, productsRuBySlug, productsHowItWorksRu) {
+  let localized = { ...product };
+
+  if (locale === 'ru') {
+    const ru = productsRuBySlug[product.slug];
+    if (ru) {
+      localized = { ...localized, ...ru };
+    }
+    if (productsHowItWorksRu[product.slug]) {
+      localized.howItWorksHtml = productsHowItWorksRu[product.slug];
+    }
+  }
+
+  if (localized.howItWorksHtml) {
+    localized.howItWorksHtml = normalizeHtmlAssetPaths(localized.howItWorksHtml);
+  }
+  if (localized.fullDescription) {
+    localized.fullDescription = normalizeHtmlAssetPaths(localized.fullDescription);
+  }
+
+  return localized;
 }
 
 const generateProductPages = (cb) => {
@@ -149,21 +452,29 @@ const generateProductPages = (cb) => {
 
   let generatedCount = 0;
   let skippedCount = 0;
+  const productsRuBySlug = loadProductsRuBySlug();
+  const productsHowItWorksRu = loadProductsHowItWorksRu();
 
-  // Generate a page for each product in shop/{slug}.html structure
-  products.forEach(product => {
-    const shopDir = path.join(__dirname, 'src/pages', 'shop');
-    const outputPath = path.join(shopDir, `${product.slug}.html`);
+  LOCALES.forEach((locale) => {
+    const labels = buildContext(locale);
+    const shopDir = path.join(
+      __dirname,
+      'src/pages',
+      'shop',
+      ...(locale === 'ru' ? ['ru'] : [])
+    );
 
-    // Skip if file exists and we're not forcing regeneration
-    if (!FORCE_REGENERATE_PRODUCT_PAGES && fs.existsSync(outputPath)) {
-      skippedCount++;
-      return; // Skip this product
-    }
-
-    // Create shop directory if it doesn't exist
     if (!fs.existsSync(shopDir)) {
       fs.mkdirSync(shopDir, { recursive: true });
+    }
+
+    products.forEach((originalProduct) => {
+    const product = localizeProduct(originalProduct, locale, productsRuBySlug, productsHowItWorksRu);
+    const outputPath = path.join(shopDir, `${product.slug}.html`);
+
+    if (!FORCE_REGENERATE_PRODUCT_PAGES && fs.existsSync(outputPath)) {
+      skippedCount++;
+      return;
     }
 
     let pageContent = template;
@@ -216,9 +527,7 @@ const generateProductPages = (cb) => {
 
     // Handle description
     const description = product.fullDescription || product.description || '';
-    const descriptionHTML = (typeof description === 'string' && description.includes('<p'))
-      ? description
-      : `<p class="text-normal">${description}</p>`;
+    const descriptionHTML = buildProductDescriptionHTML(description);
     pageContent = pageContent.replace(/\{\{PRODUCT_DESCRIPTION\}\}/g, descriptionHTML);
 
     // Handle color options
@@ -329,7 +638,7 @@ ${optionItems}
     } else {
       deliveryHTML = `
             <div class="product-detail__delivery">
-              <p class="text-normal"><b>Delivery:</b> Within 24 hours, the service is available across Cyprus after placing your order.</p>
+              <p class="text-normal"><b>${labels.shop_deliveryLabel}</b> ${labels.shop_deliveryDefault}</p>
             </div>`;
     }
     pageContent = pageContent.replace(/\{\{PRODUCT_DELIVERY\}\}/g, deliveryHTML);
@@ -344,7 +653,7 @@ ${optionItems}
             <div class="product-detail__payment">
               ${paymentTextHTML}
               <div class="product-detail__payment-methods">
-                <span class="text-normal">Payment methods:</span>
+                <span class="text-normal">${labels.shop_paymentMethods}</span>
                 <img src="../../img/shop/revolut.svg" alt="Revolut" class="product-detail__payment-icon"/>
                 <img src="../../img/shop/visa.svg" alt="Visa" class="product-detail__payment-icon"/>
                 <img src="../../img/shop/mastercard.svg" alt="Mastercard" class="product-detail__payment-icon"/>
@@ -408,19 +717,15 @@ ${setupCards}
     // Handle product variants (e.g. robot vacuum model choice)
     let variantsHTML = '';
     if (product.variants && Array.isArray(product.variants) && product.variants.length > 0) {
-      const variantLabel = product.variantsLabel || 'Choose a robot vacuum*:';
+      const variantLabel = getVariantLabel(product);
       const variantCards = product.variants.map((v, index) => {
         const isActive = index === 0 ? ' active' : '';
-        const imagePath = (v.image || '').replace(/^\.\.\//, '../../').replace(/^\.\//, '../../');
         const oldPriceHTML = v.oldPrice ? `<span class="product-detail__variant-price-old">${formatProductPrice(v.oldPrice)}</span>` : '';
-        return `                <button type="button" class="product-detail__variant-card${isActive}" data-variant-name="${(v.name || '').replace(/"/g, '&quot;')}" data-variant-id="${v.id || ''}">
-                  <div class="product-detail__variant-image">
-                    <img src="${imagePath}" alt="${(v.name || '').replace(/"/g, '&quot;')}"/>
-                  </div>
+        return `                <button type="button" class="product-detail__variant-card${isActive}" data-variant-name="${(v.name || '').replace(/"/g, '&quot;')}" data-variant-id="${(v.id || v.name || '').replace(/"/g, '&quot;')}">
+${buildVariantImageHTML(v, '../../')}
                   <div class="product-detail__variant-info">
                     <span class="product-detail__variant-name text">${v.name || ''}</span>
-                    <span class="product-detail__variant-include text-normal">incl. install</span>
-                    <div class="product-detail__variant-prices">
+${buildVariantInclInstallHTML(product, labels)}                    <div class="product-detail__variant-prices">
                       ${oldPriceHTML}
                       <span class="product-detail__variant-price text">€ ${(v.price || 0).toFixed(2)}</span>
                     </div>
@@ -430,8 +735,7 @@ ${setupCards}
 
       variantsHTML = `
             <div class="product-detail__variants">
-              <label class="text-normal product-detail__variants-label"><b>${variantLabel}</b></label>
-              <div class="product-detail__variant-cards">
+${buildVariantLabelHTML(variantLabel)}              <div class="product-detail__variant-cards">
 ${variantCards}
               </div>
               <input type="hidden" name="VARIANT" id="product-variant" value="${(product.variants[0].id || product.variants[0].name || '').replace(/"/g, '&quot;')}">
@@ -470,11 +774,9 @@ ${variantCards}
 
     // Handle "How It Works" section - flexible configuration
     let howItWorksHTML = '';
-    if (product.howItWorksHtml) {
-      // Full HTML override for maximum flexibility
+    if (hasCustomHowItWorksHtml(product)) {
       howItWorksHTML = product.howItWorksHtml;
     } else if (product.howItWorksSteps && Array.isArray(product.howItWorksSteps) && product.howItWorksSteps.length > 0) {
-      // Generate from steps array - more structured approach
       const gridClass = `grid-${product.howItWorksSteps.length}`;
       const stepsHTML = product.howItWorksSteps.map(step => {
         const imagePath = step.image ? step.image.replace(/^\.\//, '../') : '../../img/shop/delivery.png';
@@ -494,39 +796,38 @@ ${variantCards}
 ${stepsHTML}
           </div>
         </div>`;
-    } else {
-      // Default "How It Works" section
+    } else if (!isHowItWorksDisabled(product)) {
       howItWorksHTML = `
         <div class="product-detail__how-it-works">
-          <h2 class="subtitle">HOW IT WORKS</h2>
+          <h2 class="subtitle">${labels.shop_howItWorks}</h2>
           <div class="product-detail__steps grid grid-4">
             <div class="product-detail__step">
               <div class="product-detail__step-icon">
-                <img src="../../img/shop/delivery.png" alt="Fast Delivery"/>
+                <img src="../../img/shop/delivery.png" alt="${labels.shop_stepDeliveryTitle}"/>
               </div>
-              <h3 class="text">FAST DELIVERY</h3>
-              <p class="text-normal">We deliver across Cyprus within 24 hours after your order is placed.</p>
+              <h3 class="text">${labels.shop_stepDeliveryTitle}</h3>
+              <p class="text-normal">${labels.shop_stepDeliveryText}</p>
             </div>
             <div class="product-detail__step">
               <div class="product-detail__step-icon">
-                <img src="../../img/shop/setup.png" alt="Installation & Setup"/>
+                <img src="../../img/shop/setup.png" alt="${labels.shop_stepSetupTitle}"/>
               </div>
-              <h3 class="text">INSTALLATION & SETUP</h3>
-              <p class="text-normal">We install the equipment, connect your smart home system, and configure automations.</p>
+              <h3 class="text">${labels.shop_stepSetupTitle}</h3>
+              <p class="text-normal">${labels.shop_stepSetupText}</p>
             </div>
             <div class="product-detail__step">
               <div class="product-detail__step-icon">
-                <img src="../../img/shop/training.png" alt="Training & Handover"/>
+                <img src="../../img/shop/training.png" alt="${labels.shop_stepTrainingTitle}"/>
               </div>
-              <h3 class="text">TRAINING & HANDOVER</h3>
-              <p class="text-normal">We show you how to use the system, control it from your phone, and optimize daily operation.</p>
+              <h3 class="text">${labels.shop_stepTrainingTitle}</h3>
+              <p class="text-normal">${labels.shop_stepTrainingText}</p>
             </div>
             <div class="product-detail__step">
               <div class="product-detail__step-icon">
-                <img src="../../img/shop/perfomance.png" alt="Performance Check"/>
+                <img src="../../img/shop/perfomance.png" alt="${labels.shop_stepPerformanceTitle}"/>
               </div>
-              <h3 class="text">PERFORMANCE CHECK</h3>
-              <p class="text-normal">We monitor and test the system to ensure stable, correct, and reliable performance.</p>
+              <h3 class="text">${labels.shop_stepPerformanceTitle}</h3>
+              <p class="text-normal">${labels.shop_stepPerformanceText}</p>
             </div>
           </div>
         </div>`;
@@ -534,41 +835,10 @@ ${stepsHTML}
     pageContent = pageContent.replace(/\{\{PRODUCT_HOW_IT_WORKS\}\}/g, howItWorksHTML);
 
     // Handle availability
-    const availabilityText = product.available ?  'available' : 'Not available';
+    const availabilityText = product.available ? labels.shop_available : labels.shop_notAvailable;
     pageContent = pageContent.replace(/\{\{PRODUCT_AVAILABILITY\}\}/g, availabilityText);
 
-    // Handle prefilled comment (use first variant name if product has variants, e.g. robot vacuum)
-    let prefilledComment;
-    if (product.additionalOptions && product.additionalOptions.length > 0) {
-      // Build prefilled comment with default (first) option selections
-      const byName = {};
-      product.additionalOptions.forEach(og => {
-        if (og.values && og.values.length > 0) {
-          byName[og.name] = og.values[0].label;
-        }
-      });
-      const parts = [];
-      if (byName['Insight Color']) parts.push(byName['Insight Color'].toLowerCase() + ' (insight)');
-      if (byName['Urban Color'] && byName['Urban Emotion']) {
-        parts.push(byName['Urban Color'].toLowerCase() + ' (emotion / ' + byName['Urban Emotion'].toLowerCase() + ')');
-      } else if (byName['Urban Color']) {
-        parts.push(byName['Urban Color'].toLowerCase());
-      }
-      if (byName['UV Cover Color']) parts.push(byName['UV Cover Color'].toLowerCase() + ' (protection)');
-      // Generic fallback for products with just Color (e.g. home-server-remote)
-      if (byName['Color'] && !byName['Insight Color']) parts.push(byName['Color'].toLowerCase());
-
-      let optionsText;
-      if (parts.length === 1) optionsText = parts[0];
-      else if (parts.length === 2) optionsText = parts.join(' and ');
-      else optionsText = parts.slice(0, -1).join(', ') + ' and ' + parts[parts.length - 1];
-
-      prefilledComment = `Hello, I would like to order ${product.title} — ${optionsText}. Please contact me.`;
-    } else if (product.variants && product.variants.length > 0 && product.variants[0].name) {
-      prefilledComment = `Hello, I would like to order ${product.variants[0].name} with Installation & Automation. Please contact me.`;
-    } else {
-      prefilledComment = `Hello, I would like to order ${product.title.toLowerCase()}. Please contact me.`;
-    }
+    const prefilledComment = buildPrefilledComment(product, locale);
     pageContent = pageContent.replace(/\{\{PRODUCT_COMMENT_PREFILL\}\}/g, prefilledComment);
 
     // Handle address field (not used by current products; kept for template compatibility)
@@ -576,141 +846,143 @@ ${stepsHTML}
     pageContent = pageContent.replace(/\{\{PRODUCT_ADDRESS_FIELD\}\}/g, addressFieldHTML);
 
     // Handle form intro text
-    const formIntroText =
-      'We will contact you within 24 hours. <br> Delivery is available within 24 hours after your request.  <br> Payment is made after the service is completed.';
+    const formIntroText = labels.shop_formIntro;
     pageContent = pageContent.replace(/\{\{PRODUCT_FORM_INTRO\}\}/g, formIntroText);
 
     // Handle quantity selector for products with additionalUnitPrice (AC and Underfloor Heating)
-    let quantitySelectorHTML = '';
-    if (product.additionalUnitPrice) {
-      quantitySelectorHTML = `
-            <!-- QUANTITY -->
-            <div>
-              <label class="text-normal">quantity</label>
-              <div class="product-detail__contact-methods">
-                <button type="button" class="product-detail__contact-method active" data-quantity="1">1</button>
-                <button type="button" class="product-detail__contact-method" data-quantity="2">2</button>
-                <button type="button" class="product-detail__contact-method" data-quantity="3">3</button>
-                <button type="button" class="product-detail__contact-method" data-quantity="4+">4+</button>
-              </div>
-              <input type="hidden" name="QUANTITY" id="quantity" value="1">
-            </div>`;
-    }
+    const quantitySelectorHTML = '';
     pageContent = pageContent.replace(/\{\{PRODUCT_QUANTITY_SELECTOR\}\}/g, quantitySelectorHTML);
 
-    // Fix breadcrumb and other relative links for shop/ structure
     pageContent = pageContent.replace(/href="\.\/shop\.html"/g, 'href="./"');
     pageContent = pageContent.replace(/href="\.\/contact-us/g, 'href="../contact-us');
 
-    // Asset paths will be fixed by fixShopAssetPaths task after file-include processes them
+    if (locale === 'ru') {
+      pageContent = pageContent.replace(/\.\.\/\.\.\/partials/g, '../../../partials');
+      pageContent = pageContent.replace(/href="\.\.\/contact-us/g, 'href="../../contact-us');
+    }
 
-    // Write product page
     fs.writeFileSync(outputPath, pageContent, 'utf8');
     generatedCount++;
+    });
   });
 
   console.log(`Product pages: ${generatedCount} generated, ${skippedCount} skipped (existing)`);
   cb();
 };
 
-// Fix asset paths in shop pages
-const fixShopAssetPaths = (cb) => {
-  const shopDir = path.join(__dirname, 'dist', 'shop');
-  if (!fs.existsSync(shopDir)) {
+// Root-absolute paths work from / and /ru/ at any nesting depth
+function normalizeAssetPathsInHtml(content, filePath) {
+  content = content.replace(/href="@assetPrefix\/?/g, 'href="/');
+  content = content.replace(/src="@assetPrefix\/?/g, 'src="/');
+  content = content.replace(/href="(\.\.\/)+styles\//g, 'href="/styles/');
+  content = content.replace(/href="styles\//g, 'href="/styles/');
+  content = content.replace(/src="(\.\.\/)+js\//g, 'src="/js/');
+  content = content.replace(/src="js\//g, 'src="/js/');
+  content = content.replace(/src="(\.\.\/)+img\//g, 'src="/img/');
+  content = content.replace(/href="(\.\.\/)+img\//g, 'href="/img/');
+  content = content.replace(/src="\.\/img\//g, 'src="/img/');
+  content = content.replace(/href="\.\/img\//g, 'href="/img/');
+  content = content.replace(/href="(\.\.\/)+resources\//g, 'href="/resources/');
+  content = content.replace(/href="\.\/resources\//g, 'href="/resources/');
+
+  const isShopPage = filePath.includes(`${path.sep}shop${path.sep}`);
+  if (isShopPage) {
+    content = content.replace(
+      /href="\.\/(about-us|why-smart-home|solutions|cyprus-lifestyle|for-construction|contact-us|privacy-policy)"/g,
+      'href="../$1"'
+    );
+    content = content.replace(/href="\.\/shop"/g, 'href="./"');
+    content = content.replace(/@include\('\.\/userConsent\.html'\)/g, "@include('../userConsent.html')");
+  }
+
+  return content;
+}
+
+const fixAssetPaths = (cb) => {
+  const distRoot = path.join(__dirname, 'dist');
+  if (!fs.existsSync(distRoot)) {
     return cb();
   }
 
-  function processDirectory(dir) {
-    const files = fs.readdirSync(dir, { withFileTypes: true });
-    files.forEach(file => {
-      const filePath = path.join(dir, file.name);
-      if (file.isDirectory()) {
-        processDirectory(filePath);
-      } else if (file.isFile() && file.name.endsWith('.html')) {
-        let content = fs.readFileSync(filePath, 'utf8');
-
-        // Fix asset paths (CSS, JS, images, resources)
-        content = content.replace(/href="styles\//g, 'href="../styles/');
-        content = content.replace(/src="js\//g, 'src="../js/');
-        content = content.replace(/href="\.\/img\//g, 'href="../img/');
-        content = content.replace(/src="\.\/img\//g, 'src="../img/');
-        content = content.replace(/href="\.\/resources\//g, 'href="../resources/');
-
-        // Fix navigation links in header/footer (change ./page to ../page)
-        // But keep ./shop as is (it should go to ./ which is shop/index.html)
-        content = content.replace(/href="\.\/(about-us|why-smart-home|solutions|cyprus-lifestyle|for-construction|contact-us|privacy-policy|for-cosntruction)"/g, 'href="../$1"');
-
-        // Fix shop link - from shop pages, ./shop should go to ./ (shop index)
-        content = content.replace(/href="\.\/shop"/g, 'href="./"');
-
-        // Fix footer image path
-        content = content.replace(/src="\.\/img\/decor-legs\.svg"/g, 'src="../img/decor-legs.svg');
-
-        // Fix userConsent include path (if it's in the processed HTML)
-        content = content.replace(/@include\('\.\/userConsent\.html'\)/g, "@include('../userConsent.html')");
-
-        fs.writeFileSync(filePath, content, 'utf8');
+  function walk(dir) {
+    fs.readdirSync(dir, { withFileTypes: true }).forEach((entry) => {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        walk(fullPath);
+        return;
       }
+      if (!entry.name.endsWith('.html')) return;
+
+      const content = normalizeAssetPathsInHtml(
+        fs.readFileSync(fullPath, 'utf8'),
+        fullPath
+      );
+      fs.writeFileSync(fullPath, content, 'utf8');
     });
   }
 
-  processDirectory(shopDir);
+  walk(distRoot);
   cb();
 };
 
-// Process generated product pages with file-include (including nested shop/*/index.html)
-const processProductPages = () => {
-  return src('src/pages/**/*.html')
-    .pipe(fileInclude({
-      prefix: '@',
-      basepath: '@file'
-    }))
-    .pipe(dest('dist'))
-    .pipe(browserSync.stream());
-};
+// Backwards-compatible alias used in watch tasks
+const fixShopAssetPaths = fixAssetPaths;
 
-const htmlInclude = () => {
+// Process generated product pages with file-include (including nested shop/*/index.html)
+const processProductPages = parallel(
+  ...LOCALES.map((locale) => function processProductPagesLocale() {
+    return pipePagesForLocale(locale)
+      .pipe(dest(distDirForLocale(locale)))
+      .pipe(browserSync.stream());
+  })
+);
+
+const htmlInclude = parallel(
+  ...LOCALES.map((locale) => function htmlIncludeLocale() {
     return src('src/*.html')
-    .pipe(fileInclude({
-      prefix: '@',
-      basepath: '@file'
-    }))
-    .pipe(dest('dist'))
-    .pipe(browserSync.stream())
-};
+      .pipe(fileInclude(fileIncludeOptions(locale)))
+      .pipe(dest(distDirForLocale(locale)))
+      .pipe(browserSync.stream());
+  })
+);
 
 const svgSprites = () => {
+    const svgDir = path.join(__dirname, 'src', 'img', 'svg');
+    if (!fs.existsSync(svgDir)) return Promise.resolve();
+    const svgFiles = fs.readdirSync(svgDir).filter((file) => file.endsWith('.svg'));
+    if (svgFiles.length === 0) return Promise.resolve();
+
     return src('src/img/svg/**/*.svg')
-    .pipe(svgSprite({
-        mode: {
-            stack: {
-                sprite: '../sprite.svg'
-            }
-        }
-    }))
-    .pipe(dest('dist/assets/images'))
+      .pipe(svgSprite({
+          mode: {
+              stack: {
+                  sprite: '../sprite.svg'
+              }
+          }
+      }))
+      .pipe(dest('dist/assets/images'))
 }
 
-const scripts = () => {
+const scriptsApp = () => {
     return src([
-      'src/js/vendor/*.js',
+      ...BUNDLED_VENDOR_JS,
       'src/js/data/products.js', // Load products data first
+      'src/js/data/products.ru.js',
+      'src/js/orderComment.js',
       'src/js/helpers.js',
       'src/js/components/*.js',
       'src/js/main.js',
     ])
     .pipe(sourceMaps.init({loadMaps: true}))
-    .pipe(babel({
-        presets: ['@babel/env']
-    }))
+    .pipe(babelApp)
     .pipe(concat('main.js'))
-    .pipe(uglify({
-        toplevel: true,
-    }).on('error', notify.onError()))
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(uglifyBundle)
     .pipe(sourceMaps.write())
-    .pipe(dest('dist/js/'))
-    .pipe(browserSync.stream())
-}
+    .pipe(dest('dist/js/'));
+};
+
+const scripts = series(scriptsApp, prependIntlTelInputToMainJsTask('dist'));
 
 const images = () => {
     return src([
@@ -722,6 +994,27 @@ const images = () => {
     ])
     .pipe(dest('dist/img'))
 }
+
+const stylesBuildMain = () => {
+    return src([
+      'src/assets/styles/**/*.css',
+      '!src/assets/styles/vendor/intlTelInput.min.css',
+    ])
+    .pipe(concat('main.css'))
+    .pipe(rename({
+        suffix: '.min'
+    }))
+    .pipe(autoPrefixes({
+        cascade: false
+    }))
+    .pipe(mediaQueries())
+    .pipe(cleanCSS({
+        level: 2
+    }))
+    .pipe(dest('dist/styles/'))
+};
+
+const stylesBuild = series(stylesBuildMain, appendIntlTelInputToMainCssTask('dist'));
 
 const watchFiles = () => {
     browserSync.init({
@@ -735,18 +1028,16 @@ const watchFiles = () => {
 }
 
 async function watchAll() {
-  // Watch products data and template - regenerate pages when they change
-  watch('src/js/data/products.js', series(generateProductPages, processProductPages, fixShopAssetPaths));
-  watch('src/pages/templates/*.html', series(generateProductPages, processProductPages, fixShopAssetPaths));
-  watch('src/pages/shop/**/*.html', series(processProductPages, fixShopAssetPaths));
-  watch('src/**/*.html', htmlInclude);
-  watch('src/**/*.html', htmlPages);
-  watch('src/**/*.html', processProductPages);
+  const rebuildHtml = series(htmlInclude, htmlPages, processProductPages, fixAssetPaths);
+
+  watch('src/js/data/products.js', series(generateProductPages, processProductPages, fixAssetPaths));
+  watch('src/pages/templates/*.html', series(generateProductPages, processProductPages, fixAssetPaths));
+  watch(['src/index.html', 'src/partials/**', 'src/pages/**'], rebuildHtml);
+  watch('src/i18n/**/*.json', rebuildHtml);
   watch('src/assets/styles/**/*.css', styles);
   watch('src/assets/img/svg/**/*.svg', svgSprites);
   watch('src/js/**/*.js', scripts);
-  watch('.src/assets/img/*.{jpg,jpeg,png,svg, gif}', images);
-  watch('.src/assets/img/**/*.{jpg,jpeg,png,svg, gif}', images);
+  watch('src/assets/img/**/*.{jpg,jpeg,png,svg,gif}', images);
   watch('src/resources/**', resources);
   watch('src/docs/**', docs);
 }
@@ -756,7 +1047,7 @@ exports.docs = docs;
 exports.styles = styles;
 exports.htmlInclude = htmlInclude;
 exports.scripts = scripts;
-exports.default = series(clean, resources, docs, generateProductPages, htmlInclude, htmlPages, processProductPages, fixShopAssetPaths, scripts, styles, images, svgSprites, watchAll, watchFiles)
+exports.default = series(clean, resources, docs, generateProductPages, htmlInclude, htmlPages, processProductPages, scripts, styles, images, fixAssetPaths, svgSprites, watchAll, watchFiles)
 
 const minImages = () => {
     return src([
@@ -777,67 +1068,49 @@ const minImages = () => {
     .pipe(dest('dist/img'))
 }
 
-const stylesBuild = () => {
-    return src('src/assets/styles/**/*.css')
-    .pipe(concat('main.css'))
-    .pipe(rename({
-        suffix: '.min'
-    }))
-    .pipe(autoPrefixes({
-        cascade: false
-    }))
-    .pipe(mediaQueries())
-    .pipe(cleanCSS({
-        level: 2
-    }))
-    .pipe(dest('dist/styles/'))
-};
-
-const scriptsBuild = () => {
+const scriptsBuildApp = () => {
     return src([
-      'src/js/vendor/*.js',
+      ...BUNDLED_VENDOR_JS,
       'src/js/data/products.js', // Load products data first
+      'src/js/data/products.ru.js',
+      'src/js/orderComment.js',
       'src/js/helpers.js',
       'src/js/components/*.js',
       'src/js/main.js',
     ])
-    .pipe(babel({
-        presets: ['@babel/env']
-    }))
+    .pipe(babelApp)
     .pipe(concat('main.js'))
-    .pipe(uglify({
-        toplevel: true,
-    }).on('error', notify.onError()))
-    .pipe(dest('dist/js/'))
-}
-
-const htmlPagesMinify = () => {
-  return src('src/pages/**/*.html')
-  .pipe(fileInclude({
-    prefix: '@',
-    basepath: '@file'
-  }))
-  .pipe(htmlMin({
-    collapseWhitespace: true,
-  }))
-  .pipe(dest('dist'))
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(uglifyBundle)
+    .pipe(dest('dist/js/'));
 };
+
+const scriptsBuild = series(scriptsBuildApp, prependIntlTelInputToMainJsTask('dist'));
+
+const htmlPagesMinify = parallel(
+  ...LOCALES.map((locale) => function htmlPagesMinifyLocale() {
+    return pipePagesForLocale(locale)
+      .pipe(htmlMin({
+        collapseWhitespace: true,
+      }))
+      .pipe(dest(distDirForLocale(locale)));
+  })
+);
 
 const generateProductPagesBuild = (cb) => {
   return generateProductPages(cb);
 };
 
-const htmlMinify = () => {
+const htmlMinify = parallel(
+  ...LOCALES.map((locale) => function htmlMinifyLocale() {
     return src('src/*.html')
-    .pipe(fileInclude({
-      prefix: '@',
-      basepath: '@file'
-    }))
-    .pipe(htmlMin({
+      .pipe(fileInclude(fileIncludeOptions(locale)))
+      .pipe(htmlMin({
         collapseWhitespace: true,
-    }))
-    .pipe(dest('dist'))
-};
+      }))
+      .pipe(dest(distDirForLocale(locale)));
+  })
+);
 
 
 const fixShopAssetPathsBuild = (cb) => {
@@ -885,6 +1158,8 @@ const generateProductPagesShop = (cb) => {
   let template = fs.readFileSync(templatePath, 'utf8');
 
   let generatedCount = 0;
+
+  const labels = buildContext('en');
 
   // Generate a page for each product in shopBuild root
   products.forEach(product => {
@@ -946,9 +1221,7 @@ const generateProductPagesShop = (cb) => {
 
     // Handle description
     const description = product.fullDescription || product.description || '';
-    const descriptionHTML = (typeof description === 'string' && description.includes('<p'))
-      ? description
-      : `<p class="text-normal">${description}</p>`;
+    const descriptionHTML = buildProductDescriptionHTML(description);
     pageContent = pageContent.replace(/\{\{PRODUCT_DESCRIPTION\}\}/g, descriptionHTML);
 
     // Handle color options
@@ -1059,7 +1332,7 @@ ${optionItems}
     } else {
       deliveryHTML = `
             <div class="product-detail__delivery">
-              <p class="text-normal"><b>Delivery:</b> Within 24 hours, the service is available across Cyprus after placing your order.</p>
+              <p class="text-normal"><b>${labels.shop_deliveryLabel}</b> ${labels.shop_deliveryDefault}</p>
             </div>`;
     }
     pageContent = pageContent.replace(/\{\{PRODUCT_DELIVERY\}\}/g, deliveryHTML);
@@ -1074,7 +1347,7 @@ ${optionItems}
             <div class="product-detail__payment">
               ${paymentTextHTML}
               <div class="product-detail__payment-methods">
-                <span class="text-normal">Payment methods:</span>
+                <span class="text-normal">${labels.shop_paymentMethods}</span>
                 <img src="./img/shop/revolut.svg" alt="Revolut" class="product-detail__payment-icon"/>
                 <img src="./img/shop/visa.svg" alt="Visa" class="product-detail__payment-icon"/>
                 <img src="./img/shop/mastercard.svg" alt="Mastercard" class="product-detail__payment-icon"/>
@@ -1138,19 +1411,15 @@ ${setupCards}
     // Handle product variants (e.g. robot vacuum model choice) - standalone build
     let variantsHTML = '';
     if (product.variants && Array.isArray(product.variants) && product.variants.length > 0) {
-      const variantLabel = product.variantsLabel || 'Choose a robot vacuum*:';
+      const variantLabel = getVariantLabel(product);
       const variantCards = product.variants.map((v, index) => {
         const isActive = index === 0 ? ' active' : '';
-        const imagePath = (v.image || '').replace(/^\.\.\/img\//, './img/').replace(/^\.\/img\//, './img/');
         const oldPriceHTML = v.oldPrice ? `<span class="product-detail__variant-price-old">${formatProductPrice(v.oldPrice)}</span>` : '';
-        return `                <button type="button" class="product-detail__variant-card${isActive}" data-variant-name="${(v.name || '').replace(/"/g, '&quot;')}" data-variant-id="${v.id || ''}">
-                  <div class="product-detail__variant-image">
-                    <img src="${imagePath}" alt="${(v.name || '').replace(/"/g, '&quot;')}"/>
-                  </div>
+        return `                <button type="button" class="product-detail__variant-card${isActive}" data-variant-name="${(v.name || '').replace(/"/g, '&quot;')}" data-variant-id="${(v.id || v.name || '').replace(/"/g, '&quot;')}">
+${buildVariantImageHTML(v, './img/')}
                   <div class="product-detail__variant-info">
                     <span class="product-detail__variant-name text">${v.name || ''}</span>
-                    <span class="product-detail__variant-include text-normal">incl. install</span>
-                    <div class="product-detail__variant-prices">
+${buildVariantInclInstallHTML(product, labels)}                    <div class="product-detail__variant-prices">
                       ${oldPriceHTML}
                       <span class="product-detail__variant-price text">€ ${(v.price || 0).toFixed(2)}</span>
                     </div>
@@ -1160,8 +1429,7 @@ ${setupCards}
 
       variantsHTML = `
             <div class="product-detail__variants">
-              <label class="text-normal product-detail__variants-label"><b>${variantLabel}</b></label>
-              <div class="product-detail__variant-cards">
+${buildVariantLabelHTML(variantLabel)}              <div class="product-detail__variant-cards">
 ${variantCards}
               </div>
               <input type="hidden" name="VARIANT" id="product-variant" value="${(product.variants[0].id || product.variants[0].name || '').replace(/"/g, '&quot;')}">
@@ -1199,14 +1467,11 @@ ${variantCards}
 
     // Handle "How It Works" section - flexible configuration
     let howItWorksHTML = '';
-    if (product.howItWorksHtml) {
-      // Full HTML override for maximum flexibility
+    if (hasCustomHowItWorksHtml(product)) {
       howItWorksHTML = product.howItWorksHtml;
     } else if (product.howItWorksSteps && Array.isArray(product.howItWorksSteps) && product.howItWorksSteps.length > 0) {
-      // Generate from steps array - more structured approach
       const gridClass = `grid-${product.howItWorksSteps.length}`;
       const stepsHTML = product.howItWorksSteps.map(step => {
-        // Fix image paths for standalone build (use root-relative)
         let imagePath = step.image || './img/shop/delivery.png';
         imagePath = imagePath.replace(/^\.\.\/img\//, './img/').replace(/^\.\/img\//, './img/');
         return `            <div class="product-detail__step">
@@ -1225,8 +1490,7 @@ ${variantCards}
 ${stepsHTML}
           </div>
         </div>`;
-    } else {
-      // Default "How It Works" section
+    } else if (!isHowItWorksDisabled(product)) {
       howItWorksHTML = `
         <div class="product-detail__how-it-works">
           <h2 class="subtitle">HOW IT WORKS</h2>
@@ -1265,68 +1529,20 @@ ${stepsHTML}
     pageContent = pageContent.replace(/\{\{PRODUCT_HOW_IT_WORKS\}\}/g, howItWorksHTML);
 
     // Handle availability
-    const availabilityText = product.available ?  'available' : 'Not available';
+    const availabilityText = product.available ? labels.shop_available : labels.shop_notAvailable;
     pageContent = pageContent.replace(/\{\{PRODUCT_AVAILABILITY\}\}/g, availabilityText);
 
-    // Handle prefilled comment
-    let prefilledComment;
-    if (product.additionalOptions && product.additionalOptions.length > 0) {
-      // Build prefilled comment with default (first) option selections
-      const byName = {};
-      product.additionalOptions.forEach(og => {
-        if (og.values && og.values.length > 0) {
-          byName[og.name] = og.values[0].label;
-        }
-      });
-      const parts = [];
-      if (byName['Insight Color']) parts.push(byName['Insight Color'].toLowerCase() + ' (insight)');
-      if (byName['Urban Color'] && byName['Urban Emotion']) {
-        parts.push(byName['Urban Color'].toLowerCase() + ' (emotion / ' + byName['Urban Emotion'].toLowerCase() + ')');
-      } else if (byName['Urban Color']) {
-        parts.push(byName['Urban Color'].toLowerCase());
-      }
-      if (byName['UV Cover Color']) parts.push(byName['UV Cover Color'].toLowerCase() + ' (protection)');
-      // Generic fallback for products with just Color (e.g. home-server-remote)
-      if (byName['Color'] && !byName['Insight Color']) parts.push(byName['Color'].toLowerCase());
-
-      let optionsText;
-      if (parts.length === 1) optionsText = parts[0];
-      else if (parts.length === 2) optionsText = parts.join(' and ');
-      else optionsText = parts.slice(0, -1).join(', ') + ' and ' + parts[parts.length - 1];
-
-      prefilledComment = `Hello, I would like to order ${product.title} — ${optionsText}. Please contact me.`;
-    } else if (product.variants && product.variants.length > 0 && product.variants[0].name) {
-      prefilledComment = `Hello, I would like to order ${product.variants[0].name} with Installation & Automation. Please contact me.`;
-    } else {
-      prefilledComment = `Hello, I would like to order ${product.title.toLowerCase()}. Please contact me.`;
-    }
+    const prefilledComment = buildPrefilledComment(product, 'en');
     pageContent = pageContent.replace(/\{\{PRODUCT_COMMENT_PREFILL\}\}/g, prefilledComment);
 
     // Handle address field (not used by current products; kept for template compatibility)
     let addressFieldHTML = '';
     pageContent = pageContent.replace(/\{\{PRODUCT_ADDRESS_FIELD\}\}/g, addressFieldHTML);
 
-    // Handle form intro text
-    const formIntroText =
-      'We will contact you within 24 hours. <br> Delivery is available within 24 hours after your request. <br> Payment is made after the service is completed.';
+    const formIntroText = labels.shop_formIntro;
     pageContent = pageContent.replace(/\{\{PRODUCT_FORM_INTRO\}\}/g, formIntroText);
 
-    // Handle quantity selector for products with additionalUnitPrice
-    let quantitySelectorHTML = '';
-    if (product.additionalUnitPrice) {
-      quantitySelectorHTML = `
-            <!-- QUANTITY -->
-            <div>
-              <label class="text-normal">quantity</label>
-              <div class="product-detail__contact-methods">
-                <button type="button" class="product-detail__contact-method active" data-quantity="1">1</button>
-                <button type="button" class="product-detail__contact-method" data-quantity="2">2</button>
-                <button type="button" class="product-detail__contact-method" data-quantity="3">3</button>
-                <button type="button" class="product-detail__contact-method" data-quantity="4+">4+</button>
-              </div>
-              <input type="hidden" name="QUANTITY" id="quantity" value="1">
-            </div>`;
-    }
+    const quantitySelectorHTML = '';
     pageContent = pageContent.replace(/\{\{PRODUCT_QUANTITY_SELECTOR\}\}/g, quantitySelectorHTML);
 
     // Fix template paths for standalone build (../../img -> ./img)
@@ -1345,82 +1561,108 @@ ${stepsHTML}
   cb();
 };
 
-// Process shop HTML pages for standalone build
+// Process shop HTML pages for standalone build (English -> shopBuild root)
 const processShopPages = () => {
-  return src('src/pages/shop/**/*.html')
-    .pipe(fileInclude({
-      prefix: '@',
-      basepath: '@file'
-    }))
+  return src(['src/pages/shop/**/*.html', '!src/pages/shop/ru/**'], { base: 'src/pages/shop' })
+    .pipe(fileInclude(fileIncludeOptions('en')))
     .pipe(htmlMin({
       collapseWhitespace: true,
     }))
     .pipe(dest('shopBuild'));
 };
 
-// Pre-render product cards into shop index (static HTML instead of JS-only)
-const preRenderShopIndex = (cb) => {
-  const shopIndexPath = path.join(__dirname, 'shopBuild', 'index.html');
-  const productsPath = path.join(__dirname, 'src', 'js', 'data', 'products.js');
+// Process Russian shop pages for standalone build (shopBuild/ru).
+// RU product pages come from src/pages/shop/ru/*.html (generated by the main build);
+// the shop index is shared (src/pages/shop/index.html) and rendered with RU strings.
+const processShopPagesRu = () => {
+  return src(['src/pages/shop/index.html', 'src/pages/shop/ru/*.html'], { base: 'src/pages/shop' })
+    .pipe(fileInclude(fileIncludeOptions('ru')))
+    .pipe(rename((filePath) => {
+      const dir = filePath.dirname.replace(/\\/g, '/');
+      if (dir === 'ru') {
+        filePath.dirname = '.';
+      }
+    }))
+    .pipe(htmlMin({
+      collapseWhitespace: true,
+    }))
+    .pipe(dest('shopBuild/ru'));
+};
 
-  if (!fs.existsSync(shopIndexPath) || !fs.existsSync(productsPath)) {
-    return cb();
-  }
+// Pre-render product cards into shop index (static HTML instead of JS-only),
+// localized per locale. EN writes shopBuild/index.html, RU writes shopBuild/ru/index.html.
+function makePreRenderShopIndex(locale) {
+  const taskName = `preRenderShopIndex_${locale}`;
+  const task = (cb) => {
+    const localeDir = locale === 'en' ? 'shopBuild' : path.join('shopBuild', locale);
+    const shopIndexPath = path.join(__dirname, localeDir, 'index.html');
+    const productsPath = path.join(__dirname, 'src', 'js', 'data', 'products.js');
 
-  // Read products data
-  const productsContent = fs.readFileSync(productsPath, 'utf8');
-  const productsMatch = productsContent.match(/const products = (\[[\s\S]*?\]);/);
-  if (!productsMatch) {
-    console.error('Could not parse products data for shop index pre-render.');
-    return cb();
-  }
-
-  let products;
-  try {
-    // Evaluate products array in build context
-    // eslint-disable-next-line no-eval
-    eval(`products = ${productsMatch[1]}`);
-    if (!Array.isArray(products)) {
-      throw new Error('Products is not an array');
+    if (!fs.existsSync(shopIndexPath) || !fs.existsSync(productsPath)) {
+      return cb();
     }
-  } catch (e) {
-    console.error('Error parsing products for shop index pre-render:', e.message);
-    return cb();
-  }
 
-  // Build cards HTML (mirror of productCard.js but static)
-  const cardsHTML = products.map(product => {
-    const isAvailable = product.available;
-    const cardClass = isAvailable ? 'shop-content__card' : 'shop-content__card unavailable';
-    const tagClass = isAvailable ? 'text-normal shop-content__tag' : 'text-normal shop-content__tag shop-content__tag--not-available';
-    const tagText = isAvailable ? 'available' : 'not available';
+    // Read products data
+    const productsContent = fs.readFileSync(productsPath, 'utf8');
+    const productsMatch = productsContent.match(/const products = (\[[\s\S]*?\]);/);
+    if (!productsMatch) {
+      console.error('Could not parse products data for shop index pre-render.');
+      return cb();
+    }
 
-    // Static link to product detail page in shopBuild root
-    const linkHref = isAvailable ? `./${product.slug}.html` : '#';
+    let products;
+    try {
+      // Evaluate products array in build context
+      // eslint-disable-next-line no-eval
+      eval(`products = ${productsMatch[1]}`);
+      if (!Array.isArray(products)) {
+        throw new Error('Products is not an array');
+      }
+    } catch (e) {
+      console.error('Error parsing products for shop index pre-render:', e.message);
+      return cb();
+    }
 
-    // Use first image from images array if available, otherwise fall back to image property
-    const productImageRaw = (product.images && product.images.length > 0)
-      ? product.images[0]
-      : (product.image || './img/shop/card-1.png');
+    const labels = buildContext(locale);
+    const productsRuBySlug = locale === 'ru' ? loadProductsRuBySlug() : {};
 
-    // Normalise image path to ./img/ for standalone build
-    const productImage = productImageRaw
-      .replace(/^\.\.\/img\//, './img/')
-      .replace(/^\.\/img\//, './img/');
+    // Build cards HTML (mirror of productCard.js but static)
+    const cardsHTML = products.map(product => {
+      const ru = productsRuBySlug[product.slug];
+      const title = (ru && ru.title) || product.title;
+      const description = (ru && ru.description) || product.description;
 
-    const oldPriceHTML = product.oldPrice
-      ? `<span class="text shop-content__price-old">${formatProductPrice(product.oldPrice)}</span>`
-      : '';
+      const isAvailable = product.available;
+      const cardClass = isAvailable ? 'shop-content__card' : 'shop-content__card unavailable';
+      const tagClass = isAvailable ? 'text-normal shop-content__tag' : 'text-normal shop-content__tag shop-content__tag--not-available';
+      const tagText = isAvailable ? labels.shop_available : labels.shop_notAvailable;
 
-    return `
+      // Static link to product detail page in the same locale folder
+      const linkHref = isAvailable ? `./${product.slug}.html` : '#';
+
+      // Use first image from images array if available, otherwise fall back to image property
+      const productImageRaw = (product.images && product.images.length > 0)
+        ? product.images[0]
+        : (product.image || './img/shop/card-1.png');
+
+      // Emit ./img/ here; fixShopAssetPathsStandalone rewrites depth per locale
+      const productImage = productImageRaw
+        .replace(/^\.\.\/img\//, './img/')
+        .replace(/^\.\/img\//, './img/');
+
+      const oldPriceHTML = product.oldPrice
+        ? `<span class="text shop-content__price-old">${formatProductPrice(product.oldPrice)}</span>`
+        : '';
+
+      return `
           <div class="${cardClass}">
             <a href="${linkHref}" class="shop-content__link">
               <div class="shop-content__img">
-                <img src="${productImage}" alt="${product.title}"/>
+                <img src="${productImage}" alt="${title}"/>
               </div>
               <div class="shop-content__text">
-                <h3 class="text">${product.title}</h3>
-                <p class="text-normal">${product.description}</p>
+                <h3 class="text">${title}</h3>
+                <p class="text-normal">${description}</p>
                 <div class="shop-content__price">
                   <span class="text shop-content__price-main">${formatProductPrice(product.price)}</span>
                   ${oldPriceHTML}
@@ -1429,38 +1671,118 @@ const preRenderShopIndex = (cb) => {
               <span class="${tagClass}">${tagText}</span>
             </a>
           </div>`;
-  }).join('\n');
+    }).join('\n');
 
-  // Inject into built index.html, replacing the JS placeholder
-  let indexHtml = fs.readFileSync(shopIndexPath, 'utf8');
+    // Inject into built index.html, replacing the JS placeholder
+    let indexHtml = fs.readFileSync(shopIndexPath, 'utf8');
 
-  const containerStart = '<div class="shop-content grid grid-4" id="products-container">';
-  const containerIndex = indexHtml.indexOf(containerStart);
-  if (containerIndex === -1) {
-    console.error('Could not find products container in shop index for pre-render.');
-    return cb();
-  }
+    const containerStart = '<div class="shop-content grid grid-4" id="products-container">';
+    const containerIndex = indexHtml.indexOf(containerStart);
+    if (containerIndex === -1) {
+      console.error('Could not find products container in shop index for pre-render.');
+      return cb();
+    }
 
-  const afterStartIndex = containerIndex + containerStart.length;
-  const closingDivIndex = indexHtml.indexOf('</div>', afterStartIndex);
-  if (closingDivIndex === -1) {
-    console.error('Could not find closing </div> for products container in shop index.');
-    return cb();
-  }
+    const afterStartIndex = containerIndex + containerStart.length;
+    const closingDivIndex = indexHtml.indexOf('</div>', afterStartIndex);
+    if (closingDivIndex === -1) {
+      console.error('Could not find closing </div> for products container in shop index.');
+      return cb();
+    }
 
-  // Replace inner content of products container with static cards
-  const before = indexHtml.substring(0, afterStartIndex);
-  const after = indexHtml.substring(closingDivIndex);
-  indexHtml = `${before}
+    // Replace inner content of products container with static cards
+    const before = indexHtml.substring(0, afterStartIndex);
+    const after = indexHtml.substring(closingDivIndex);
+    indexHtml = `${before}
           ${cardsHTML}
         ${after}`;
 
-  fs.writeFileSync(shopIndexPath, indexHtml, 'utf8');
-  console.log('Pre-rendered product cards into shopBuild/index.html');
-  cb();
-};
+    fs.writeFileSync(shopIndexPath, indexHtml, 'utf8');
+    console.log(`Pre-rendered product cards into ${path.join(localeDir, 'index.html')}`);
+    cb();
+  };
+  Object.defineProperty(task, 'name', { value: taskName });
+  return task;
+}
 
-// Fix asset paths in standalone shop build (everything is at root level)
+const preRenderShopIndex = makePreRenderShopIndex('en');
+const preRenderShopIndexRu = makePreRenderShopIndex('ru');
+
+// Main site pages that live on GitHub Pages (not inside the OpenCart shop)
+const MAIN_SITE_PAGES = 'about-us|why-smart-home|solutions|cyprus-lifestyle|for-construction|contact-us|privacy-policy';
+
+/**
+ * Rewrite paths for a standalone shop page.
+ * EN pages sit at shopBuild root (assetPrefix "./"); RU pages sit in shopBuild/ru
+ * and reference shared assets one level up (assetPrefix "../").
+ */
+function normalizeStandaloneShopHtml(content, { isRu }) {
+  const assetPrefix = isRu ? '../' : './';
+  const siteBase = isRu ? 'https://pinout.cloud/ru/' : 'https://pinout.cloud/';
+
+  // Cross-links to the GitHub Pages site (keep as absolute external links)
+  if (isRu) {
+    content = content.replace(
+      new RegExp(`href="/ru/(${MAIN_SITE_PAGES})"`, 'g'),
+      `href="${siteBase}$1"`
+    );
+  }
+  content = content.replace(
+    new RegExp(`href="/(${MAIN_SITE_PAGES})"`, 'g'),
+    'href="https://pinout.cloud/$1"'
+  );
+  content = content.replace(
+    new RegExp(`href="\\.\\./(${MAIN_SITE_PAGES})"`, 'g'),
+    'href="#contact"'
+  );
+
+  // Product detail links -> sibling .html file in the same locale folder
+  if (isRu) {
+    content = content.replace(/href="\/ru\/shop\/([^"]+)"/g, 'href="./$1.html"');
+  }
+  content = content.replace(/href="\/shop\/([^"]+)"/g, 'href="./$1.html"');
+  content = content.replace(/href="\.\/shop\/([^"]+)"/g, 'href="./$1.html"');
+
+  // Shop index + home links -> local index.html
+  if (isRu) {
+    content = content.replace(/href="\/ru\/shop"/g, 'href="./index.html"');
+    content = content.replace(/href="\/ru\/"/g, 'href="./index.html"');
+    content = content.replace(/href="\/ru"/g, 'href="./index.html"');
+  }
+  content = content.replace(/href="\/shop"/g, 'href="./index.html"');
+  content = content.replace(/href="\.\/shop"/g, 'href="./index.html"');
+  content = content.replace(/href="\/"/g, 'href="./index.html"');
+
+  // Favicon shortcut used in <head>
+  content = content.replace(
+    /href="\/android-icon-192x192\.png"/g,
+    `href="${assetPrefix}img/favicon/android-chrome-192x192.png"`
+  );
+
+  // Shared asset directories: normalize every relative/absolute form to assetPrefix
+  ['styles', 'js', 'img', 'resources'].forEach((dir) => {
+    content = content.replace(
+      new RegExp(`(href|src|content)="(?:\\.\\./)+${dir}/`, 'g'),
+      `$1="${assetPrefix}${dir}/`
+    );
+    content = content.replace(
+      new RegExp(`(href|src|content)="\\./${dir}/`, 'g'),
+      `$1="${assetPrefix}${dir}/`
+    );
+    content = content.replace(
+      new RegExp(`(href|src|content)="/${dir}/`, 'g'),
+      `$1="${assetPrefix}${dir}/`
+    );
+    content = content.replace(
+      new RegExp(`(href|src|content)="${dir}/`, 'g'),
+      `$1="${assetPrefix}${dir}/`
+    );
+  });
+
+  return content;
+}
+
+// Fix asset paths in standalone shop build (EN at root, RU under /ru)
 const fixShopAssetPathsStandalone = (cb) => {
   const shopBuildDir = path.join(__dirname, 'shopBuild');
   if (!fs.existsSync(shopBuildDir)) {
@@ -1472,47 +1794,15 @@ const fixShopAssetPathsStandalone = (cb) => {
     files.forEach(file => {
       const filePath = path.join(dir, file.name);
       if (file.isDirectory()) {
+        if (file.name === 'temp') return;
         processDirectory(filePath);
       } else if (file.isFile() && file.name.endsWith('.html')) {
-        let content = fs.readFileSync(filePath, 'utf8');
-
-        // Fix asset paths to be root-relative (no ../ needed in standalone build)
-        // Handle ../../ paths first (two levels up), then ../ paths (one level up)
-        content = content.replace(/href="\.\.\/\.\.\/styles\//g, 'href="./styles/');
-        content = content.replace(/href="\.\.\/styles\//g, 'href="./styles/');
-        content = content.replace(/href="styles\//g, 'href="./styles/');
-        content = content.replace(/src="\.\.\/\.\.\/js\//g, 'src="./js/');
-        content = content.replace(/src="\.\.\/js\//g, 'src="./js/');
-        content = content.replace(/src="js\//g, 'src="./js/');
-        content = content.replace(/href="\.\.\/\.\.\/img\//g, 'href="./img/');
-        content = content.replace(/href="\.\.\/img\//g, 'href="./img/');
-        content = content.replace(/src="\.\.\/\.\.\/img\//g, 'src="./img/');
-        content = content.replace(/src="\.\.\/img\//g, 'src="./img/');
-        content = content.replace(/href="\.\.\/\.\.\/resources\//g, 'href="./resources/');
-        content = content.replace(/href="\.\.\/resources\//g, 'href="./resources/');
-        content = content.replace(/href="resources\//g, 'href="./resources/');
-
-        // Fix product links to be root-relative (e.g., /shop/product -> ./product.html)
-        content = content.replace(/href="\/shop\/([^"]+)"/g, 'href="./$1.html"');
-        content = content.replace(/href="\.\/shop\/([^"]+)"/g, 'href="./$1.html"');
-
-        // Fix shop index link
-        content = content.replace(/href="\/shop"/g, 'href="./index.html"');
-        content = content.replace(/href="\.\/shop"/g, 'href="./index.html"');
-
-        // Fix navigation links - remove external site links or keep them as-is
-        // Keep contact-us and other pages as external links or remove them
-        content = content.replace(/href="\.\.\/(about-us|why-smart-home|solutions|cyprus-lifestyle|for-construction|contact-us|privacy-policy)"/g, 'href="#contact"');
-
-        // Fix footer image path
-        content = content.replace(/src="\.\.\/img\/decor-legs\.svg"/g, 'src="./img/decor-legs.svg"');
-        content = content.replace(/src="\.\/img\/decor-legs\.svg"/g, 'src="./img/decor-legs.svg"');
-
-        // Fix favicon paths
-        content = content.replace(/href="\/android-icon-192x192\.png"/g, 'href="./img/favicon/android-chrome-192x192.png"');
-        content = content.replace(/href="\.\.\/img\/favicon\//g, 'href="./img/favicon/');
-        content = content.replace(/href="\.\/img\/favicon\//g, 'href="./img/favicon/');
-
+        const rel = path.relative(shopBuildDir, filePath);
+        const isRu = rel.split(path.sep)[0] === 'ru';
+        const content = normalizeStandaloneShopHtml(
+          fs.readFileSync(filePath, 'utf8'),
+          { isRu }
+        );
         fs.writeFileSync(filePath, content, 'utf8');
       }
     });
@@ -1554,23 +1844,23 @@ const processProductsForShop = (cb) => {
 
 // Build scripts for standalone shop
 // Keep only what the shop pages actually need (no secret-code, no dynamic product cards)
-const scriptsShopBuild = () => {
+const scriptsShopBuildApp = () => {
   return src([
-    'src/js/vendor/*.js',              // focus-visible + swiper library
+    ...BUNDLED_VENDOR_JS,
     'src/js/helpers.js',               // Utility functions (stopScroll, getScroll for burger menu)
+    'src/js/orderComment.js',
     'src/js/components/swiper.js',     // Swiper initialisation (shop/product pages)
     'src/js/components/productDetailForm.js', // Product detail form behaviour
     'src/js/main-shop.js',             // Burger menu + navigation (shop-specific)
   ], { allowEmpty: true })
-  .pipe(babel({
-    presets: ['@babel/env']
-  }))
+  .pipe(babelApp)
   .pipe(concat('main.js'))
-  .pipe(uglify({
-    toplevel: true,
-  }).on('error', notify.onError()))
+  .pipe(rename({ suffix: '.min' }))
+  .pipe(uglifyBundle)
   .pipe(dest('shopBuild/js/'));
 };
+
+const scriptsShopBuild = series(scriptsShopBuildApp, prependIntlTelInputToMainJsTask('shopBuild'));
 
 // Clean up temp files after build
 const cleanShopTemp = (cb) => {
@@ -1587,7 +1877,7 @@ const cleanShopTemp = (cb) => {
 
 // Fix JavaScript paths for standalone shop build
 const fixShopJSPaths = (cb) => {
-  const jsPath = path.join(__dirname, 'shopBuild/js/main.js');
+  const jsPath = path.join(__dirname, 'shopBuild/js', MAIN_JS_OUTPUT);
   if (!fs.existsSync(jsPath)) {
     return cb();
   }
@@ -1654,8 +1944,12 @@ const fixShopJSPaths = (cb) => {
 };
 
 // Build styles for standalone shop
-const stylesShopBuild = () => {
-  return src('src/assets/styles/**/*.css')
+const stylesShopBuildMain = () => {
+  return src([
+    'src/assets/styles/**/*.css',
+    '!src/assets/styles/vendor/intlTelInput.min.css',
+    '!src/assets/styles/components/lang-switch.css',
+  ])
     .pipe(concat('main.css'))
     .pipe(rename({
       suffix: '.min'
@@ -1669,6 +1963,30 @@ const stylesShopBuild = () => {
     }))
     .pipe(dest('shopBuild/styles/'));
 };
+
+const appendShopLangSwitchCss = (cb) => {
+  const outputPath = path.join(__dirname, 'shopBuild', 'styles', 'main.min.css');
+  const langSwitchPath = path.join(
+    __dirname,
+    'src',
+    'assets',
+    'styles',
+    'components',
+    'lang-switch.css'
+  );
+
+  if (fs.existsSync(outputPath) && fs.existsSync(langSwitchPath)) {
+    const css = fs.readFileSync(langSwitchPath, 'utf8');
+    fs.appendFileSync(outputPath, `\n/* language switch */\n${css}`, 'utf8');
+  }
+  cb();
+};
+
+const stylesShopBuild = series(
+  stylesShopBuildMain,
+  appendIntlTelInputToMainCssTask('shopBuild'),
+  appendShopLangSwitchCss
+);
 
 // Copy shop images for standalone build
 const shopImages = () => {
@@ -1696,6 +2014,12 @@ const shopGifs = () => {
     'src/assets/img/shop/**/*.gif',
   ])
   .pipe(dest('shopBuild/img/shop'));
+};
+
+// Copy flag sprites for intl-tel-input country dropdown
+const shopFlags = () => {
+  return src('src/assets/img/flags/**/*.png', { allowEmpty: true })
+    .pipe(dest('shopBuild/img/flags'));
 };
 
 // Copy shared images needed by shop (logos, decor, etc.)
@@ -1733,8 +2057,9 @@ exports['build:shop'] = series(
   cleanShop,
   generateProductPagesShop,
   processShopPages,
+  processShopPagesRu,
   preRenderShopIndex,
-  fixShopAssetPathsStandalone,
+  preRenderShopIndexRu,
   processProductsForShop,
   scriptsShopBuild,
   fixShopJSPaths,
@@ -1742,9 +2067,12 @@ exports['build:shop'] = series(
   stylesShopBuild,
   shopImages,
   shopGifs,
+  shopFlags,
   shopSharedImages,
   shopFavicons,
-  shopResources
+  shopResources,
+  fixShopAssetPathsStandalone
 );
 
-exports.build = series(clean, resources, docs, generateProductPagesBuild, htmlMinify, htmlPagesMinify, fixShopAssetPathsBuild, scriptsBuild, stylesBuild, minImages, svgSprites)
+exports['build:shop:styles'] = stylesShopBuild;
+exports.build = series(clean, resources, docs, generateProductPagesBuild, htmlMinify, htmlPagesMinify, scriptsBuild, stylesBuild, minImages, fixAssetPaths, svgSprites)

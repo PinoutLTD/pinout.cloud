@@ -67,7 +67,7 @@
   line-height: 1;
   font-weight: 700;
   font-variation-settings: 'GRAD' 132, 'wdth' 148;
-  color: var(--color-grey)
+  color: var(--color-grey);
 }
 
 .about-us__certificate {
@@ -135,7 +135,6 @@
 
 .about-us-next__layout {
   align-items: start;
-
 }
 
 .about-us-next__content {
@@ -184,6 +183,7 @@
   line-height: 1.2;
   font-weight: 650;
   font-variation-settings: 'GRAD' 132, 'wdth' 148;
+  hyphens: auto;
 }
 
 .about-us-rocket {
@@ -193,16 +193,13 @@
   max-width: 850px;
   transform: translateX(-50%);
   opacity: 0;
-
 }
 
 .about-us-rocket.landing {
   animation: landing 5s forwards linear 0.3s;
 }
 
-
 @media screen and (max-width: 990px) {
-
   .about-us {
     margin-bottom: 0;
   }
@@ -218,7 +215,6 @@
 
   .about-us-more__right {
     max-width: 368px;
-
   }
 
   .about-us-more__lens {
@@ -241,7 +237,6 @@
 }
 
 @media screen and (max-width: 860px) {
-
   .about-us-next__content {
     grid-column: 1/2;
   }
@@ -251,9 +246,7 @@
   }
 }
 
-
 @media screen and (max-width: 720px) {
-
   .about-us-more__right {
     justify-self: center;
     min-height: 450px;
@@ -283,8 +276,7 @@
 }
 
 @media screen and (max-width: 540px) {
-
-  .about-us__creds-left  {
+  .about-us__creds-left {
     background: none;
   }
 
@@ -313,14 +305,12 @@
   .about-us-more__mit,
   .about-us-more__map,
   .about-us-more__hackathon,
-  .about-us-more__right-img
-   {
+  .about-us-more__right-img {
     display: none;
   }
 }
 
 @media screen and (max-width: 395px) {
-
   .about-us__title {
     margin-bottom: var(--space);
   }

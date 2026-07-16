@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@htmlLang">
   @include('../partials/head.html', {
-    "pageTitle": "Privacy Policy / Pinout",
+    "pageTitle": "@meta_privacyPolicyTitle",
   })
 <body>
   <!-- website header -->
@@ -11,135 +11,95 @@
   <main>
     <section class="privacy-policy">
       <div class="layout">
-        <h1 class="page-title">Privacy Policy</h1>
-        <div class="text-small text-normal-light privacy-policy__update">Last Updated: <b>February 2025</b></div>
+        <h1 class="page-title">@privacyPolicy_heading</h1>
+        <div class="text-small text-normal-light privacy-policy__update">@privacyPolicy_lastUpdated <b>@privacyPolicy_lastUpdatedDate</b></div>
         <div class="privacy-policy__content">
           <ol class="list list--ordered text-normal">
             <li class="list__item list__item--ol">
-              <h2 class="subtitle">Introduction</h2>
-              <p class="text-normal">Welcome to Pinout.Cloud ("we," "our," or "us"). Your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your information when you visit our website [pinout.cloud].</p>
+              <h2 class="subtitle">@privacyPolicy_s1Title</h2>
+              <p class="text-normal">@privacyPolicy_s1Text</p>
             </li>
             <li class="list__item list__item--ol">
-              <h2 class="subtitle">Information We Collect</h2>
-              <p class="text-normal">We collect the following types of information:</p>
+              <h2 class="subtitle">@privacyPolicy_s2Title</h2>
+              <p class="text-normal">@privacyPolicy_s2Intro</p>
               <ul class="list list--unordered">
-                <li class="list__item">
-                  <b>Personal Data</b>: Name, email, phone number, etc., when voluntarily provided by you.
-                </li>
-                <li class="list__item">
-                  <b>Usage Data</b>: Pages visited, time spent on the site, and interactions
-                </li>
-                <li class="list__item">
-                  <b>Tracking Data</b>: We use cookies, Google Analytics, and UTM parameters to track visitor behavior and improve our services.
-                </li>
+                <li class="list__item">@privacyPolicy_s2Li1</li>
+                <li class="list__item">@privacyPolicy_s2Li2</li>
+                <li class="list__item">@privacyPolicy_s2Li3</li>
               </ul>
             </li>
             <li class="list__item list__item--ol">
-              <h2 class="subtitle">How We Use Your Information</h2>
-              <p class="text-normal">We use the collected data to:</p>
+              <h2 class="subtitle">@privacyPolicy_s3Title</h2>
+              <p class="text-normal">@privacyPolicy_s3Intro</p>
               <ul class="list list--unordered">
-                <li class="list__item">
-                  Improve website functionality and user experience.
-                </li>
-                <li class="list__item">
-                  Analyze traffic and marketing effectiveness.
-                </li>
-                <li class="list__item">
-                  Respond to your inquiries and provide customer support.
-                </li>
-                <li class="list__item">
-                  Comply with legal obligations under European regulations.
-                </li>
+                <li class="list__item">@privacyPolicy_s3Li1</li>
+                <li class="list__item">@privacyPolicy_s3Li2</li>
+                <li class="list__item">@privacyPolicy_s3Li3</li>
+                <li class="list__item">@privacyPolicy_s3Li4</li>
               </ul>
             </li>
             <li class="list__item list__item--ol">
-              <h2 class="subtitle">Tracking Technologies</h2>
-              <p class="text-normal">We use cookies, localStorage and tracking technologies to analyze user behavior. You can manage or disable it below. We also comply with <b>GDPR</b> by obtaining user consent before tracking.</p>
+              <h2 class="subtitle">@privacyPolicy_s4Title</h2>
+              <p class="text-normal">@privacyPolicy_s4Text</p>
 
               <div class="privacy-policy__change-preference">
-                <p>Update Consent:</p>
-                <button class="privacy-policy__add-btn underline" onclick="acceptCookies()">Add</button>
-                <button class="privacy-policy__remove-btn hide underline"  onclick="declineCookies()">Remove</button>
+                <p>@privacyPolicy_s4ConsentLabel</p>
+                <button class="privacy-policy__add-btn underline" onclick="acceptCookies()">@privacyPolicy_s4Add</button>
+                <button class="privacy-policy__remove-btn hide underline"  onclick="declineCookies()">@privacyPolicy_s4Remove</button>
               </div>
             </li>
             <li class="list__item list__item--ol">
-              <h2 class="subtitle">Google Analytics & UTM Tracking</h2>
-              <p class="text-normal">We use <a href="https://marketingplatform.google.com/about/analytics/" class="underline" aria-label="learn more about Google Analytics" target="_blank">Google Analytics</a> to collect anonymized data about website visits. This includes UTM parameters to track campaign performance. IP anonymization is enabled to comply with GDPR regulations.</p>
+              <h2 class="subtitle">@privacyPolicy_s5Title</h2>
+              <p class="text-normal">@privacyPolicy_s5BeforeLink <a href="https://marketingplatform.google.com/about/analytics/" class="underline" aria-label="@privacyPolicy_s5GaAria" target="_blank">@privacyPolicy_s5LinkText</a> @privacyPolicy_s5AfterLink</p>
             </li>
             <li class="list__item list__item--ol">
-              <h2 class="subtitle">Your Rights (GDPR & European Compliance)</h2>
-              <p class="text-normal">Under the <b>General Data Protection Regulation (GDPR)</b> and other European privacy laws, you have the following rights:</p>
+              <h2 class="subtitle">@privacyPolicy_s6Title</h2>
+              <p class="text-normal">@privacyPolicy_s6Intro</p>
               <ul class="list list--unordered">
-                <li class="list__item">
-                  <b>Access</b>: Request a copy of the personal data we hold.
-                </li>
-                <li class="list__item">
-                  <b>Correction</b>: Request corrections to inaccurate data.
-                </li>
-                <li class="list__item">
-                  <b>Deletion</b>: Request data erasure ("right to be forgotten").
-                </li>
-                <li class="list__item">
-                  <b>Objection</b>: Opt-out of tracking and data collection.
-                </li>
-                <li class="list__item">
-                  <b>Data Portability: </b>: Request a structured, machine-readable copy of your data.
-                </li>
-                <li class="list__item">
-                  <b>Restriction of Processing</b>: Request a temporary halt to data processing under certain conditions.
-                </li>
-                <li class="list__item">
-                  <b>Lodge a Complaint</b>: File a complaint with a data protection authority if your rights are violated.
-                </li>
+                <li class="list__item">@privacyPolicy_s6Li1</li>
+                <li class="list__item">@privacyPolicy_s6Li2</li>
+                <li class="list__item">@privacyPolicy_s6Li3</li>
+                <li class="list__item">@privacyPolicy_s6Li4</li>
+                <li class="list__item">@privacyPolicy_s6Li5</li>
+                <li class="list__item">@privacyPolicy_s6Li6</li>
+                <li class="list__item">@privacyPolicy_s6Li7</li>
               </ul>
 
-              <p class="text-normal">To exercise your rights, contact us at <a aria-label="email us vm@pinout.cloud" class="underline" href="mailto:vm@pinout.cloud">vm@pinout.cloud</a>.</p>
+              <p class="text-normal">@privacyPolicy_s6ContactBefore <a aria-label="@privacyPolicy_s6EmailAria" class="underline" href="mailto:vm@pinout.cloud">vm@pinout.cloud</a>.</p>
             </li>
             <li class="list__item list__item--ol">
-              <h2 class="subtitle">Legal Basis for Processing (EU Users)</h2>
-              <p class="text-normal">For users in the European Economic Area (EEA), we process personal data based on the following legal grounds:</p>
+              <h2 class="subtitle">@privacyPolicy_s7Title</h2>
+              <p class="text-normal">@privacyPolicy_s7Intro</p>
               <ul class="list list--unordered">
-                <li class="list__item">
-                  <b>Consent</b>: When you give explicit consent.
-                </li>
-                <li class="list__item">
-                  <b>Legitimate Interest</b>: For improving services and security.
-                </li>
-                <li class="list__item">
-                  <b>Contractual Necessity</b>: When processing is necessary for providing services.
-                </li>
-                <li class="list__item">
-                  <b>Legal Obligations</b>: When required by law.
-                </li>
+                <li class="list__item">@privacyPolicy_s7Li1</li>
+                <li class="list__item">@privacyPolicy_s7Li2</li>
+                <li class="list__item">@privacyPolicy_s7Li3</li>
+                <li class="list__item">@privacyPolicy_s7Li4</li>
               </ul>
             </li>
             <li class="list__item list__item--ol">
-              <h2 class="subtitle">Third-Party Services</h2>
-              <p class="text-normal">We may use third-party services like <a href="https://marketingplatform.google.com/about/analytics/" class="underline" aria-label="learn more about Google Analytics" target="_blank">Google Analytics</a>. These services have their own privacy policies, which we encourage you to review.</p>
+              <h2 class="subtitle">@privacyPolicy_s8Title</h2>
+              <p class="text-normal">@privacyPolicy_s8BeforeLink <a href="https://marketingplatform.google.com/about/analytics/" class="underline" aria-label="@privacyPolicy_s5GaAria" target="_blank">@privacyPolicy_s5LinkText</a>@privacyPolicy_s8AfterLink</p>
             </li>
             <li class="list__item list__item--ol">
-              <h2 class="subtitle">Data Security</h2>
-              <p class="text-normal">We implement security measures to protect your data from unauthorized access or breaches.</p>
+              <h2 class="subtitle">@privacyPolicy_s9Title</h2>
+              <p class="text-normal">@privacyPolicy_s9Text</p>
             </li>
             <li class="list__item list__item--ol">
-              <h2 class="subtitle">International Data Transfers</h2>
-              <p class="text-normal">If we transfer your data outside the European Economic Area (EEA), we ensure appropriate safeguards such as:</p>
+              <h2 class="subtitle">@privacyPolicy_s10Title</h2>
+              <p class="text-normal">@privacyPolicy_s10Intro</p>
               <ul class="list list--unordered">
-                <li class="list__item">
-                  Standard Contractual Clauses (SCCs) approved by the European Commission.
-                </li>
-                <li class="list__item">
-                  Compliance with recognized data protection frameworks.
-                </li>
+                <li class="list__item">@privacyPolicy_s10Li1</li>
+                <li class="list__item">@privacyPolicy_s10Li2</li>
               </ul>
             </li>
             <li class="list__item list__item--ol">
-              <h2 class="subtitle">Changes to This Policy</h2>
-              <p class="text-normal">We may update this Privacy Policy from time to time. Any changes will be posted on this page with a revised "Last Updated" date.</p>
+              <h2 class="subtitle">@privacyPolicy_s11Title</h2>
+              <p class="text-normal">@privacyPolicy_s11Text</p>
             </li>
             <li class="list__item list__item--ol">
-              <h2 class="subtitle">Contact Us</h2>
-              <p class="text-normal"> If you have any questions about this Privacy Policy, please contact us in any <a href="./contact-us" class="underline" aria-label="contact us anywhere you like">preferable way</a></p>
+              <h2 class="subtitle">@privacyPolicy_s12Title</h2>
+              <p class="text-normal">@privacyPolicy_s12BeforeLink <a href="@localePrefix/contact-us" class="underline" aria-label="@privacyPolicy_s12ContactAria">@privacyPolicy_s12LinkText</a></p>
             </li>
           </ol>
         </div>
@@ -169,4 +129,3 @@
   });
 
 </script>
-

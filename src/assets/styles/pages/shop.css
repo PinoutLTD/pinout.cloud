@@ -417,6 +417,43 @@
   object-fit: contain;
 }
 
+/* IKEA-style variant icons: black when idle, white on active (blue) card */
+.product-detail__variant-image--icons {
+  position: relative;
+  flex-shrink: 0;
+  width: 76px;
+  height: 48px;
+  padding: 4px 6px;
+  background: transparent;
+  overflow: hidden;
+}
+
+.product-detail__variant-image--icons .product-detail__variant-icon {
+  position: absolute;
+  inset: 4px 6px;
+  width: calc(100% - 12px);
+  height: calc(100% - 8px);
+  max-width: none;
+  max-height: none;
+  margin: auto;
+  object-fit: contain;
+  object-position: center;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.product-detail__variant-icon--active {
+  opacity: 0;
+}
+
+.product-detail__variant-card.active .product-detail__variant-icon--inactive {
+  opacity: 0;
+}
+
+.product-detail__variant-card.active .product-detail__variant-icon--active {
+  opacity: 1;
+}
+
 .product-detail__variant-info {
   display: flex;
   flex-direction: column;
@@ -471,6 +508,9 @@
 }
 
 .product-detail__description {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--space) * 0.65);
   font-size: 18px;
   line-height: 1.65;
   color: rgba(0, 0, 0, 0.82);
@@ -480,23 +520,13 @@
   margin: 0;
 }
 
-.product-detail__description br {
-  content: "";
-  display: block;
-  margin-bottom: calc(var(--space) * 0.55);
-}
-
 .product-detail__description b {
   color: var(--color-dark);
+  font-weight: 600;
 }
 
 .product-detail__description .product-detail__desc-heading {
-  margin-top: calc(var(--space) * 0.8);
-  margin-bottom: calc(var(--space) * 0.3);
-}
-
-.product-detail__description .product-detail__desc-heading b {
-  font-weight: 600;
+  margin-top: calc(var(--space) * 0.35);
 }
 
 .product-detail__description .product-detail__desc-heading:first-child {
@@ -504,7 +534,14 @@
 }
 
 .product-detail__description .product-detail__desc-lead {
-  margin-bottom: calc(var(--space) * 0.6);
+  font-size: 19px;
+}
+
+/* Optional line breaks still inside one paragraph */
+.product-detail__description p br {
+  display: block;
+  margin-bottom: calc(var(--space) * 0.4);
+  content: '';
 }
 
 .product-detail__features {

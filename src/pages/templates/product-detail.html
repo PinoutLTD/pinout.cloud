@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@htmlLang">
   @include('../../partials/head.html', { "pageTitle": "{{PRODUCT_TITLE}} / Pinout" })
   <body>
     <!-- website header -->
@@ -8,49 +8,28 @@
     <main class="product-detail">
       <section class="product-detail-section">
         <div class="layout">
-          <!-- Breadcrumbs -->
-          <nav class="product-detail__breadcrumbs" aria-label="Breadcrumb">
+          <nav class="product-detail__breadcrumbs" aria-label="@shop_breadcrumbAria">
             <ol class="product-detail__breadcrumbs-list">
               <li class="product-detail__breadcrumbs-item text">
-                <a href="./index.html" class="product-detail__breadcrumbs-link"
-                  >Shop</a
-                >
+                <a href="./index.html" class="product-detail__breadcrumbs-link">@shop_breadcrumb</a>
               </li>
-              <li
-                class="product-detail__breadcrumbs-item text"
-                aria-current="page"
-              >
-                <span class="product-detail__breadcrumbs-current"
-                  >{{PRODUCT_TITLE}}</span
-                >
+              <li class="product-detail__breadcrumbs-item text" aria-current="page">
+                <span class="product-detail__breadcrumbs-current">{{PRODUCT_TITLE}}</span>
               </li>
             </ol>
           </nav>
-          <!-- Product Overview Section -->
           <div class="grid grid-2 product-detail__overview">
-            <!-- Product Image Slider -->
             <div class="product-detail__gallery">
               <div class="product-detail__gallery-wrapper">
-                <!-- Thumbnails with Navigation -->
                 <div class="product-detail__thumbs-wrapper">
                   <div class="swiper product-detail__thumbs">
                     <div class="swiper-wrapper">{{PRODUCT_IMAGES_THUMBS}}</div>
                   </div>
-                  <!-- Navigation buttons for main swiper -->
                   <div class="product-detail__swiper-navigation">
-                    <button
-                      type="button"
-                      class="product-detail__swiper-button-prev"
-                      aria-label="Previous slide"
-                    ></button>
-                    <button
-                      type="button"
-                      class="product-detail__swiper-button-next"
-                      aria-label="Next slide"
-                    ></button>
+                    <button type="button" class="product-detail__swiper-button-prev" aria-label="@shop_prevSlide"></button>
+                    <button type="button" class="product-detail__swiper-button-next" aria-label="@shop_nextSlide"></button>
                   </div>
                 </div>
-                <!-- Main Swiper -->
                 <div class="swiper product-detail__swiper">
                   <div class="swiper-wrapper">{{PRODUCT_IMAGES_SLIDES}}</div>
                   <div class="swiper-pagination"></div>
@@ -58,253 +37,99 @@
               </div>
             </div>
 
-            <!-- Product Info -->
             <div class="product-detail__info">
               <div class="product-detail__header">
                 <h1 class="page-title">{{PRODUCT_TITLE}}</h1>
-                <span class="text-normal product-detail__availability-tag"
-                  >{{PRODUCT_AVAILABILITY}}</span
-                >
+                <span class="text-normal product-detail__availability-tag">{{PRODUCT_AVAILABILITY}}</span>
               </div>
 
               <div class="product-detail__price">
-                <span class="text product-detail__price-main"
-                  >{{PRODUCT_PRICE}}</span
-                >
+                <span class="text product-detail__price-main">{{PRODUCT_PRICE}}</span>
                 {{PRODUCT_OLD_PRICE}}
-                <span class="text-normal product-detail__tax">*Tax incl.</span>
+                <span class="text-normal product-detail__tax">@shop_taxIncl</span>
               </div>
 
               {{PRODUCT_ADDITIONAL_PRICING}}
-
-              <div class="product-detail__description">
-                {{PRODUCT_DESCRIPTION}}
-              </div>
-
+              <div class="product-detail__description">{{PRODUCT_DESCRIPTION}}</div>
               {{PRODUCT_WARNING}}
               {{PRODUCT_DELIVERY}}
               {{PRODUCT_SERVICE_SUMMARY}}
               {{PRODUCT_PAYMENT}} {{PRODUCT_SETUP}} {{PRODUCT_VARIANTS}} {{PRODUCT_COLOR_OPTIONS}} {{PRODUCT_ADDITIONAL_OPTIONS}}
 
               <div class="product-detail__actions">
-                <a
-                  href="#product-form"
-                  class="text button product-detail__order-btn"
-                  data-product="{{PRODUCT_TITLE}}"
-                  >ORDER NOW</a
-                >
+                <a href="#product-form" class="text button product-detail__order-btn" data-product="{{PRODUCT_TITLE}}">@shop_orderNow</a>
               </div>
             </div>
           </div>
 
-          <!-- What's Included & Benefits Section -->
           <div class="product-detail__features-benefits grid grid-2">
-            <!-- What's Included -->
             <div class="product-detail__whats-included">
-              <h2 class="subtitle">WHAT'S INCLUDED?</h2>
-              <ul class="product-detail__features-list">
-                {{PRODUCT_FEATURES}}
-              </ul>
+              <h2 class="subtitle">@shop_whatsIncluded</h2>
+              <ul class="product-detail__features-list">{{PRODUCT_FEATURES}}</ul>
             </div>
-
-            <!-- Benefits -->
             <div class="product-detail__benefits">
-              <h2 class="subtitle">BENEFITS:</h2>
-              <ul class="product-detail__features-list">
-                {{PRODUCT_BENEFITS}}
-              </ul>
+              <h2 class="subtitle">@shop_benefits</h2>
+              <ul class="product-detail__features-list">{{PRODUCT_BENEFITS}}</ul>
             </div>
           </div>
 
-          <!-- How It Works Section -->
           {{PRODUCT_HOW_IT_WORKS}}
-
-          <!-- Optional extra sections for specific products (e.g. Home Server) -->
           {{PRODUCT_EXTRA_SECTIONS}}
 
-          <!-- Contact Form Section -->
-          <div
-            class="grid-2 product-detail__form-section grid"
-            id="product-form"
-          >
+          <div class="grid-2 product-detail__form-section grid" id="product-form">
             <div class="product-detail__form-header">
-              <h2 class="page-title">Submit your request</h2>
-              <p class="text-normal product-detail__form-intro">
-                {{PRODUCT_FORM_INTRO}}
-              </p>
+              <h2 class="page-title">@shop_formTitle</h2>
+              <p class="text-normal product-detail__form-intro">{{PRODUCT_FORM_INTRO}}</p>
             </div>
 
-            <form
-              class="product-detail__form"
-              action="https://cloud.us17.list-manage.com/subscribe/post?u=e4dba595a375a9f342a2436aa&amp;id=35b2cf1c49&amp;f_id=00561be3f0"
-              method="post"
-              target="_blank"
-              id="mc-embedded-subscribe-form"
-              name="mc-embedded-subscribe-form"
-            >
-              <!-- EMAIL (hidden - generated from phone, Mailchimp requires EMAIL) -->
+            <form class="product-detail__form" action="https://cloud.us17.list-manage.com/subscribe/post?u=e4dba595a375a9f342a2436aa&amp;id=35b2cf1c49&amp;f_id=00561be3f0" method="post" target="_blank" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form">
               <input type="hidden" name="EMAIL" id="mce-EMAIL" value="" />
-
-              <!-- NAME -->
               <div>
-                <input
-                  type="text"
-                  name="NAME"
-                  id="mce-NAME"
-                  class="contacts-form__input"
-                  placeholder="your name"
-                />
+                <input type="text" name="NAME" id="mce-NAME" class="contacts-form__input" placeholder="@shop_namePlaceholder" />
               </div>
-
-              <!-- PHONE -->
               <div>
-                <input
-                  type="tel"
-                  name="PHONE"
-                  id="mce-PHONE"
-                  class="contacts-form__input"
-                  placeholder="your phone number*"
-                  required
-                />
+                <input type="tel" id="phone-input" class="contacts-form__input" placeholder="@shop_phonePlaceholder" required />
+                <input type="hidden" name="PHONE" id="mce-PHONE" value="" />
               </div>
-
-              <!-- ADDRESS (only for home-server) -->
               {{PRODUCT_ADDRESS_FIELD}}
-
-              <!-- CONTACT METHOD -->
               <div>
-                <label class="text-normal">your preferred contact method</label>
+                <label class="text-normal">@shop_contactMethodLabel</label>
                 <div class="product-detail__contact-methods">
-                  <button
-                    type="button"
-                    class="product-detail__contact-method"
-                    data-method="telegram"
-                  >
-                    telegram
-                  </button>
-                  <button
-                    type="button"
-                    class="product-detail__contact-method"
-                    data-method="whatsapp"
-                  >
-                    whatsapp
-                  </button>
-                  <button
-                    type="button"
-                    class="product-detail__contact-method active"
-                    data-method="sms"
-                  >
-                    sms
-                  </button>
-                  <button
-                    type="button"
-                    class="product-detail__contact-method"
-                    data-method="call"
-                  >
-                    call mobile
-                  </button>
+                  <button type="button" class="product-detail__contact-method" data-method="telegram">@shop_telegram</button>
+                  <button type="button" class="product-detail__contact-method" data-method="whatsapp">@shop_whatsapp</button>
+                  <button type="button" class="product-detail__contact-method active" data-method="sms">@shop_sms</button>
+                  <button type="button" class="product-detail__contact-method" data-method="call">@shop_callMobile</button>
                 </div>
-                <input
-                  type="hidden"
-                  name="TYPE"
-                  id="contact-method"
-                  value="sms"
-                />
+                <input type="hidden" name="TYPE" id="contact-method" value="sms" />
               </div>
-
-              <!-- LANGUAGE -->
               <div>
-                <label class="text-normal">select language</label>
+                <label class="text-normal">@shop_languageLabel</label>
                 <div class="product-detail__contact-methods">
-                  <button
-                    type="button"
-                    class="product-detail__contact-method active"
-                    data-lang="English"
-                  >
-                    English
-                  </button>
-                  <button
-                    type="button"
-                    class="product-detail__contact-method"
-                    data-lang="Russian"
-                  >
-                    Russian
-                  </button>
+                  <button type="button" class="product-detail__contact-method active" data-lang="English">@shop_languageEn</button>
+                  <button type="button" class="product-detail__contact-method" data-lang="Russian">@shop_languageRu</button>
                 </div>
-                <input
-                  type="hidden"
-                  name="LANGUAGE"
-                  id="language"
-                  value="English"
-                />
+                <input type="hidden" name="LANGUAGE" id="language" value="English" />
               </div>
-
               {{PRODUCT_QUANTITY_SELECTOR}}
-
-              <!-- COMMENT -->
               <div>
-                <textarea
-                  name="COMMENT"
-                  id="mce-COMMENT"
-                  class="product-detail__textarea contacts-form__input contacts-form__textarea"
-                  placeholder="your message (optional)"
-                  maxlength="250"
-                >{{PRODUCT_COMMENT_PREFILL}}</textarea>
+                <textarea name="COMMENT" id="mce-COMMENT" class="product-detail__textarea contacts-form__input contacts-form__textarea" placeholder="@shop_messagePlaceholder" maxlength="250">{{PRODUCT_COMMENT_PREFILL}}</textarea>
               </div>
-
-              <!-- TERMS -->
               <div>
-                <label
-                  class="checkbox subfield contacts-form__checkbox contacts__checkbox custom-checkbox"
-                  for="gdpr96449"
-                >
-                  <input
-                    type="checkbox"
-                    id="gdpr_96449"
-                    name="gdpr[96449]"
-                    class="gdpr custom-checkbox__field"
-                    value="Y"
-                    required
-                  />
-                  <span class="custom-checkbox__content text-normal">
-                    I accept the Terms & Conditions
-                  </span>
+                <label class="checkbox subfield contacts-form__checkbox contacts__checkbox custom-checkbox" for="gdpr96449">
+                  <input type="checkbox" id="gdpr_96449" name="gdpr[96449]" class="gdpr custom-checkbox__field" value="Y" required />
+                  <span class="custom-checkbox__content text-normal">@shop_termsLabel</span>
                 </label>
               </div>
-
-              <!-- PRODUCT -->
               <input type="hidden" name="PRODUCT" value="{{PRODUCT_TITLE}}" />
-
-              <!-- COLOR -->
               {{PRODUCT_COLOR_INPUT}}
-
-              <!-- ADDITIONAL OPTIONS -->
               {{PRODUCT_ADDITIONAL_OPTIONS_INPUTS}}
-
               <input type="hidden" name="REQUEST" value="new product" />
-
-              <!-- TAG -->
               <input type="hidden" name="tags" value="8329957, order" />
-
-              <!-- HONEYPOT -->
               <div style="position: absolute; left: -5000px" aria-hidden="true">
-                <input
-                  type="text"
-                  name="b_e4dba595a375a9f342a2436aa_35b2cf1c49"
-                  tabindex="-1"
-                  value=""
-                />
+                <input type="text" name="b_e4dba595a375a9f342a2436aa_35b2cf1c49" tabindex="-1" value="" />
               </div>
-
-              <!-- SUBMIT -->
               <div class="contacs-form__btn-wrapper">
-                <button
-                  type="submit"
-                  name="subscribe"
-                  class="contacts-form__btn button link-font link-with-arrow link"
-                >
-                  submit
-                </button>
+                <button type="submit" name="subscribe" class="contacts-form__btn button link-font link-with-arrow link">@shop_submit</button>
               </div>
             </form>
           </div>
@@ -312,7 +137,6 @@
       </section>
     </main>
 
-    <!-- website footer -->
     @include('../../partials/footer.html')
   </body>
 </html>

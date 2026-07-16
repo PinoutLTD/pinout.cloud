@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@htmlLang">
   @include('../partials/head.html', {
-    "pageTitle": "Page not found / Pinout",
+    "pageTitle": "@meta_notFoundTitle",
   })
 <body>
   <!--  website header -->
@@ -11,16 +11,16 @@
     <section class="page-404">
       <div class="layout page-404__layout">
         <div class="page-404__terminal">
-          <img src="./img/404-terminal.svg" alt="" aria-hidden="true"/>
+          <img src="/img/404-terminal.svg" alt="" aria-hidden="true"/>
         </div>
         <p class="text text-with-bg text page-404__text-with-bg">
-          <span>Oops! It seems this page does not exist. </span><br/>
-          <span>Check and fix the URL address or return to <br/>  the homepage and try again.</span>
+          <span>@notFound_line1</span><br/>
+          <span>@notFound_line2</span>
         </p>
-        <a href="/" aria-label="go to home page" class="link-font underline link-with-arrow page-404__link"> return to the home page </a>
+        <a href="@localePrefix/" aria-label="@notFound_homeAria" class="link-font underline link-with-arrow page-404__link">@notFound_homeLink</a>
       </div>
 
-      <img class="page-404__img" src="./img/home-banner.png" alt="" aria-hidden="true"/>
+      <img class="page-404__img" src="/img/home-banner.png" alt="" aria-hidden="true"/>
     </section>
   </main>
 

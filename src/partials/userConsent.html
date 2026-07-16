@@ -1,20 +1,20 @@
 <!-- getting user consent for utm -->
 
 <div id="cookie-consent-banner" class="text-normal">
-  <p>We use cookies.</p>
+  <p>@cookies_title</p>
   <p>
-    Learn more in our
-    <a href="/privacy-policy" target="_blank" style="color: #175973"
-      >Privacy Policy</a
+    @cookies_learnMore
+    <a href="@localePrefix/privacy-policy" target="_blank" style="color: #175973"
+      >@cookies_privacyPolicy</a
     >.
   </p>
   <div class="cookie-consent-banner__agreement text-normal">
-    <p>Would you like to allow us to collect analytics data?</p>
+    <p>@cookies_analyticsQuestion</p>
     <button class="text-normal underline" onclick="acceptCookies()">
-      Accept
+      @cookies_accept
     </button>
     <button class="text-normal underline" onclick="declineCookies()">
-      Decline
+      @cookies_decline
     </button>
   </div>
 </div>

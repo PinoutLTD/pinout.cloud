@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@htmlLang">
   @include('../partials/head.html', {
-    "pageTitle": "Why smart home / Pinout",
+    "pageTitle": "@meta_whySmartHomeTitle",
   })
 <body>
   <!--  website header -->
@@ -10,19 +10,18 @@
   <main>
     <section class="why-smart-home">
       <div class="why-smart-home__layout layout">
-        <h1 class="why-smart-home___title page-title"> <span class="page-title--light">why</span> smart&nbsp;home</h1>
-        <p class="text why-smart-home__descr">SMART HOME is a new level <br/>
-        of convenience and interaction <br/> with your home. </p>
-        <p class="why-smart-home__caption">This thesis is confirmed by experienced users of smart home solutions all over the planet.</p>
+        <h1 class="why-smart-home___title page-title"> <span class="page-title--light">@why_titleLight</span> @why_titleMain</h1>
+        <p class="text why-smart-home__descr">@why_descr</p>
+        <p class="why-smart-home__caption">@why_caption1</p>
         <div class="why-smart-home__graph grid grid-2">
           <div class="why-smart-home__graph-img">
-            <img src="./img/why-smart-home-graphs.png" alt="privacy research graphs"/>
+            <img src="/img/why-smart-home-graphs.png" alt="@why_graphsAlt"/>
           </div>
           <div class="why-smart-home__graph-text">
             <p class="text-normal">
-              On the illustration, you can find the results of independent scientific research that confirm how important privacy is to people in their home.
+              @why_graphText
             </p>
-            <p class="why-smart-home__caption">Barbosa, N. M., et al (2020). Do Privacy and Security Matter to Everyone? (pp. 417-435).</p>
+            <p class="why-smart-home__caption">@why_citation</p>
           </div>
         </div>
       </div>
@@ -32,23 +31,22 @@
       <div class="layout why-smart-home-offers__layout">
         <div class="why-smart-home-offers__top grid grid-2">
           <div class="why-smart-home-offers__left">
-            <h2 class="why-smart-home-offers__title">Our offering starts from</h2>
-            <span class="why-smart-home-offers__price">€1,900*</span>
-            <p class="text-normal why-smart-home-offers__text">Our solutions allow you to achieve the desired level of comfort from new technologies, but at the same time, we know how to achieve this without losing control over the data that collects by your smart home.
-            </p>
+            <h2 class="why-smart-home-offers__title">@why_offeringTitle</h2>
+            <span class="why-smart-home-offers__price">@why_price</span>
+            <p class="text-normal why-smart-home-offers__text">@why_offeringText</p>
           </div>
           <div class="why-smart-home-offers__right">
             <div class="why-smart-home-offers__silhouette">
-              <img src="./img/why-smart-home-silhouette.png" alt="" aria-hidden="true"/>
+              <img src="/img/why-smart-home-silhouette.png" alt="" aria-hidden="true"/>
             </div>
-            <a href="./solutions" class="text link-with-arrow underline" aria-label="contact us to get an offer">get an offer</a>
+            <a href="@localePrefix/solutions" class="text link-with-arrow underline" aria-label="@why_getOfferAria">@why_getOffer</a>
           </div>
         </div>
         <div class="why-smart-home-offers__bottom">
           <div class="why-smart-home-offers__bottom-img">
-            <img src="./img/why-smart-home-offer.svg" alt="" aria-hidden="true"/>
+            <img src="/img/why-smart-home-offer.svg" alt="" aria-hidden="true"/>
           </div>
-          <p class="why-smart-home-offers__bottom-text text-normal">Almost no company in the world can offer you such an approach today with a budget lower than $40,000.</p>
+          <p class="why-smart-home-offers__bottom-text text-normal">@why_bottomText</p>
         </div>
       </div>
       <div class="why-smart-home__jack">

@@ -23,8 +23,9 @@
 .burger:active {
   color: black;
 }
-.burger::before, .burger::after {
-  content: "";
+.burger::before,
+.burger::after {
+  content: '';
   position: absolute;
   left: 0;
   width: 100%;
@@ -63,9 +64,12 @@
   transition: transform 0.3s ease-in-out;
 }
 
-@media screen and (max-width: 940px) {
+@media screen and (max-width: 1040px) {
   .burger {
     display: block;
-    order: 2;
+  }
+
+  .header__actions {
+    margin-left: auto;
   }
 }

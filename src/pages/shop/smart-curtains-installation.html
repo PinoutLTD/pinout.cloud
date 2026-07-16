@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@htmlLang">
   @include('../../partials/head.html', { "pageTitle": "Smart Curtain System Installation & Automation / Pinout" })
   <body>
     <!-- website header -->
@@ -8,30 +8,19 @@
     <main class="product-detail">
       <section class="product-detail-section">
         <div class="layout">
-          <!-- Breadcrumbs -->
-          <nav class="product-detail__breadcrumbs" aria-label="Breadcrumb">
+          <nav class="product-detail__breadcrumbs" aria-label="@shop_breadcrumbAria">
             <ol class="product-detail__breadcrumbs-list">
               <li class="product-detail__breadcrumbs-item text">
-                <a href="./index.html" class="product-detail__breadcrumbs-link"
-                  >Shop</a
-                >
+                <a href="./index.html" class="product-detail__breadcrumbs-link">@shop_breadcrumb</a>
               </li>
-              <li
-                class="product-detail__breadcrumbs-item text"
-                aria-current="page"
-              >
-                <span class="product-detail__breadcrumbs-current"
-                  >Smart Curtain System Installation & Automation</span
-                >
+              <li class="product-detail__breadcrumbs-item text" aria-current="page">
+                <span class="product-detail__breadcrumbs-current">Smart Curtain System Installation & Automation</span>
               </li>
             </ol>
           </nav>
-          <!-- Product Overview Section -->
           <div class="grid grid-2 product-detail__overview">
-            <!-- Product Image Slider -->
             <div class="product-detail__gallery">
               <div class="product-detail__gallery-wrapper">
-                <!-- Thumbnails with Navigation -->
                 <div class="product-detail__thumbs-wrapper">
                   <div class="swiper product-detail__thumbs">
                     <div class="swiper-wrapper">                  <div class="swiper-slide">
@@ -53,21 +42,11 @@
                     <img src="../img/shop/banners/smart-curtains/card-6.jpg" alt="Smart Curtain System Installation & Automation"/>
                   </div></div>
                   </div>
-                  <!-- Navigation buttons for main swiper -->
                   <div class="product-detail__swiper-navigation">
-                    <button
-                      type="button"
-                      class="product-detail__swiper-button-prev"
-                      aria-label="Previous slide"
-                    ></button>
-                    <button
-                      type="button"
-                      class="product-detail__swiper-button-next"
-                      aria-label="Next slide"
-                    ></button>
+                    <button type="button" class="product-detail__swiper-button-prev" aria-label="@shop_prevSlide"></button>
+                    <button type="button" class="product-detail__swiper-button-next" aria-label="@shop_nextSlide"></button>
                   </div>
                 </div>
-                <!-- Main Swiper -->
                 <div class="swiper product-detail__swiper">
                   <div class="swiper-wrapper">                  <div class="swiper-slide">
                     <img src="../img/shop/banners/smart-curtains/card-1.jpg" alt="Smart Curtain System Installation & Automation"/>
@@ -92,32 +71,23 @@
               </div>
             </div>
 
-            <!-- Product Info -->
             <div class="product-detail__info">
               <div class="product-detail__header">
                 <h1 class="page-title">Smart Curtain System Installation & Automation</h1>
-                <span class="text-normal product-detail__availability-tag"
-                  >available</span
-                >
+                <span class="text-normal product-detail__availability-tag">available</span>
               </div>
 
               <div class="product-detail__price">
-                <span class="text product-detail__price-main"
-                  >€ 350.00</span
-                >
+                <span class="text product-detail__price-main">€ 350.00</span>
                 <span class="text product-detail__price-old">€ 400.00</span>
-                <span class="text-normal product-detail__tax">*Tax incl.</span>
+                <span class="text-normal product-detail__tax">@shop_taxIncl</span>
               </div>
 
               
             <div class="product-detail__additional-pricing">
               <p class="text-normal">Get your first upgrade for <span class="product-detail__additional-price">€&nbsp350.00</span>. Each additional one is only <span class="product-detail__additional-price">€&nbsp+10.00</span>!</p>
             </div>
-
-              <div class="product-detail__description">
-                <p class="text-normal">Get smart motorized curtains with professional installation and smart home automation included. We install and configure the system, set up schedules and scenarios, and integrate smart curtains into your smart home for effortless daily control.</p>
-              </div>
-
+              <div class="product-detail__description"><p class="text-normal">Get smart motorized curtains with professional installation and smart home automation included. We install and configure the system, set up schedules and scenarios, and integrate smart curtains into your smart home for effortless daily control.</p></div>
               
             <div class="product-detail__warning">
               <p class="text-normal">! Permanent power supply (pre-installed power cable) is required. Track length up to 4 meters.</p>
@@ -140,274 +110,118 @@
             </div>    
 
               <div class="product-detail__actions">
-                <a
-                  href="#product-form"
-                  class="text button product-detail__order-btn"
-                  data-product="Smart Curtain System Installation & Automation"
-                  >ORDER NOW</a
-                >
+                <a href="#product-form" class="text button product-detail__order-btn" data-product="Smart Curtain System Installation & Automation">@shop_orderNow</a>
               </div>
             </div>
           </div>
 
-          <!-- What's Included & Benefits Section -->
           <div class="product-detail__features-benefits grid grid-2">
-            <!-- What's Included -->
             <div class="product-detail__whats-included">
-              <h2 class="subtitle">WHAT'S INCLUDED?</h2>
-              <ul class="product-detail__features-list">
-                <li class="text-normal">Two motorized curtain tracks (blackout + sheer) with permanent power supply</li>
+              <h2 class="subtitle">@shop_whatsIncluded</h2>
+              <ul class="product-detail__features-list"><li class="text-normal">Two motorized curtain tracks (blackout + sheer) with permanent power supply</li>
               <li class="text-normal">Professional installation by our technicians</li>
               <li class="text-normal">Configuration and integration with your smart home system (e.g., Home Assistant, Alexa, Google Home)</li>
-              <li class="text-normal">Guidance on using and automating your new smart curtains</li>
-              </ul>
+              <li class="text-normal">Guidance on using and automating your new smart curtains</li></ul>
             </div>
-
-            <!-- Benefits -->
             <div class="product-detail__benefits">
-              <h2 class="subtitle">BENEFITS:</h2>
-              <ul class="product-detail__features-list">
-                <li class="text-normal">Automation – Curtains open and close by schedule or smart scenarios (morning, bedtime, leaving home, or returning)</li>
+              <h2 class="subtitle">@shop_benefits</h2>
+              <ul class="product-detail__features-list"><li class="text-normal">Automation – Curtains open and close by schedule or smart scenarios (morning, bedtime, leaving home, or returning)</li>
               <li class="text-normal">Effortless Comfort – Ideal for large and heavy curtains</li>
               <li class="text-normal">Smart Home Integration - Connect it to your existing smart home ecosystem</li>
-              <li class="text-normal">Cozy & Private Atmosphere – Maximum comfort and privacy, especially in bedrooms with blackout curtains</li>
-              </ul>
+              <li class="text-normal">Cozy & Private Atmosphere – Maximum comfort and privacy, especially in bedrooms with blackout curtains</li></ul>
             </div>
           </div>
 
-          <!-- How It Works Section -->
           
         <div class="product-detail__how-it-works">
           <h2 class="subtitle">HOW IT WORKS</h2>
           <div class="product-detail__steps grid grid-4">
             <div class="product-detail__step">
               <div class="product-detail__step-icon">
-                <img src="../../img/shop/delivery.png" alt="Fast Delivery"/>
+                <img src="../../img/shop/delivery.png" alt="FAST DELIVERY"/>
               </div>
               <h3 class="text">FAST DELIVERY</h3>
               <p class="text-normal">We deliver across Cyprus within 24 hours after your order is placed.</p>
             </div>
             <div class="product-detail__step">
               <div class="product-detail__step-icon">
-                <img src="../../img/shop/setup.png" alt="Installation & Setup"/>
+                <img src="../../img/shop/setup.png" alt="INSTALLATION & SETUP"/>
               </div>
               <h3 class="text">INSTALLATION & SETUP</h3>
               <p class="text-normal">We install the equipment, connect your smart home system, and configure automations.</p>
             </div>
             <div class="product-detail__step">
               <div class="product-detail__step-icon">
-                <img src="../../img/shop/training.png" alt="Training & Handover"/>
+                <img src="../../img/shop/training.png" alt="TRAINING & HANDOVER"/>
               </div>
               <h3 class="text">TRAINING & HANDOVER</h3>
               <p class="text-normal">We show you how to use the system, control it from your phone, and optimize daily operation.</p>
             </div>
             <div class="product-detail__step">
               <div class="product-detail__step-icon">
-                <img src="../../img/shop/perfomance.png" alt="Performance Check"/>
+                <img src="../../img/shop/perfomance.png" alt="PERFORMANCE CHECK"/>
               </div>
               <h3 class="text">PERFORMANCE CHECK</h3>
               <p class="text-normal">We monitor and test the system to ensure stable, correct, and reliable performance.</p>
             </div>
           </div>
         </div>
-
-          <!-- Optional extra sections for specific products (e.g. Home Server) -->
           
 
-          <!-- Contact Form Section -->
-          <div
-            class="grid-2 product-detail__form-section grid"
-            id="product-form"
-          >
+          <div class="grid-2 product-detail__form-section grid" id="product-form">
             <div class="product-detail__form-header">
-              <h2 class="page-title">Submit your request</h2>
-              <p class="text-normal product-detail__form-intro">
-                We will contact you within 24 hours. <br> Delivery is available within 24 hours after your request.  <br> Payment is made after the service is completed.
-              </p>
+              <h2 class="page-title">@shop_formTitle</h2>
+              <p class="text-normal product-detail__form-intro">We will contact you within 24 hours. <br> Delivery is available within 24 hours after your request.  <br> Payment is made after the service is completed.</p>
             </div>
 
-            <form
-              class="product-detail__form"
-              action="https://cloud.us17.list-manage.com/subscribe/post?u=e4dba595a375a9f342a2436aa&amp;id=35b2cf1c49&amp;f_id=00561be3f0"
-              method="post"
-              target="_blank"
-              id="mc-embedded-subscribe-form"
-              name="mc-embedded-subscribe-form"
-            >
-              <!-- EMAIL (hidden - generated from phone, Mailchimp requires EMAIL) -->
+            <form class="product-detail__form" action="https://cloud.us17.list-manage.com/subscribe/post?u=e4dba595a375a9f342a2436aa&amp;id=35b2cf1c49&amp;f_id=00561be3f0" method="post" target="_blank" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form">
               <input type="hidden" name="EMAIL" id="mce-EMAIL" value="" />
-
-              <!-- NAME -->
               <div>
-                <input
-                  type="text"
-                  name="NAME"
-                  id="mce-NAME"
-                  class="contacts-form__input"
-                  placeholder="your name"
-                />
+                <input type="text" name="NAME" id="mce-NAME" class="contacts-form__input" placeholder="@shop_namePlaceholder" />
               </div>
-
-              <!-- PHONE -->
               <div>
-                <input
-                  type="tel"
-                  name="PHONE"
-                  id="mce-PHONE"
-                  class="contacts-form__input"
-                  placeholder="your phone number*"
-                  required
-                />
+                <input type="tel" id="phone-input" class="contacts-form__input" placeholder="@shop_phonePlaceholder" required />
+                <input type="hidden" name="PHONE" id="mce-PHONE" value="" />
               </div>
-
-              <!-- ADDRESS (only for home-server) -->
               
-
-              <!-- CONTACT METHOD -->
               <div>
-                <label class="text-normal">your preferred contact method</label>
+                <label class="text-normal">@shop_contactMethodLabel</label>
                 <div class="product-detail__contact-methods">
-                  <button
-                    type="button"
-                    class="product-detail__contact-method"
-                    data-method="telegram"
-                  >
-                    telegram
-                  </button>
-                  <button
-                    type="button"
-                    class="product-detail__contact-method"
-                    data-method="whatsapp"
-                  >
-                    whatsapp
-                  </button>
-                  <button
-                    type="button"
-                    class="product-detail__contact-method active"
-                    data-method="sms"
-                  >
-                    sms
-                  </button>
-                  <button
-                    type="button"
-                    class="product-detail__contact-method"
-                    data-method="call"
-                  >
-                    call mobile
-                  </button>
+                  <button type="button" class="product-detail__contact-method" data-method="telegram">@shop_telegram</button>
+                  <button type="button" class="product-detail__contact-method" data-method="whatsapp">@shop_whatsapp</button>
+                  <button type="button" class="product-detail__contact-method active" data-method="sms">@shop_sms</button>
+                  <button type="button" class="product-detail__contact-method" data-method="call">@shop_callMobile</button>
                 </div>
-                <input
-                  type="hidden"
-                  name="TYPE"
-                  id="contact-method"
-                  value="sms"
-                />
+                <input type="hidden" name="TYPE" id="contact-method" value="sms" />
               </div>
-
-              <!-- LANGUAGE -->
               <div>
-                <label class="text-normal">select language</label>
+                <label class="text-normal">@shop_languageLabel</label>
                 <div class="product-detail__contact-methods">
-                  <button
-                    type="button"
-                    class="product-detail__contact-method active"
-                    data-lang="English"
-                  >
-                    English
-                  </button>
-                  <button
-                    type="button"
-                    class="product-detail__contact-method"
-                    data-lang="Russian"
-                  >
-                    Russian
-                  </button>
+                  <button type="button" class="product-detail__contact-method active" data-lang="English">@shop_languageEn</button>
+                  <button type="button" class="product-detail__contact-method" data-lang="Russian">@shop_languageRu</button>
                 </div>
-                <input
-                  type="hidden"
-                  name="LANGUAGE"
-                  id="language"
-                  value="English"
-                />
+                <input type="hidden" name="LANGUAGE" id="language" value="English" />
               </div>
-
               
-            <!-- QUANTITY -->
-            <div>
-              <label class="text-normal">quantity</label>
-              <div class="product-detail__contact-methods">
-                <button type="button" class="product-detail__contact-method active" data-quantity="1">1</button>
-                <button type="button" class="product-detail__contact-method" data-quantity="2">2</button>
-                <button type="button" class="product-detail__contact-method" data-quantity="3">3</button>
-                <button type="button" class="product-detail__contact-method" data-quantity="4+">4+</button>
-              </div>
-              <input type="hidden" name="QUANTITY" id="quantity" value="1">
-            </div>
-
-              <!-- COMMENT -->
               <div>
-                <textarea
-                  name="COMMENT"
-                  id="mce-COMMENT"
-                  class="product-detail__textarea contacts-form__input contacts-form__textarea"
-                  placeholder="your message (optional)"
-                  maxlength="250"
-                >Hello, I would like to order smart curtain system installation & automation. Please contact me.</textarea>
+                <textarea name="COMMENT" id="mce-COMMENT" class="product-detail__textarea contacts-form__input contacts-form__textarea" placeholder="@shop_messagePlaceholder" maxlength="250">Hello, I would like to order smart curtain system installation & automation. Please contact me.</textarea>
               </div>
-
-              <!-- TERMS -->
               <div>
-                <label
-                  class="checkbox subfield contacts-form__checkbox contacts__checkbox custom-checkbox"
-                  for="gdpr96449"
-                >
-                  <input
-                    type="checkbox"
-                    id="gdpr_96449"
-                    name="gdpr[96449]"
-                    class="gdpr custom-checkbox__field"
-                    value="Y"
-                    required
-                  />
-                  <span class="custom-checkbox__content text-normal">
-                    I accept the Terms & Conditions
-                  </span>
+                <label class="checkbox subfield contacts-form__checkbox contacts__checkbox custom-checkbox" for="gdpr96449">
+                  <input type="checkbox" id="gdpr_96449" name="gdpr[96449]" class="gdpr custom-checkbox__field" value="Y" required />
+                  <span class="custom-checkbox__content text-normal">@shop_termsLabel</span>
                 </label>
               </div>
-
-              <!-- PRODUCT -->
               <input type="hidden" name="PRODUCT" value="Smart Curtain System Installation & Automation" />
-
-              <!-- COLOR -->
               
-
-              <!-- ADDITIONAL OPTIONS -->
               
-
               <input type="hidden" name="REQUEST" value="new product" />
-
-              <!-- TAG -->
               <input type="hidden" name="tags" value="8329957, order" />
-
-              <!-- HONEYPOT -->
               <div style="position: absolute; left: -5000px" aria-hidden="true">
-                <input
-                  type="text"
-                  name="b_e4dba595a375a9f342a2436aa_35b2cf1c49"
-                  tabindex="-1"
-                  value=""
-                />
+                <input type="text" name="b_e4dba595a375a9f342a2436aa_35b2cf1c49" tabindex="-1" value="" />
               </div>
-
-              <!-- SUBMIT -->
               <div class="contacs-form__btn-wrapper">
-                <button
-                  type="submit"
-                  name="subscribe"
-                  class="contacts-form__btn button link-font link-with-arrow link"
-                >
-                  submit
-                </button>
+                <button type="submit" name="subscribe" class="contacts-form__btn button link-font link-with-arrow link">@shop_submit</button>
               </div>
             </form>
           </div>
@@ -415,7 +229,6 @@
       </section>
     </main>
 
-    <!-- website footer -->
     @include('../../partials/footer.html')
   </body>
 </html>

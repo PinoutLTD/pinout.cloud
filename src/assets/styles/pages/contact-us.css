@@ -15,6 +15,7 @@
   margin-bottom: 0;
   /* text-align: center; */
   font-size: calc(var(--base-font-size) * 4);
+  hyphens: auto;
 }
 
 .contact-us__more-details {
@@ -29,7 +30,7 @@
 }
 
 .contact-us__info,
-.contact-us__info address  {
+.contact-us__info address {
   display: flex;
   flex-direction: column;
 }
@@ -52,7 +53,6 @@
   margin-top: 10px;
   display: flex;
   align-items: center;
-
 }
 
 .contacts__social {
@@ -103,7 +103,7 @@
 
 @media screen and (max-width: 1120px) {
   .contact-us__layout {
-    background-size: 370px ;
+    background-size: 370px;
   }
 
   .contacts__decor-line-3 {
@@ -116,7 +116,6 @@
     background-size: 290px 515px;
   }
 }
-
 
 @media screen and (max-width: 860px) {
   .contact-us__layout {
@@ -135,7 +134,7 @@
   }
 
   .contacts__decor-line-3 {
-    left: calc(var(--space) * 4)
+    left: calc(var(--space) * 4);
   }
 }
 
@@ -182,7 +181,7 @@
     background-image: url("data:image/svg+xml,%3Csvg width='107' height='157' viewBox='0 0 107 157' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M55.2521 0.901997C55.4283 0.689353 55.3987 0.374154 55.1861 0.197981C54.9734 0.0218079 54.6582 0.0513739 54.4821 0.264018L55.2521 0.901997ZM2.56769 130.567L3.05277 130.446L2.56769 130.567ZM106.644 133.468C106.665 133.193 106.46 132.953 106.184 132.931L101.698 132.582C101.422 132.561 101.182 132.767 101.161 133.042C101.139 133.318 101.345 133.558 101.62 133.579L105.608 133.889L105.298 137.877C105.277 138.153 105.483 138.393 105.758 138.415C106.033 138.436 106.274 138.23 106.295 137.955L106.644 133.468ZM54.4821 0.264018C39.8407 17.9365 24.1669 40.184 13.4387 63.1759C2.71643 86.1552 -3.10095 109.953 2.08262 130.688L3.05277 130.446C-2.04822 110.041 3.65897 86.5001 14.3449 63.5987C25.025 40.7099 40.6433 18.5352 55.2521 0.901997L54.4821 0.264018ZM2.08262 130.688C4.57451 140.656 10.5381 147.43 18.5331 151.566C26.5119 155.693 36.4939 157.185 47.0463 156.657C68.1434 155.6 91.6904 146.458 106.471 133.81L105.82 133.05C91.2199 145.544 67.888 154.612 46.9963 155.658C36.5544 156.181 26.7645 154.698 18.9926 150.678C11.2368 146.665 5.47083 140.118 3.05277 130.446L2.08262 130.688Z' fill='white'/%3E%3C/svg%3E%0A");
     top: unset;
     bottom: 78px;
-    left: calc(var(--space)* 2);
+    left: calc(var(--space) * 2);
   }
 
   .contact-us__wrapper {
@@ -197,24 +196,20 @@
     margin-bottom: var(--space);
   }
 
-   .contact-us__more-details .text-normal-light {
+  .contact-us__more-details .text-normal-light {
     display: block;
-   }
+  }
 
-   .form-layout {
-     padding-bottom: calc(var(--space) * 1.5);
-    }
-
-
+  .form-layout {
+    padding-bottom: calc(var(--space) * 1.5);
+  }
 }
 
 @media screen and (max-width: 415px) {
-
   .contact-us__next-go {
     text-align: left;
     line-height: 1;
   }
-
 
   .contact-us__next-go {
     font-size: calc(var(--base-font-size) * 3);

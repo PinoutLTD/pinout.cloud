@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@htmlLang">
   @include('../../partials/head.html', { "pageTitle": "Remote Property Monitoring in Cyprus / Pinout" })
   <body>
     <!-- website header -->
@@ -8,30 +8,19 @@
     <main class="product-detail">
       <section class="product-detail-section">
         <div class="layout">
-          <!-- Breadcrumbs -->
-          <nav class="product-detail__breadcrumbs" aria-label="Breadcrumb">
+          <nav class="product-detail__breadcrumbs" aria-label="@shop_breadcrumbAria">
             <ol class="product-detail__breadcrumbs-list">
               <li class="product-detail__breadcrumbs-item text">
-                <a href="./index.html" class="product-detail__breadcrumbs-link"
-                  >Shop</a
-                >
+                <a href="./index.html" class="product-detail__breadcrumbs-link">@shop_breadcrumb</a>
               </li>
-              <li
-                class="product-detail__breadcrumbs-item text"
-                aria-current="page"
-              >
-                <span class="product-detail__breadcrumbs-current"
-                  >Remote Property Monitoring in Cyprus</span
-                >
+              <li class="product-detail__breadcrumbs-item text" aria-current="page">
+                <span class="product-detail__breadcrumbs-current">Remote Property Monitoring in Cyprus</span>
               </li>
             </ol>
           </nav>
-          <!-- Product Overview Section -->
           <div class="grid grid-2 product-detail__overview">
-            <!-- Product Image Slider -->
             <div class="product-detail__gallery">
               <div class="product-detail__gallery-wrapper">
-                <!-- Thumbnails with Navigation -->
                 <div class="product-detail__thumbs-wrapper">
                   <div class="swiper product-detail__thumbs">
                     <div class="swiper-wrapper">                  <div class="swiper-slide">
@@ -47,21 +36,11 @@
                     <img src="../img/shop/banners/remote-property-monitoring/card-4.png" alt="Remote Property Monitoring in Cyprus"/>
                   </div></div>
                   </div>
-                  <!-- Navigation buttons for main swiper -->
                   <div class="product-detail__swiper-navigation">
-                    <button
-                      type="button"
-                      class="product-detail__swiper-button-prev"
-                      aria-label="Previous slide"
-                    ></button>
-                    <button
-                      type="button"
-                      class="product-detail__swiper-button-next"
-                      aria-label="Next slide"
-                    ></button>
+                    <button type="button" class="product-detail__swiper-button-prev" aria-label="@shop_prevSlide"></button>
+                    <button type="button" class="product-detail__swiper-button-next" aria-label="@shop_nextSlide"></button>
                   </div>
                 </div>
-                <!-- Main Swiper -->
                 <div class="swiper product-detail__swiper">
                   <div class="swiper-wrapper">                  <div class="swiper-slide">
                     <img src="../img/shop/banners/remote-property-monitoring/card-1.png" alt="Remote Property Monitoring in Cyprus"/>
@@ -80,29 +59,22 @@
               </div>
             </div>
 
-            <!-- Product Info -->
             <div class="product-detail__info">
               <div class="product-detail__header">
                 <h1 class="page-title">Remote Property Monitoring in Cyprus</h1>
-                <span class="text-normal product-detail__availability-tag"
-                  >available</span
-                >
+                <span class="text-normal product-detail__availability-tag">available</span>
               </div>
 
               <div class="product-detail__price">
-                <span class="text product-detail__price-main"
-                  >€ 1550.00</span
-                >
+                <span class="text product-detail__price-main">€ 1550.00</span>
                 
-                <span class="text-normal product-detail__tax">*Tax incl.</span>
+                <span class="text-normal product-detail__tax">@shop_taxIncl</span>
               </div>
 
               
-
-              <div class="product-detail__description">
-                <p class="text-normal">Monitor your property in Cyprus from anywhere in the world. We install and configure a system that allows you to track your apartment in real time, receive instant notifications, and quickly respond to any events.<br>The system combines video surveillance, motion sensors, door opening sensors, water leak detection, and energy monitoring into a single platform. All devices are connected to a local smart home server, ensuring stable and secure operation without reliance on cloud services.<br>You will always know what’s happening in your property — even when you’re abroad.</p>
-              </div>
-
+              <div class="product-detail__description">Monitor your property in Cyprus from anywhere in the world. We install and configure a system that allows you to track your apartment in real time, receive instant notifications, and quickly respond to any events.</p>
+      <p class="text-normal">The system combines video surveillance, motion sensors, door opening sensors, water leak detection, and energy monitoring into a single platform. All devices are connected to a local smart home server, ensuring stable and secure operation without reliance on cloud services.</p>
+      <p class="text-normal">You will always know what’s happening in your property — even when you’re abroad.</div>
               
               
               
@@ -124,23 +96,15 @@
             </div>    
 
               <div class="product-detail__actions">
-                <a
-                  href="#product-form"
-                  class="text button product-detail__order-btn"
-                  data-product="Remote Property Monitoring in Cyprus"
-                  >ORDER NOW</a
-                >
+                <a href="#product-form" class="text button product-detail__order-btn" data-product="Remote Property Monitoring in Cyprus">@shop_orderNow</a>
               </div>
             </div>
           </div>
 
-          <!-- What's Included & Benefits Section -->
           <div class="product-detail__features-benefits grid grid-2">
-            <!-- What's Included -->
             <div class="product-detail__whats-included">
-              <h2 class="subtitle">WHAT'S INCLUDED?</h2>
-              <ul class="product-detail__features-list">
-                <li class="text-normal">Installation and setup of an energy monitoring system</li>
+              <h2 class="subtitle">@shop_whatsIncluded</h2>
+              <ul class="product-detail__features-list"><li class="text-normal">Installation and setup of an energy monitoring system</li>
               <li class="text-normal">Installation of water leak sensors</li>
               <li class="text-normal">Installation of an online PTZ camera in the living room</li>
               <li class="text-normal">Installation of motion sensors in every room</li>
@@ -148,246 +112,109 @@
               <li class="text-normal">Installation and configuration of a local smart home server connecting all devices</li>
               <li class="text-normal">Setup of event notifications and remote access to property data</li>
               <li class="text-normal">Mobile app installation for remote access</li>
-              <li class="text-normal">User training on how to operate the system</li>
-              </ul>
+              <li class="text-normal">User training on how to operate the system</li></ul>
             </div>
-
-            <!-- Benefits -->
             <div class="product-detail__benefits">
-              <h2 class="subtitle">BENEFITS:</h2>
-              <ul class="product-detail__features-list">
-                <li class="text-normal"><b>Full Control</b> – all property data in one app</li>
+              <h2 class="subtitle">@shop_benefits</h2>
+              <ul class="product-detail__features-list"><li class="text-normal"><b>Full Control</b> – all property data in one app</li>
               <li class="text-normal"><b>Security</b> – instant alerts for motion, door openings, and water leaks</li>
               <li class="text-normal"><b>Video Monitoring</b> – real-time camera access</li>
               <li class="text-normal"><b>Remote Access</b> - control your system from anywhere in the world</li>
               <li class="text-normal"><b>Piece of Mind</b> - always know your property is safe</li>
-              <li class="text-normal"><b>Reliability</b> - runs on a local server without cloud dependency</li>
-              </ul>
+              <li class="text-normal"><b>Reliability</b> - runs on a local server without cloud dependency</li></ul>
             </div>
           </div>
 
-          <!-- How It Works Section -->
           
         <div class="product-detail__how-it-works">
           <h2 class="subtitle">HOW IT WORKS</h2>
           <div class="product-detail__steps grid grid-4">
             <div class="product-detail__step">
               <div class="product-detail__step-icon">
-                <img src="../../img/shop/delivery.png" alt="Fast Delivery"/>
+                <img src="../../img/shop/delivery.png" alt="FAST DELIVERY"/>
               </div>
               <h3 class="text">FAST DELIVERY</h3>
               <p class="text-normal">We deliver across Cyprus within 24 hours after your order is placed.</p>
             </div>
             <div class="product-detail__step">
               <div class="product-detail__step-icon">
-                <img src="../../img/shop/setup.png" alt="Installation & Setup"/>
+                <img src="../../img/shop/setup.png" alt="INSTALLATION & SETUP"/>
               </div>
               <h3 class="text">INSTALLATION & SETUP</h3>
               <p class="text-normal">We install the equipment, connect your smart home system, and configure automations.</p>
             </div>
             <div class="product-detail__step">
               <div class="product-detail__step-icon">
-                <img src="../../img/shop/training.png" alt="Training & Handover"/>
+                <img src="../../img/shop/training.png" alt="TRAINING & HANDOVER"/>
               </div>
               <h3 class="text">TRAINING & HANDOVER</h3>
               <p class="text-normal">We show you how to use the system, control it from your phone, and optimize daily operation.</p>
             </div>
             <div class="product-detail__step">
               <div class="product-detail__step-icon">
-                <img src="../../img/shop/perfomance.png" alt="Performance Check"/>
+                <img src="../../img/shop/perfomance.png" alt="PERFORMANCE CHECK"/>
               </div>
               <h3 class="text">PERFORMANCE CHECK</h3>
               <p class="text-normal">We monitor and test the system to ensure stable, correct, and reliable performance.</p>
             </div>
           </div>
         </div>
-
-          <!-- Optional extra sections for specific products (e.g. Home Server) -->
           
 
-          <!-- Contact Form Section -->
-          <div
-            class="grid-2 product-detail__form-section grid"
-            id="product-form"
-          >
+          <div class="grid-2 product-detail__form-section grid" id="product-form">
             <div class="product-detail__form-header">
-              <h2 class="page-title">Submit your request</h2>
-              <p class="text-normal product-detail__form-intro">
-                We will contact you within 24 hours. <br> Delivery is available within 24 hours after your request.  <br> Payment is made after the service is completed.
-              </p>
+              <h2 class="page-title">@shop_formTitle</h2>
+              <p class="text-normal product-detail__form-intro">We will contact you within 24 hours. <br> Delivery is available within 24 hours after your request.  <br> Payment is made after the service is completed.</p>
             </div>
 
-            <form
-              class="product-detail__form"
-              action="https://cloud.us17.list-manage.com/subscribe/post?u=e4dba595a375a9f342a2436aa&amp;id=35b2cf1c49&amp;f_id=00561be3f0"
-              method="post"
-              target="_blank"
-              id="mc-embedded-subscribe-form"
-              name="mc-embedded-subscribe-form"
-            >
-              <!-- EMAIL (hidden - generated from phone, Mailchimp requires EMAIL) -->
+            <form class="product-detail__form" action="https://cloud.us17.list-manage.com/subscribe/post?u=e4dba595a375a9f342a2436aa&amp;id=35b2cf1c49&amp;f_id=00561be3f0" method="post" target="_blank" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form">
               <input type="hidden" name="EMAIL" id="mce-EMAIL" value="" />
-
-              <!-- NAME -->
               <div>
-                <input
-                  type="text"
-                  name="NAME"
-                  id="mce-NAME"
-                  class="contacts-form__input"
-                  placeholder="your name"
-                />
+                <input type="text" name="NAME" id="mce-NAME" class="contacts-form__input" placeholder="@shop_namePlaceholder" />
               </div>
-
-              <!-- PHONE -->
               <div>
-                <input
-                  type="tel"
-                  name="PHONE"
-                  id="mce-PHONE"
-                  class="contacts-form__input"
-                  placeholder="your phone number*"
-                  required
-                />
+                <input type="tel" id="phone-input" class="contacts-form__input" placeholder="@shop_phonePlaceholder" required />
+                <input type="hidden" name="PHONE" id="mce-PHONE" value="" />
               </div>
-
-              <!-- ADDRESS (only for home-server) -->
               
-
-              <!-- CONTACT METHOD -->
               <div>
-                <label class="text-normal">your preferred contact method</label>
+                <label class="text-normal">@shop_contactMethodLabel</label>
                 <div class="product-detail__contact-methods">
-                  <button
-                    type="button"
-                    class="product-detail__contact-method"
-                    data-method="telegram"
-                  >
-                    telegram
-                  </button>
-                  <button
-                    type="button"
-                    class="product-detail__contact-method"
-                    data-method="whatsapp"
-                  >
-                    whatsapp
-                  </button>
-                  <button
-                    type="button"
-                    class="product-detail__contact-method active"
-                    data-method="sms"
-                  >
-                    sms
-                  </button>
-                  <button
-                    type="button"
-                    class="product-detail__contact-method"
-                    data-method="call"
-                  >
-                    call mobile
-                  </button>
+                  <button type="button" class="product-detail__contact-method" data-method="telegram">@shop_telegram</button>
+                  <button type="button" class="product-detail__contact-method" data-method="whatsapp">@shop_whatsapp</button>
+                  <button type="button" class="product-detail__contact-method active" data-method="sms">@shop_sms</button>
+                  <button type="button" class="product-detail__contact-method" data-method="call">@shop_callMobile</button>
                 </div>
-                <input
-                  type="hidden"
-                  name="TYPE"
-                  id="contact-method"
-                  value="sms"
-                />
+                <input type="hidden" name="TYPE" id="contact-method" value="sms" />
               </div>
-
-              <!-- LANGUAGE -->
               <div>
-                <label class="text-normal">select language</label>
+                <label class="text-normal">@shop_languageLabel</label>
                 <div class="product-detail__contact-methods">
-                  <button
-                    type="button"
-                    class="product-detail__contact-method active"
-                    data-lang="English"
-                  >
-                    English
-                  </button>
-                  <button
-                    type="button"
-                    class="product-detail__contact-method"
-                    data-lang="Russian"
-                  >
-                    Russian
-                  </button>
+                  <button type="button" class="product-detail__contact-method active" data-lang="English">@shop_languageEn</button>
+                  <button type="button" class="product-detail__contact-method" data-lang="Russian">@shop_languageRu</button>
                 </div>
-                <input
-                  type="hidden"
-                  name="LANGUAGE"
-                  id="language"
-                  value="English"
-                />
+                <input type="hidden" name="LANGUAGE" id="language" value="English" />
               </div>
-
               
-
-              <!-- COMMENT -->
               <div>
-                <textarea
-                  name="COMMENT"
-                  id="mce-COMMENT"
-                  class="product-detail__textarea contacts-form__input contacts-form__textarea"
-                  placeholder="your message (optional)"
-                  maxlength="250"
-                >Hello, I would like to order remote property monitoring in cyprus. Please contact me.</textarea>
+                <textarea name="COMMENT" id="mce-COMMENT" class="product-detail__textarea contacts-form__input contacts-form__textarea" placeholder="@shop_messagePlaceholder" maxlength="250">Hello, I would like to order remote property monitoring in cyprus. Please contact me.</textarea>
               </div>
-
-              <!-- TERMS -->
               <div>
-                <label
-                  class="checkbox subfield contacts-form__checkbox contacts__checkbox custom-checkbox"
-                  for="gdpr96449"
-                >
-                  <input
-                    type="checkbox"
-                    id="gdpr_96449"
-                    name="gdpr[96449]"
-                    class="gdpr custom-checkbox__field"
-                    value="Y"
-                    required
-                  />
-                  <span class="custom-checkbox__content text-normal">
-                    I accept the Terms & Conditions
-                  </span>
+                <label class="checkbox subfield contacts-form__checkbox contacts__checkbox custom-checkbox" for="gdpr96449">
+                  <input type="checkbox" id="gdpr_96449" name="gdpr[96449]" class="gdpr custom-checkbox__field" value="Y" required />
+                  <span class="custom-checkbox__content text-normal">@shop_termsLabel</span>
                 </label>
               </div>
-
-              <!-- PRODUCT -->
               <input type="hidden" name="PRODUCT" value="Remote Property Monitoring in Cyprus" />
-
-              <!-- COLOR -->
               
-
-              <!-- ADDITIONAL OPTIONS -->
               
-
               <input type="hidden" name="REQUEST" value="new product" />
-
-              <!-- TAG -->
               <input type="hidden" name="tags" value="8329957, order" />
-
-              <!-- HONEYPOT -->
               <div style="position: absolute; left: -5000px" aria-hidden="true">
-                <input
-                  type="text"
-                  name="b_e4dba595a375a9f342a2436aa_35b2cf1c49"
-                  tabindex="-1"
-                  value=""
-                />
+                <input type="text" name="b_e4dba595a375a9f342a2436aa_35b2cf1c49" tabindex="-1" value="" />
               </div>
-
-              <!-- SUBMIT -->
               <div class="contacs-form__btn-wrapper">
-                <button
-                  type="submit"
-                  name="subscribe"
-                  class="contacts-form__btn button link-font link-with-arrow link"
-                >
-                  submit
-                </button>
+                <button type="submit" name="subscribe" class="contacts-form__btn button link-font link-with-arrow link">@shop_submit</button>
               </div>
             </form>
           </div>
@@ -395,7 +222,6 @@
       </section>
     </main>
 
-    <!-- website footer -->
     @include('../../partials/footer.html')
   </body>
 </html>

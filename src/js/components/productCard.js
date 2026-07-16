@@ -1,4 +1,45 @@
 // Product Card Component
+function getLocalePrefix() {
+  const path = window.location.pathname;
+  return path === '/ru' || path.startsWith('/ru/') ? '/ru' : '';
+}
+
+function getShopLabels() {
+  const el = document.documentElement;
+  return {
+    available: el.dataset.shopAvailable || 'available',
+    notAvailable: el.dataset.shopNotAvailable || 'not available',
+    loading: el.dataset.shopLoading || 'Products are loading...',
+  };
+}
+
+function normalizeProductImagePath(src) {
+  if (!src) return '/img/shop/card-1.png';
+  if (/^(https?:)?\/\//.test(src) || src.startsWith('/')) return src;
+  return '/' + src.replace(/^(\.\.\/)+/, '').replace(/^\.\//, '');
+}
+
+function getProductsRuBySlug() {
+  if (typeof window !== 'undefined' && window.productsRuBySlug) {
+    return window.productsRuBySlug;
+  }
+  if (typeof productsRuBySlug !== 'undefined') {
+    return productsRuBySlug;
+  }
+  return null;
+}
+
+function localizeProductForDisplay(product) {
+  const prefix = getLocalePrefix();
+  const ruMap = getProductsRuBySlug();
+  if (prefix !== '/ru' || !ruMap) {
+    return product;
+  }
+  const ru = ruMap[product.slug];
+  if (!ru) return product;
+  return { ...product, title: ru.title || product.title, description: ru.description || product.description };
+}
+
 function formatProductPrice(price) {
   if (typeof price === 'number') {
     return `€ ${price.toFixed(2)}`;
@@ -9,7 +50,8 @@ function formatProductPrice(price) {
     if (!normalized) return '';
     if (normalized.includes('€')) return normalized;
     if (/^from\b/i.test(normalized)) {
-      return normalized.replace(/^from\s*/i, 'from € ');
+      const fromLabel = getLocalePrefix() === '/ru' ? 'от € ' : 'from € ';
+      return normalized.replace(/^from\s*/i, fromLabel);
     }
     return `€ ${normalized}`;
   }
@@ -18,29 +60,31 @@ function formatProductPrice(price) {
 }
 
 function createProductCard(product) {
+  const localized = localizeProductForDisplay(product);
+  const labels = getShopLabels();
   const isAvailable = product.available;
   const cardClass = isAvailable ? 'shop-content__card' : 'shop-content__card unavailable';
   const tagClass = isAvailable ? 'text-normal shop-content__tag' : 'text-normal shop-content__tag shop-content__tag--not-available';
-  const tagText = isAvailable ? 'available' : 'not available';
-  // Use absolute path from root to ensure links work in both dev and production builds
-  const linkHref = isAvailable ? `/shop/${product.slug}` : '#';
+  const tagText = isAvailable ? labels.available : labels.notAvailable;
+  const localePrefix = getLocalePrefix();
+  const linkHref = isAvailable ? `${localePrefix}/shop/${product.slug}` : '#';
 
   const oldPriceHTML = product.oldPrice ? `<span class="text shop-content__price-old">${formatProductPrice(product.oldPrice)}</span>` : '';
 
-  // Use first image from images array if available, otherwise fall back to image property
-  const productImage = (product.images && product.images.length > 0)
+  const rawImage = (product.images && product.images.length > 0)
     ? product.images[0]
-    : (product.image || '../img/shop/card-1.png');
+    : product.image;
+  const productImage = normalizeProductImagePath(rawImage);
 
   return `
     <div class="${cardClass}">
       <a href="${linkHref}" class="shop-content__link">
         <div class="shop-content__img">
-          <img src="${productImage}" alt="${product.title}"/>
+          <img src="${productImage}" alt="${localized.title}"/>
         </div>
         <div class="shop-content__text">
-          <h3 class="text">${product.title}</h3>
-          <p class="text-normal">${product.description}</p>
+          <h3 class="text">${localized.title}</h3>
+          <p class="text-normal">${localized.description}</p>
           <div class="shop-content__price">
             <span class="text shop-content__price-main">${formatProductPrice(product.price)}</span>
             ${oldPriceHTML}
@@ -52,7 +96,6 @@ function createProductCard(product) {
   `;
 }
 
-// Render all products to a container
 function renderProducts(containerSelector, productsToRender) {
   const container = document.querySelector(containerSelector);
   if (!container) {
@@ -69,26 +112,23 @@ function renderProducts(containerSelector, productsToRender) {
   container.innerHTML = cardsHTML;
 }
 
-// Initialize product cards on shop page
 function initProductCards() {
-  // Check if we're on the shop page
   const shopContainer = document.querySelector('.shop-content');
   if (!shopContainer) {
     return;
   }
 
-  // Check if products are available
+  const labels = getShopLabels();
+
   if (typeof products === 'undefined' || !Array.isArray(products)) {
     console.error('Products data not loaded. Make sure products.js is loaded before productCard.js');
-    shopContainer.innerHTML = '<p class="text-normal">Products are loading...</p>';
+    shopContainer.innerHTML = `<p class="text-normal">${labels.loading}</p>`;
     return;
   }
 
-  // Render all products
   renderProducts('.shop-content', products);
 }
 
-// Auto-initialize when DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initProductCards);
 } else {

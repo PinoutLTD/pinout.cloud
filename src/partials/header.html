@@ -1,7 +1,7 @@
 <header class="header">
   <div class="layout">
     <div class="header__container">
-      <a href="/" class="header__logo" aria-label="website logo / go to home page">
+      <a href="@localePrefix/" class="header__logo" aria-label="@nav_logoLabel">
         <svg width="120" height="60" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_3_78)">
           <path d="M73.8779 34.3629C73.8779 36.945 71.9433 38.5396 68.8513 38.5396H66.5201V41.7288H63.8408V30.1619H68.8513C71.9433 30.1619 73.8779 31.7646 73.8779 34.3629ZM71.1663 34.3629C71.1663 33.0921 70.3406 32.3474 68.7056 32.3474H66.5201V36.3622H68.7056C70.3406 36.3622 71.1663 35.6175 71.1663 34.3629Z" fill="#191919"/>
@@ -15,28 +15,31 @@
           </g>
         </svg>
       </a>
-      <button class="burger header__burger" aria-label="Open website menu">
-        <span class="burger__line"></span>
-      </button>
       <nav class="nav header__nav">
         <ul class="nav__list header__list">
           <li class="nav__item underline">
-            <a class="nav__link" href="./about-us"  aria-label="go to about us page">about us</a>
+            <a class="nav__link" href="@localePrefix/about-us" aria-label="@aria_aboutUs">@nav_aboutUs</a>
           </li>
           <li class="nav__item underline">
-            <a class="nav__link" href="./solutions" aria-label="go to solutions page">solutions</a>
+            <a class="nav__link" href="@localePrefix/solutions" aria-label="@aria_solutions">@nav_solutions</a>
           </li>
           <li class="nav__item underline">
-            <a class="nav__link" href="./for-construction" aria-label="go to for construction page">for construction </a>
+            <a class="nav__link" href="@localePrefix/for-construction" aria-label="@aria_forConstruction">@nav_forConstruction</a>
           </li>
           <li class="nav__item nav__item--featured">
-            <a class="nav__link nav__link--featured" href="./shop" aria-label="go to for shopping page">shop </a>
+            <a class="nav__link nav__link--featured" href="@localePrefix/shop" aria-label="@aria_shop">@nav_shop</a>
           </li>
           <li class="nav__item underline">
-            <a class="nav__link" href="./contact-us" aria-label="go to contact us page">contact us</a>
+            <a class="nav__link" href="@localePrefix/contact-us" aria-label="@aria_contactUs">@nav_contactUs</a>
           </li>
         </ul>
       </nav>
+      <div class="header__actions">
+        @include('./lang-switch.html')
+        <button class="burger header__burger" aria-label="@nav_openMenu">
+          <span class="burger__line"></span>
+        </button>
+      </div>
     </div>
   </div>
 </header>

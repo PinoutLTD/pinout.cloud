@@ -36,14 +36,13 @@
   justify-content: end;
 }
 
-.eu-business__decor-images-top  {
+.eu-business__decor-images-top {
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
   width: 100%;
   justify-content: center;
 }
-
 
 .eu-business__decor-images-top img {
   max-width: 250px;
@@ -83,7 +82,6 @@
   font-size: 26px;
 }
 
-
 .eu-business__testing a.link-font {
   display: block;
   color: var(--color-blue-link);
@@ -102,7 +100,7 @@
 
 @media screen and (max-width: 1000px) {
   .eu-business section {
-    margin-bottom: 0
+    margin-bottom: 0;
   }
 
   .eu-business .grid {
@@ -116,11 +114,10 @@
 }
 
 @media screen and (max-width: 580px) {
-
   .eu-business-management .page-title {
     font-size: 36px;
+    hyphens: auto;
   }
-
 
   .eu-business__pinout-solution .link-font {
     font-size: 20px;

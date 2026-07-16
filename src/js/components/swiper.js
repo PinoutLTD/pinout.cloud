@@ -1,4 +1,5 @@
 // Special Offer Swiper
+if (document.querySelector('.swiper-solutions')) {
 const swiperSpecialOffer = new Swiper('.swiper-solutions', {
 
   speed: 400,
@@ -31,7 +32,10 @@ const swiperSpecialOffer = new Swiper('.swiper-solutions', {
 
 });
 
+}
+
 // Product Detail Swiper with Thumbnails
+if (document.querySelector('.product-detail__thumbs')) {
   const thumbsSwiper = new Swiper('.product-detail__thumbs', {
     spaceBetween: 10,
     slidesPerView: 5,
@@ -88,3 +92,4 @@ const swiperSpecialOffer = new Swiper('.swiper-solutions', {
     window.mainSwiper = mainSwiper;
   }
 
+}

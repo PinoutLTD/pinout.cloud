@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="@htmlLang">
+  @include('../../../partials/head.html', { "pageTitle": "Умный дом IKEA с локальным сервером / Pinout" })
+  <body>
+    <!-- website header -->
+    @include('../../../partials/header.html')
+
+    <main class="product-detail">
+      <section class="product-detail-section">
+        <div class="layout">
+          <nav class="product-detail__breadcrumbs" aria-label="@shop_breadcrumbAria">
+            <ol class="product-detail__breadcrumbs-list">
+              <li class="product-detail__breadcrumbs-item text">
+                <a href="./index.html" class="product-detail__breadcrumbs-link">@shop_breadcrumb</a>
+              </li>
+              <li class="product-detail__breadcrumbs-item text" aria-current="page">
+                <span class="product-detail__breadcrumbs-current">Умный дом IKEA с локальным сервером</span>
+              </li>
+            </ol>
+          </nav>
+          <div class="grid grid-2 product-detail__overview">
+            <div class="product-detail__gallery">
+              <div class="product-detail__gallery-wrapper">
+                <div class="product-detail__thumbs-wrapper">
+                  <div class="swiper product-detail__thumbs">
+                    <div class="swiper-wrapper">                  <div class="swiper-slide">
+                    <img src="../img/shop/banners/ikea/card-1.png" alt="Умный дом IKEA с локальным сервером"/>
+                  </div>
+                  <div class="swiper-slide">
+                    <img src="../img/shop/banners/ikea/card-2.png" alt="Умный дом IKEA с локальным сервером"/>
+                  </div>
+                  <div class="swiper-slide">
+                    <img src="../img/shop/banners/ikea/card-3.png" alt="Умный дом IKEA с локальным сервером"/>
+                  </div></div>
+                  </div>
+                  <div class="product-detail__swiper-navigation">
+                    <button type="button" class="product-detail__swiper-button-prev" aria-label="@shop_prevSlide"></button>
+                    <button type="button" class="product-detail__swiper-button-next" aria-label="@shop_nextSlide"></button>
+                  </div>
+                </div>
+                <div class="swiper product-detail__swiper">
+                  <div class="swiper-wrapper">                  <div class="swiper-slide">
+                    <img src="../img/shop/banners/ikea/card-1.png" alt="Умный дом IKEA с локальным сервером"/>
+                  </div>
+                  <div class="swiper-slide">
+                    <img src="../img/shop/banners/ikea/card-2.png" alt="Умный дом IKEA с локальным сервером"/>
+                  </div>
+                  <div class="swiper-slide">
+                    <img src="../img/shop/banners/ikea/card-3.png" alt="Умный дом IKEA с локальным сервером"/>
+                  </div></div>
+                  <div class="swiper-pagination"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-detail__info">
+              <div class="product-detail__header">
+                <h1 class="page-title">Умный дом IKEA с локальным сервером</h1>
+                <span class="text-normal product-detail__availability-tag">в наличии</span>
+              </div>
+
+              <div class="product-detail__price">
+                <span class="text product-detail__price-main">€ 1100.00</span>
+                
+                <span class="text-normal product-detail__tax">@shop_taxIncl</span>
+              </div>
+
+              
+              <div class="product-detail__description">Умный дом IKEA с локальным сервером — простой и доступный способ начать пользоваться умным домом. Готовый комплект позволяет автоматизировать освещение, использовать датчики и управлять устройствами из одного приложения без сложного монтажа и дорогого ремонта.</p>
+      <p class="text-normal">Большинство устройств устанавливается без строительных работ: умные лампы заменяют обычные, беспроводные кнопки ставятся где удобно, датчики работают от батареек. Идеально для тех, кто хочет попробовать умный дом и постепенно расширять систему.</p>
+      <p class="text-normal">Решение построено на устройствах IKEA и локальном сервере Home Assistant: быстрая работа, независимость от облака и широкие возможности автоматизации. Управляйте светом, создавайте сценарии, получайте уведомления и добавляйте новые устройства по мере необходимости.</p>
+      <p class="text-normal">Особенно подходит для аренды: без постоянных изменений в квартире; при переезде оборудование легко снять, перенести и установить снова со всеми настройками и сценариями.</div>
+              
+              
+              
+            <div class="product-detail__service-summary">
+              <p class="text-normal"><b><b>Полное решение с оборудованием и установкой</b></b></p>
+              <p class="text-normal"><b>Сроки проекта:</b> 7 рабочих дней.</p>
+              <p class="text-normal"><b>Время работ на объекте:</b> около 4 часов</p>
+            </div>
+              
+            <div class="product-detail__payment">
+              
+              <div class="product-detail__payment-methods">
+                <span class="text-normal">Способы оплаты:</span>
+                <img src="../../img/shop/revolut.svg" alt="Revolut" class="product-detail__payment-icon"/>
+                <img src="../../img/shop/visa.svg" alt="Visa" class="product-detail__payment-icon"/>
+                <img src="../../img/shop/mastercard.svg" alt="Mastercard" class="product-detail__payment-icon"/>
+                <img src="./img/shop/cash.svg" alt="Cash" class="product-detail__payment-icon"/>
+              </div>
+            </div>  
+            <div class="product-detail__variants">
+              <div class="product-detail__variant-cards">
+                <button type="button" class="product-detail__variant-card active" data-variant-name="1 спальня" data-variant-id="1B">
+                  <div class="product-detail__variant-image product-detail__variant-image--icons">
+                    <img src="../../img/shop/banners/ikea/icon-1-black.svg" alt="" class="product-detail__variant-icon product-detail__variant-icon--inactive" aria-hidden="true"/>
+                    <img src="../../img/shop/banners/ikea/icon-1-white.svg" alt="" class="product-detail__variant-icon product-detail__variant-icon--active" aria-hidden="true"/>
+                  </div>
+                  <div class="product-detail__variant-info">
+                    <span class="product-detail__variant-name text">1 спальня</span>
+                    <div class="product-detail__variant-prices">
+                      
+                      <span class="product-detail__variant-price text">€ 1100.00</span>
+                    </div>
+                  </div>
+                </button>
+                <button type="button" class="product-detail__variant-card" data-variant-name="2 спальни" data-variant-id="2B">
+                  <div class="product-detail__variant-image product-detail__variant-image--icons">
+                    <img src="../../img/shop/banners/ikea/icon-2-black.svg" alt="" class="product-detail__variant-icon product-detail__variant-icon--inactive" aria-hidden="true"/>
+                    <img src="../../img/shop/banners/ikea/icon-2-white.svg" alt="" class="product-detail__variant-icon product-detail__variant-icon--active" aria-hidden="true"/>
+                  </div>
+                  <div class="product-detail__variant-info">
+                    <span class="product-detail__variant-name text">2 спальни</span>
+                    <div class="product-detail__variant-prices">
+                      
+                      <span class="product-detail__variant-price text">€ 1200.00</span>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <input type="hidden" name="VARIANT" id="product-variant" value="1B">
+            </div>  
+
+              <div class="product-detail__actions">
+                <a href="#product-form" class="text button product-detail__order-btn" data-product="Умный дом IKEA с локальным сервером">@shop_orderNow</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-detail__features-benefits grid grid-2">
+            <div class="product-detail__whats-included">
+              <h2 class="subtitle">@shop_whatsIncluded</h2>
+              <ul class="product-detail__features-list"><li class="text-normal">Локальный сервер Home Assistant</li>
+              <li class="text-normal">Умные LED-лампы IKEA KAJPLATS</li>
+              <li class="text-normal">Беспроводные пульты IKEA STYRBAR</li>
+              <li class="text-normal">Датчик открытия IKEA PARASOLL</li>
+              <li class="text-normal">Датчики протечки IKEA BADRING</li>
+              <li class="text-normal">Аккумуляторы IKEA LADDA</li>
+              <li class="text-normal">Установка и настройка всех устройств</li>
+              <li class="text-normal">Единая панель умного дома</li>
+              <li class="text-normal">Настройка мобильного приложения для локального доступа</li>
+              <li class="text-normal">Создание сценариев автоматизации</li>
+              <li class="text-normal">Тестирование, ввод в эксплуатацию и обучение</li></ul>
+            </div>
+            <div class="product-detail__benefits">
+              <h2 class="subtitle">@shop_benefits</h2>
+              <ul class="product-detail__features-list"><li class="text-normal"><b>Лёгкий старт</b> — доступный вход в умное освещение, датчики и автоматизацию без сложной системы.</li>
+              <li class="text-normal"><b>Без ремонта</b> — установка без перепланировки электрики, удобно для квартир и аренды.</li>
+              <li class="text-normal"><b>Переезжаете с вами</b> — систему можно перенести в новый дом со всеми настройками.</li>
+              <li class="text-normal"><b>Локальное управление</b> — одно приложение и сервер Home Assistant: быстрый отклик, приватность, без облака.</li></ul>
+            </div>
+          </div>
+
+          
+      <section class="product-detail__ikea-more">
+        <div class="grid grid-2">
+        <div class="ikea-more__descr">
+          <h3 class="subtitle">Умный дом IKEA и Home Assistant</h3>
+          <p class="text">Комплект объединяет устройства IKEA Smart Home и Home Assistant в единую платформу для света, датчиков и автоматизаций. Благодаря Zigbee и открытым стандартам систему можно расширять по мере роста потребностей.</p>
+          <p class="text">Локальный сервер Home Assistant обеспечивает быстрый отклик, стабильную работу и высокий уровень приватности. Все сценарии выполняются в домашней сети без постоянной зависимости от облака.</p>
+          <p class="text">Поддерживаются пользовательские сценарии: расписание освещения, уведомления от датчиков и централизованное управление всеми устройствами в одном интерфейсе.</p>
+          <p class="text">Открытая экосистема позволяет в будущем добавлять освещение, климат, безопасность и мониторинг без замены уже установленной системы.</p>
+        </div>
+          <img src="/img/shop/banners/ikea/ikea-bg.png" alt="" loading="lazy"/>
+        </div>
+      </section>
+          
+
+          <div class="grid-2 product-detail__form-section grid" id="product-form">
+            <div class="product-detail__form-header">
+              <h2 class="page-title">@shop_formTitle</h2>
+              <p class="text-normal product-detail__form-intro">Мы свяжемся с вами в течение 24 часов.<br>Доставка возможна в течение 24 часов после запроса.<br>Оплата после выполнения услуги.</p>
+            </div>
+
+            <form class="product-detail__form" action="https://cloud.us17.list-manage.com/subscribe/post?u=e4dba595a375a9f342a2436aa&amp;id=35b2cf1c49&amp;f_id=00561be3f0" method="post" target="_blank" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form">
+              <input type="hidden" name="EMAIL" id="mce-EMAIL" value="" />
+              <div>
+                <input type="text" name="NAME" id="mce-NAME" class="contacts-form__input" placeholder="@shop_namePlaceholder" />
+              </div>
+              <div>
+                <input type="tel" id="phone-input" class="contacts-form__input" placeholder="@shop_phonePlaceholder" required />
+                <input type="hidden" name="PHONE" id="mce-PHONE" value="" />
+              </div>
+              
+              <div>
+                <label class="text-normal">@shop_contactMethodLabel</label>
+                <div class="product-detail__contact-methods">
+                  <button type="button" class="product-detail__contact-method" data-method="telegram">@shop_telegram</button>
+                  <button type="button" class="product-detail__contact-method" data-method="whatsapp">@shop_whatsapp</button>
+                  <button type="button" class="product-detail__contact-method active" data-method="sms">@shop_sms</button>
+                  <button type="button" class="product-detail__contact-method" data-method="call">@shop_callMobile</button>
+                </div>
+                <input type="hidden" name="TYPE" id="contact-method" value="sms" />
+              </div>
+              <div>
+                <label class="text-normal">@shop_languageLabel</label>
+                <div class="product-detail__contact-methods">
+                  <button type="button" class="product-detail__contact-method active" data-lang="English">@shop_languageEn</button>
+                  <button type="button" class="product-detail__contact-method" data-lang="Russian">@shop_languageRu</button>
+                </div>
+                <input type="hidden" name="LANGUAGE" id="language" value="English" />
+              </div>
+              
+              <div>
+                <textarea name="COMMENT" id="mce-COMMENT" class="product-detail__textarea contacts-form__input contacts-form__textarea" placeholder="@shop_messagePlaceholder" maxlength="250">Здравствуйте! Хочу заказать «1 спальня» с установкой и автоматизацией. Свяжитесь со мной, пожалуйста.</textarea>
+              </div>
+              <div>
+                <label class="checkbox subfield contacts-form__checkbox contacts__checkbox custom-checkbox" for="gdpr96449">
+                  <input type="checkbox" id="gdpr_96449" name="gdpr[96449]" class="gdpr custom-checkbox__field" value="Y" required />
+                  <span class="custom-checkbox__content text-normal">@shop_termsLabel</span>
+                </label>
+              </div>
+              <input type="hidden" name="PRODUCT" value="Умный дом IKEA с локальным сервером" />
+              
+              
+              <input type="hidden" name="REQUEST" value="new product" />
+              <input type="hidden" name="tags" value="8329957, order" />
+              <div style="position: absolute; left: -5000px" aria-hidden="true">
+                <input type="text" name="b_e4dba595a375a9f342a2436aa_35b2cf1c49" tabindex="-1" value="" />
+              </div>
+              <div class="contacs-form__btn-wrapper">
+                <button type="submit" name="subscribe" class="contacts-form__btn button link-font link-with-arrow link">@shop_submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    @include('../../../partials/footer.html')
+  </body>
+</html>
