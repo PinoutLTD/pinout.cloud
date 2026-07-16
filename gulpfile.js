@@ -125,6 +125,7 @@ const docs = () => {
 const stylesMain = () => {
     return src([
       'src/assets/styles/**/*.css',
+      '!src/assets/styles/main.min.css',
       '!src/assets/styles/vendor/intlTelInput.min.css',
     ])
     .pipe(sourceMaps.init())
@@ -998,6 +999,7 @@ const images = () => {
 const stylesBuildMain = () => {
     return src([
       'src/assets/styles/**/*.css',
+      '!src/assets/styles/main.min.css',
       '!src/assets/styles/vendor/intlTelInput.min.css',
     ])
     .pipe(concat('main.css'))
@@ -1947,6 +1949,7 @@ const fixShopJSPaths = (cb) => {
 const stylesShopBuildMain = () => {
   return src([
     'src/assets/styles/**/*.css',
+    '!src/assets/styles/main.min.css',
     '!src/assets/styles/vendor/intlTelInput.min.css',
     '!src/assets/styles/components/lang-switch.css',
   ])
