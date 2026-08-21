@@ -1,7 +1,7 @@
 {
   "meta": {
     "description": "We build Smart Home Solutions based on open source software. Make your home as smart as your smartphone.",
-    "homeTitle": "Pinout LTD, Smart Solutions for your Home / Pinout",
+    "homeTitle": "Pinout Limited, Smart Solutions for your Home / Pinout",
     "aboutTitle": "About us / Pinout",
     "whySmartHomeTitle": "Why smart home / Pinout",
     "solutionsTitle": "Solutions / Pinout",
@@ -276,11 +276,11 @@
     "gdpr": "go to the GDPR page"
   },
   "footer": {
-    "copyright": "Copyright © Pinout LTD"
+    "copyright": "Copyright © Pinout Limited"
   },
   "home": {
     "title": "Smart <br/> Home Solution",
-    "subtitle": "by Pinout  LTD",
+    "subtitle": "by Pinout Limited",
     "startPrice": "€1900",
     "checkSolutions": "check",
     "ourSolutions": "our solutions",
@@ -303,7 +303,7 @@
     "offerSubtitle": "We will reach back to you  within 24 hours",
     "emailPlaceholder": "your email*",
     "messagePlaceholder": "your message (optional)",
-    "gdprLabel": "I would like to be kept up to date with Pinout LTD promotions, marketing and events",
+    "gdprLabel": "I would like to be kept up to date with Pinout Limited promotions, marketing and events",
     "unsubscribe": "You can unsubscribe at any time by clicking the link in the footer of our emails.",
     "submit": "submit"
   },

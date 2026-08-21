@@ -1,7 +1,7 @@
 {
   "meta": {
     "description": "Мы создаём решения для умного дома на базе open source. Сделайте свой дом таким же умным, как ваш смартфон.",
-    "homeTitle": "Pinout LTD, умные решения для вашего дома / Pinout",
+    "homeTitle": "Pinout Limited, умные решения для вашего дома / Pinout",
     "aboutTitle": "О нас / Pinout",
     "whySmartHomeTitle": "Зачем умный дом / Pinout",
     "solutionsTitle": "Решения / Pinout",
@@ -276,11 +276,11 @@
     "gdpr": "перейти на страницу GDPR"
   },
   "footer": {
-    "copyright": "© Pinout LTD"
+    "copyright": "© Pinout Limited"
   },
   "home": {
     "title": "Умный <br/> дом",
-    "subtitle": "от Pinout LTD",
+    "subtitle": "от Pinout Limited",
     "startPrice": "€1900",
     "checkSolutions": "смотреть",
     "ourSolutions": "наши решения",
@@ -303,7 +303,7 @@
     "offerSubtitle": "Мы свяжемся с вами в течение 24 часов",
     "emailPlaceholder": "ваш email*",
     "messagePlaceholder": "ваше сообщение (необязательно)",
-    "gdprLabel": "Я хочу получать новости Pinout LTD: акции, маркетинг и мероприятия",
+    "gdprLabel": "Я хочу получать новости Pinout Limited: акции, маркетинг и мероприятия",
     "unsubscribe": "Вы можете отписаться в любой момент по ссылке внизу наших писем.",
     "submit": "отправить"
   },
