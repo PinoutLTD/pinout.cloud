@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="@htmlLang">
+  @include('../partials/head.html', {
+    "pageTitle": "@meta_gdprTitle",
+  })
+<body>
+  <!-- website header -->
+  @include('../partials/header.html')
+
+  <!-- main page content -->
+  <main>
+    <section class="privacy-policy">
+      <div class="layout">
+        <h1 class="page-title">@gdpr_heading</h1>
+        <div class="text-small text-normal-light privacy-policy__update">@gdpr_lastUpdated <b>@gdpr_lastUpdatedDate</b></div>
+        <div class="privacy-policy__content">
+          <p class="text-normal">@gdpr_intro</p>
+          <p class="text-normal">@gdpr_cookiesLinkBefore <a href="@localePrefix/privacy-policy" class="underline" aria-label="@aria_privacyPolicy">@gdpr_cookiesLinkText</a>@gdpr_cookiesLinkAfter</p>
+
+          <ol class="list list--ordered text-normal">
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">@gdpr_s1Title</h2>
+              <p class="text-normal">@gdpr_s1Text</p>
+              <p class="text-normal">@gdpr_s1Dpo</p>
+            </li>
+
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">@gdpr_s2Title</h2>
+              <p class="text-normal">@gdpr_s2Text</p>
+            </li>
+
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">@gdpr_s3Title</h2>
+              <p class="text-normal">@gdpr_s3Intro</p>
+              <ul class="list list--unordered">
+                <li class="list__item">@gdpr_s3Li1</li>
+                <li class="list__item">@gdpr_s3Li2</li>
+                <li class="list__item">@gdpr_s3Li3</li>
+              </ul>
+              <p class="text-normal">@gdpr_s3Outro</p>
+            </li>
+
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">@gdpr_s4Title</h2>
+              <ul class="list list--unordered">
+                <li class="list__item">@gdpr_s4Li1</li>
+                <li class="list__item">@gdpr_s4Li2</li>
+                <li class="list__item">@gdpr_s4Li3</li>
+                <li class="list__item">@gdpr_s4Li4</li>
+                <li class="list__item">@gdpr_s4Li5</li>
+              </ul>
+            </li>
+
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">@gdpr_s5Title</h2>
+              <ul class="list list--unordered">
+                <li class="list__item">@gdpr_s5Li1</li>
+                <li class="list__item">@gdpr_s5Li2</li>
+                <li class="list__item">@gdpr_s5Li3</li>
+                <li class="list__item">@gdpr_s5Li4</li>
+              </ul>
+            </li>
+
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">@gdpr_s6Title</h2>
+              <p class="text-normal">@gdpr_s6Text</p>
+              <p class="text-normal">@gdpr_s6Cloud</p>
+            </li>
+
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">@gdpr_s7Title</h2>
+              <ul class="list list--unordered">
+                <li class="list__item">@gdpr_s7Li1</li>
+                <li class="list__item">@gdpr_s7Li2</li>
+                <li class="list__item">@gdpr_s7Li3</li>
+              </ul>
+            </li>
+
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">@gdpr_s8Title</h2>
+              <p class="text-normal">@gdpr_s8Text</p>
+            </li>
+
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">@gdpr_s9Title</h2>
+              <p class="text-normal">@gdpr_s9Intro</p>
+              <ul class="list list--unordered">
+                <li class="list__item">@gdpr_s9Li1</li>
+                <li class="list__item">@gdpr_s9Li2</li>
+                <li class="list__item">@gdpr_s9Li3</li>
+                <li class="list__item">@gdpr_s9Li4</li>
+                <li class="list__item">@gdpr_s9Li5</li>
+              </ul>
+              <p class="text-normal">@gdpr_s9Outro</p>
+            </li>
+
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">@gdpr_s10Title</h2>
+              <p class="text-normal">@gdpr_s10Text</p>
+            </li>
+
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">@gdpr_s11Title</h2>
+              <p class="text-normal">@gdpr_s11Text</p>
+            </li>
+
+            <li class="list__item list__item--ol">
+              <h2 class="subtitle">@gdpr_s12Title</h2>
+              <p class="text-normal">@gdpr_s12Text</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- website footer -->
+  @include('../partials/footer.html')
+</body>
+</html>

@@ -10,7 +10,8 @@
     "cyprusLifestyleTitle": "Cyprus Lifestyle / Pinout",
     "privacyPolicyTitle": "Privacy Policy / Pinout",
     "notFoundTitle": "Page not found / Pinout",
-    "shopTitle": "Shop / Pinout"
+    "shopTitle": "Shop / Pinout",
+    "gdprTitle": "GDPR and your data / Pinout"
   },
   "notFound": {
     "line1": "Oops! It seems this page does not exist.",
@@ -259,7 +260,8 @@
     "cyprusLifestyle": "Cyprus lifestyle",
     "privacyPolicy": "privacy policy",
     "openMenu": "Open website menu",
-    "logoLabel": "website logo / go to home page"
+    "logoLabel": "website logo / go to home page",
+    "gdpr": "GDPR"
   },
   "aria": {
     "aboutUs": "go to about us page",
@@ -270,7 +272,8 @@
     "home": "go to home page",
     "whySmartHome": "go to why smart home page",
     "cyprusLifestyle": "go to Cyprus lifestyle page",
-    "privacyPolicy": "go to privacy policy page"
+    "privacyPolicy": "go to privacy policy page",
+    "gdpr": "go to the GDPR page"
   },
   "footer": {
     "copyright": "Copyright © Pinout LTD"
@@ -371,5 +374,59 @@
     "analyticsQuestion": "Would you like to allow us to collect analytics data?",
     "accept": "Accept",
     "decline": "Decline"
+  },
+  "gdpr": {
+    "heading": "GDPR and your data",
+    "lastUpdated": "Last updated:",
+    "lastUpdatedDate": "August 2026",
+    "intro": "This page explains what happens to personal data when we design, install and service a smart home for you. It is about the service relationship, not about browsing this website.",
+    "cookiesLinkBefore": "For the website itself, see the",
+    "cookiesLinkText": "Privacy Policy",
+    "cookiesLinkAfter": ".",
+    "s1Title": "Who is responsible",
+    "s1Text": "Pinout Limited, a private limited company registered in the Republic of Cyprus under number HE 446523, registered office Evripidou 12A, Agia Zoni, 3031 Limassol, Cyprus. We are the controller of the data described below, and you can reach us at info@pinout.cloud about anything on this page.",
+    "s1Dpo": "We have not appointed a data protection officer, and Article 37 GDPR does not require one: we can reach a system only after its owner switches access on, and in practice only while we are in a meeting with them, so nothing we do amounts to regular, systematic, large-scale monitoring.",
+    "s2Title": "Where we decide and where you decide",
+    "s2Text": "We are the controller of your contact details, the address of the property, our correspondence with you and our invoicing records. For the data held inside your own system, which we see during a servicing session, we act as a processor on your instructions: that data is yours, and we handle it only to deal with the matter you reported.",
+    "s3Title": "What stays in your home",
+    "s3Intro": "Your smart home runs locally. The following never reaches us in normal operation:",
+    "s3Li1": "sensor readings and occupancy history",
+    "s3Li2": "camera streams",
+    "s3Li3": "schedules, scene history and the state of every device",
+    "s3Outro": "It is not collected as telemetry or analytics, it is not passed to anyone, and it is not used to train anything. We do not run a cloud account that your system reports into.",
+    "s4Title": "What we do hold, and for how long",
+    "s4Li1": "Your name, contact details and the address of the property — to perform the contract and to attend. Kept for the term of the contract, then the statutory limitation period.",
+    "s4Li2": "Invoices and payment records — because the law requires it. Kept six years from the end of the tax year.",
+    "s4Li3": "The composition of your system — to support it and to honour the warranty. Kept for the term of the contract.",
+    "s4Li4": "Servicing correspondence and fault history — to diagnose recurring faults. Kept for the term of the contract, then the statutory limitation period.",
+    "s4Li5": "Remote access logs — so that you can audit what was done. Kept for the term of the contract.",
+    "s5Title": "Our legal grounds",
+    "s5Li1": "Performing our contract with you — Article 6(1)(b): your details, the composition of your system, servicing correspondence.",
+    "s5Li2": "A legal obligation — Article 6(1)(c): invoices and payment records.",
+    "s5Li3": "Legitimate interests — Article 6(1)(f): session logs, so that we are accountable to you and you can check what was done.",
+    "s5Li4": "Your consent — a remote session, or a photograph used outside the job record. You may withdraw it at any time, and withdrawing it affects nothing else.",
+    "s6Title": "How we connect",
+    "s6Text": "We hold no standing means of reaching your system. A servicing session runs over SSH and can be opened only after you press \"allow outside access\" in your smart home interface — until you do, we cannot connect at all. Switching it back off is your action too: no reason needed, no notice to us. Every session is logged with its date, duration and purpose, and the log is yours on request. We install no permanent access, no hidden account, and no component that would let us connect without your knowledge.",
+    "s6Cloud": "Cloud access you use to reach your own home from an app is a different thing. That is a Nabu Casa subscription you hold yourself, its own privacy notice covers what it holds, and it is not the route we use for servicing.",
+    "s7Title": "Who else sees it",
+    "s7Li1": "Our engineers and any subcontractor we send to your home, all bound by the same confidentiality obligation in their contract with us. We remain responsible to you for them.",
+    "s7Li2": "Nobody else at the property: not a developer, a management company, a concierge, a first-line engineer, a neighbour or another resident.",
+    "s7Li3": "An authority, but only where a court order, a lawful request or a statutory obligation requires it. We tell you unless we are prohibited from saying so, and we disclose no more than the request requires.",
+    "s8Title": "Transfers outside the EEA",
+    "s8Text": "We do not transfer your personal data outside the European Economic Area. A servicing session is an SSH connection from Cyprus into your own home, and nothing is copied out of it. A cloud subscription you take yourself is your contract with that provider, and any transfer it makes is governed by its terms, not ours.",
+    "s9Title": "Your rights",
+    "s9Intro": "You may ask us for:",
+    "s9Li1": "a copy of the data we hold about you",
+    "s9Li2": "its correction",
+    "s9Li3": "its erasure, where no statutory obligation requires us to keep it",
+    "s9Li4": "its transfer to you in a portable form",
+    "s9Li5": "restriction of processing, or objection to processing we base on legitimate interests",
+    "s9Outro": "Write to info@pinout.cloud and we answer within one month. If our answer does not satisfy you, you may complain to the Office of the Commissioner for Personal Data Protection of the Republic of Cyprus, and you may also go to court.",
+    "s10Title": "Automated decisions",
+    "s10Text": "We take no decision about you by automated means, and we do not profile you.",
+    "s11Title": "If something goes wrong",
+    "s11Text": "Where a personal data breach affects you, we tell you without undue delay and in any event within 72 hours of becoming aware of it, say what happened and what data was affected, and say what we are doing about it.",
+    "s12Title": "Clients who have signed an agreement",
+    "s12Text": "Everything above is also a contractual commitment: Annex 1 of our framework agreement makes it binding on us. Where this page and that annex differ, the annex governs — a page we can edit is not allowed to cut down what we signed."
   }
 }
