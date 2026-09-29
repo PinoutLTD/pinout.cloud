@@ -8,6 +8,7 @@
     "contactTitle": "Contact us / Pinout",
     "forConstructionTitle": "For Construction / Pinout",
     "cyprusLifestyleTitle": "Cyprus Lifestyle / Pinout",
+    "portfolioTitle": "Portfolio / Pinout",
     "privacyPolicyTitle": "Privacy Policy / Pinout",
     "notFoundTitle": "Page not found / Pinout",
     "shopTitle": "Shop / Pinout",
@@ -88,6 +89,18 @@
     "welcomeAlva": "Welcome to Alva Pines",
     "codeWrong": "Wrong code. Try again.",
     "footerTagline": "Don't become robots — let the robots work for you."
+  },
+  "portfolioPage": {
+    "title": "Our portfolio",
+    "subtitle": "Smart spaces. Real projects.",
+    "intro": "Explore Pinout smart home projects across Cyprus — from private apartments and villas to residential developments and hospitality properties. We design and integrate smart home automation systems including lighting and climate control, Home Assistant integration, security, access control and network infrastructure.",
+    "completed": "Completed projects",
+    "inProgress": "Projects in progress",
+    "closingTitleBold": "Every property is different.",
+    "closingTitleLight": "So is every smart system.",
+    "closingText": "From a single apartment to a complete residential development, we design each solution around the property, its infrastructure and the way people actually use the space.",
+    "ctaQuestion": "Planning a project in Cyprus?",
+    "ctaButton": "Let's discuss it"
   },
   "forConstruction": {
     "titleBold": "Smart Maintenance",
@@ -251,6 +264,7 @@
   },
   "nav": {
     "aboutUs": "about us",
+    "portfolio": "portfolio",
     "solutions": "solutions",
     "forConstruction": "for construction",
     "shop": "shop",
@@ -265,6 +279,7 @@
   },
   "aria": {
     "aboutUs": "go to about us page",
+    "portfolio": "go to portfolio page",
     "solutions": "go to solutions page",
     "forConstruction": "go to for construction page",
     "shop": "go to for shopping page",

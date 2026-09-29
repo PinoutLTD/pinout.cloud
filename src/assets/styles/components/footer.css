@@ -30,9 +30,12 @@
   font-variation-settings: 'Xtra' 468, 'wdth' 110;
 }
 
-
 .footer__decor {
   width: 80px;
+}
+
+.footer__list .nav__item:not(:last-child) {
+  margin-right: calc(var(--space) * 0.5);
 }
 
 @media screen and (max-width: 1460px) {
@@ -55,7 +58,6 @@
     right: var(--space);
   }
 
-
   .footer__decor {
     display: none;
   }
@@ -70,10 +72,8 @@
   }
 }
 
-
 @media screen and (max-width: 850px) {
-
-  .footer__container  {
+  .footer__container {
     align-items: flex-start;
     flex-direction: column-reverse;
   }

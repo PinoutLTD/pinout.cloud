@@ -889,7 +889,7 @@ function normalizeAssetPathsInHtml(content, filePath) {
   const isShopPage = filePath.includes(`${path.sep}shop${path.sep}`);
   if (isShopPage) {
     content = content.replace(
-      /href="\.\/(about-us|why-smart-home|solutions|cyprus-lifestyle|for-construction|contact-us|privacy-policy)"/g,
+      /href="\.\/(about-us|why-smart-home|solutions|cyprus-lifestyle|for-construction|contact-us|privacy-policy|portfolio)"/g,
       'href="../$1"'
     );
     content = content.replace(/href="\.\/shop"/g, 'href="./"');
@@ -969,6 +969,7 @@ const scriptsApp = () => {
       ...BUNDLED_VENDOR_JS,
       'src/js/data/products.js', // Load products data first
       'src/js/data/products.ru.js',
+      'src/js/data/portfolio.js',
       'src/js/orderComment.js',
       'src/js/helpers.js',
       'src/js/components/*.js',
@@ -1075,6 +1076,7 @@ const scriptsBuildApp = () => {
       ...BUNDLED_VENDOR_JS,
       'src/js/data/products.js', // Load products data first
       'src/js/data/products.ru.js',
+      'src/js/data/portfolio.js',
       'src/js/orderComment.js',
       'src/js/helpers.js',
       'src/js/components/*.js',
@@ -1711,7 +1713,7 @@ const preRenderShopIndex = makePreRenderShopIndex('en');
 const preRenderShopIndexRu = makePreRenderShopIndex('ru');
 
 // Main site pages that live on GitHub Pages (not inside the OpenCart shop)
-const MAIN_SITE_PAGES = 'about-us|why-smart-home|solutions|cyprus-lifestyle|for-construction|contact-us|privacy-policy';
+const MAIN_SITE_PAGES = 'about-us|why-smart-home|solutions|cyprus-lifestyle|for-construction|contact-us|privacy-policy|portfolio';
 
 /**
  * Rewrite paths for a standalone shop page.
