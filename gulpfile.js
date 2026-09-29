@@ -1052,12 +1052,20 @@ exports.htmlInclude = htmlInclude;
 exports.scripts = scripts;
 exports.default = series(clean, resources, docs, generateProductPages, htmlInclude, htmlPages, processProductPages, scripts, styles, images, fixAssetPaths, svgSprites, watchAll, watchFiles)
 
-const minImages = () => {
+// iPhone JPEGs in portfolio folders crash mozjpeg in CI (write EPIPE).
+const portfolioCameraPhotos = [
+    'src/assets/img/portfolio/*/*.jpg',
+    'src/assets/img/portfolio/*/*.jpeg',
+];
+
+const optimizeImages = () => {
     return src([
         'src/assets/img/**/*.jpg',
         'src/assets/img/**/*.png',
         'src/assets/img/**/*.svg',
         'src/assets/img/**/*.jpeg',
+        '!src/assets/img/portfolio/*/*.jpg',
+        '!src/assets/img/portfolio/*/*.jpeg',
     ])
     .pipe(imagemin([
         imagemin.mozjpeg({quality: 75, progressive: true}),
@@ -1069,7 +1077,14 @@ const minImages = () => {
         })
     ]))
     .pipe(dest('dist/img'))
-}
+};
+
+const copyPortfolioCameraPhotos = () => {
+    return src(portfolioCameraPhotos, { base: 'src/assets/img', allowEmpty: true })
+        .pipe(dest('dist/img'));
+};
+
+const minImages = series(optimizeImages, copyPortfolioCameraPhotos);
 
 const scriptsBuildApp = () => {
     return src([
