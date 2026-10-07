@@ -36,8 +36,8 @@ const portfolioProjects = [
     meta: { en: 'Residential development', ru: 'Жилая застройка' },
     stat: { en: '28 apartments', ru: '28 квартир' },
     text: {
-      en: 'Complete smart home automation for all 28 apartments of the Residence 28 development.',
-      ru: 'Полная автоматизация умного дома для всех 28 квартир комплекса Residence 28.',
+      en: "Every apartment has its own Home Assistant server, so lighting, climate, curtains, hot water and security work as one system from one iPad, and residents' data stays in the flat.",
+      ru: 'В каждой квартире свой сервер Home Assistant: свет, климат, шторы, горячая вода и охрана работают как одна система с одного iPad, а данные жильцов не уходят из квартиры.',
     },
     specs: [
       { icon: 'hass-server-integration', label: { en: 'Home Assistant server integration', ru: 'Интеграция сервера Home Assistant' } },
@@ -73,8 +73,8 @@ const portfolioProjects = [
     meta: { en: 'Residential development', ru: 'Жилая застройка' },
     stat: { en: '20 + 8 smart apartments', ru: '20 + 8 умных квартир' },
     text: {
-      en: 'Smart home and network infrastructure for two residential buildings: 20 apartments in Qube A and 8 apartments in Qube B.',
-      ru: 'Умный дом и сетевая инфраструктура для двух жилых зданий: 20 квартир в Qube A и 8 квартир в Qube B.',
+      en: 'Every apartment in both buildings was handed over with Wi-Fi 7 and one control panel for lighting, climate, hot water and the intercom. The same standard in all 28 apartments.',
+      ru: 'Каждая квартира в обоих зданиях сдана с Wi-Fi 7 и одной панелью, которая управляет светом, климатом, горячей водой и домофоном. Один стандарт во всех 28 квартирах.',
     },
     specs: [
       { icon: 'hass-server-integration', label: { en: 'Home Assistant server integration', ru: 'Интеграция сервера Home Assistant' } },
@@ -111,8 +111,8 @@ const portfolioProjects = [
     ],
     meta: { en: 'Private villa · Smart home retrofit', ru: 'Частная вилла · Модернизация умного дома' },
     text: {
-      en: "Upgrade and renovation of the villa's existing smart home, security and monitoring systems.",
-      ru: 'Обновление и модернизация существующего умного дома, систем безопасности и мониторинга виллы.',
+      en: "We took over the villa's existing INELS smart home, upgraded its core and brought lighting, climate, hot water and cameras back into one system on Home Assistant. The owners now run the villa from one dashboard and give guests their own access.",
+      ru: 'Мы взяли на себя существующий умный дом INELS, обновили его центральный модуль и вернули свет, климат, горячую воду и камеры в одну систему на Home Assistant. Теперь владельцы управляют виллой с одной панели и выдают гостям свой доступ.',
     },
     specs: [
       { icon: 'INELS', width: 25, label: { en: 'INELS central module upgrade', ru: 'Обновление центрального модуля INELS' } },
@@ -196,8 +196,8 @@ const portfolioProjects = [
     ],
     meta: { en: 'Private villa · Smart home automation', ru: 'Частная вилла · Автоматизация умного дома' },
     text: {
-      en: 'Network, security and outdoor lighting infrastructure for a three-storey private villa and its outdoor areas.',
-      ru: 'Сеть, безопасность и наружное освещение для трёхэтажной частной виллы и её территории.',
+      en: 'Wi-Fi with no dead zones on all three floors and the outdoor area, eleven perimeter cameras and around twenty outdoor lighting groups that switch on at sunset and off at midnight by themselves. All of it runs on one Home Assistant server.',
+      ru: 'Wi-Fi без мёртвых зон на трёх этажах и на территории, одиннадцать камер по периметру и около двадцати групп уличного света, которые сами включаются на закате и гаснут в полночь. Всё работает на одном сервере Home Assistant.',
     },
     specs: [
       { icon: 'hass-server-integration', label: { en: 'Home Assistant server integration', ru: 'Интеграция сервера Home Assistant' } },
@@ -328,8 +328,8 @@ const portfolioProjects = [
     ],
     meta: { en: 'Hospitality · Boutique hotel', ru: 'Гостеприимство · Бутик-отель' },
     text: {
-      en: 'Network, surveillance and access-control infrastructure for a multi-storey boutique hotel.',
-      ru: 'Сеть, видеонаблюдение и контроль доступа для многоэтажного бутик-отеля.',
+      en: 'Wi-Fi on every floor, electronic door locks the owner manages from an app, and six perimeter cameras. The network, recorder and gateway sit in outdoor cabinets with UPS backup.',
+      ru: 'Wi-Fi на каждом этаже, электронные замки, доступом к которым владелец управляет из приложения, и шесть камер по периметру. Сеть, регистратор и шлюз стоят в уличных шкафах с резервным питанием от ИБП.',
     },
     specs: [
       { icon: 'wifi', label: { en: 'Wi-Fi on every floor', ru: 'Wi-Fi на каждом этаже' } },
