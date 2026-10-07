@@ -25,11 +25,11 @@ const portfolioProjects = [
       {
         type: 'image',
         src: '/img/portfolio/residence-28.png',
-        width: 1035,
+        width: 2199,
         height: 1377,
         alt: {
-          en: 'Residence 28 living room with a tablet showing a floor plan',
-          ru: 'Гостиная Residence 28 с планшетом, на котором открыт план квартиры',
+          en: 'Residence 28 buildings with the pool and palm-lined courtyard',
+          ru: 'Корпуса Residence 28 с бассейном и пальмами во дворе',
         },
       }
     ],
